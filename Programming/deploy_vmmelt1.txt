@@ -1,0 +1,25 @@
+
+# Assuming everything pre built
+
+ssh findwise@vmmelt1 "cd ~/grammar-search/tomcat/bin;./shutdown.sh"
+
+scp bundle/nlparser/target/nlparser.war findwise@vmmelt1:~/grammar-search/tomcat/webapps/
+scp bundle/solr-mvn/target/solr.war findwise@vmmelt1:~/grammar-search/tomcat/webapps/solr-instrucs.war
+scp /vagrant/GF/src/runtime/java/Release\ \(posix\)/libjpgf.so findwise@vmmelt1:/usr/local/lib/
+scp /vagrant/bundle/org.grammaticalframework.pgf.jar findwise@vmmelt1:~/grammar-search/tomcat/lib/jpgf.jar
+
+ssh findwise@vmmelt1 "cd ~/grammar-search/tomcat/bin;./startup.sh"
+
+# Move solr stuff (assuming vagrant)
+scp -r bundle/solr-instrucs/ findwise@vmmelt1:/home/findwise/grammar-search/solr/
+
+
+# Build jpgf:
+
+/home/findwise/grammar-search/eclipse/eclipse/eclipse -nosplash \
+    --launcher.suppressErrors \
+    -application org.eclipse.cdt.managedbuilder.core.headlessbuild \
+    -import ./ \
+    -I /usr/lib/jvm/java-1.7.0-openjdk-amd64/include/ \
+    -I /usr/lib/jvm/java-1.7.0-openjdk-amd64/include/linux \
+    -cleanBuild .*/.*posix.*

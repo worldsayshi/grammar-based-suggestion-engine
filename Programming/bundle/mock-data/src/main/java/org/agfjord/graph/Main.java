@@ -18,7 +18,8 @@ public class Main {
 	public Main(){
 		URL url = this.getClass().getClassLoader().getResource("Instrucs.pgf");
 		try {
-			grammar = new Grammar(url.openStream());
+            String grammmar_dir = System.getProperty("grammar.dir");
+			grammar = new Grammar(grammmar_dir,"Instrucs");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -2,6 +2,7 @@ package org.agfjord.graph;
 
 
 import org.apache.solr.client.solrj.beans.Field;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.Map;
 
@@ -48,5 +49,11 @@ public class Instruction {
 	public void setNameCounts(Map<String, Integer> nameCounts) {
 		this.nameCounts = nameCounts;
 	}
-	
+    
+    @Override
+	public String toString () {
+        return ToStringBuilder.reflectionToString(this);
+                
+                ///"Instruction {" + "linearizations: " + "," "}";
+    }
 }

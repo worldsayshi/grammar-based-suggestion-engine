@@ -6,6 +6,7 @@ mvn compile
 # debug args
 #export MAVEN_OPTS='-Djava.library.path=/usr/local/lib -Xmx1500m -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=1044'
 
-export MAVEN_OPTS='-Djava.library.path=/usr/local/lib -Xmx1500m'
+export MAVEN_OPTS='-Djava.library.path=/usr/local/lib -Xmx1500m -Dgrammar.dir=/vagrant/bundle/Grammar'
 export PATH=/home/vagrant/.cabal/bin:$PATH
-mvn exec:java -Dexec.mainClass="org.agfjord.graph.Main"
+export CLASSPATH=/vagrant/bundle/Grammar:CLASSPATH
+mvn exec:java # -Dexec.mainClass="org.agfjord.graph.Main" -Dexec.args="%classpath" # -Dexec.classpathScope="java"

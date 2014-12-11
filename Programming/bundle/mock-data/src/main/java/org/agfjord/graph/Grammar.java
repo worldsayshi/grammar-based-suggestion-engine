@@ -4,6 +4,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -21,26 +23,38 @@ import org.apache.commons.io.IOUtils;
 import org.grammaticalframework.pgf.PGF;
 import org.grammaticalframework.pgf.PGFError;
 import java.nio.charset.StandardCharsets;
+import static org.apache.lucene.analysis.standard.UAX29URLEmailTokenizer.URL;
 
 
 public class Grammar {
 
-	private PGF gr;
-	final private String[] nameFuns = new String[]{ "MkSkill", "MkLocation", "MkOrganization", "MkModule" };
-	final private String[] nameCats = new String[]{ "Skill", "Location", "Organization", "Module" };    
-	final private Properties prop = new Properties();
+	//private PGF gr;
+    final private String[] nameFuns = new String[]{ "Station", "GeoLocation" };
+	final private String[] nameCats = new String[]{ "Station", "GeoLocation" };
+	//final private String[] nameFuns = new String[]{ "MkSkill", "MkLocation", "MkOrganization", "MkModule" };
+	//final private String[] nameCats = new String[]{ "Skill", "Location", "Organization", "Module" };    
+	//final private Properties prop = new Properties();
+    final private String grammar_dir;
+    final private String abs_grammar_filename;
 
-	public Grammar(InputStream pgf) {
-		try {
+	public Grammar(String grammar_dir,String abs_grammar_name) throws MalformedURLException, IOException {
+        
+        this.grammar_dir = grammar_dir;
+        this.abs_grammar_filename = abs_grammar_name+".gf";
+        
+        /*URL url = new File(grammar_dir,abs_grammar_filename)
+                .toURI().toURL();
+        InputStream pgf = url.openStream();*/
+		/*try {
 			gr = PGF.readPGF(pgf);
 		} catch (PGFError e) {
 			e.printStackTrace();
-		}
-		try {
+		}*/
+		/*try {
 			prop.load(new FileInputStream("config.properties"));
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	/*
@@ -75,7 +89,7 @@ public class Grammar {
 	public Set<String> generateAbstractSyntaxTreesFromShell() throws IOException{
 		//Generate trees by using the GF-shell
 		List<String> commands = new ArrayList<String>();
-		commands.add("import " + prop.getProperty("abstract_grammar"));
+		commands.add("import " + abs_grammar_filename);
 		commands.add("gt -depth=6");
 		Set<String> asts = sendGfShellCommands(commands);
 		Set<String> result = new LinkedHashSet<String>();
@@ -138,7 +152,7 @@ public class Grammar {
 	 * We do the linearization multiple intervals, GF wont be able to process
 	 * all data otherwise.
 	 */
-	public List<Set<String>> generateLinearizations(Set<String> asts, String gfFile, String concreteSyntax) throws IOException{
+	public List<Set<String>> generateLinearizations(Set<String> asts, String gfConcreteGrammarFile, String concreteSyntax) throws IOException{
 		List<String> commands = new ArrayList<String>();
 		for(String ast : asts){
 			commands.add("linearize -lang=" + concreteSyntax + " -list " + ast);
@@ -148,7 +162,7 @@ public class Grammar {
 		List<Set<String>> result = new ArrayList<Set<String>>();
 		while(from < asts.size()){
 			List<String> subCommands = commands.subList(from, to);
-			subCommands.add(0, "import " + gfFile);
+			subCommands.add(0, "import " + gfConcreteGrammarFile);
 			Set<String> lines = sendGfShellCommands(subCommands);
 			for(String line : lines) {
 				Set<String> linearizations = new LinkedHashSet<String>();
@@ -178,7 +192,7 @@ public class Grammar {
 		// Run 'gf --run' in the correct directory
 		ProcessBuilder pb = new ProcessBuilder("gf", "-literal=Symb", "--run");
 		
-		pb.directory(new File(prop.get("grammar_dir").toString()));
+		pb.directory(new File(grammar_dir));
 		Process p = pb.start();
         try (OutputStream outputStream = p.getOutputStream()) {
             IOUtils.writeLines(commands, "\n", outputStream, StandardCharsets.UTF_8);

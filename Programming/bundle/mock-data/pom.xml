@@ -15,13 +15,23 @@
 	</properties>
 
 	<build>
+        <!--resources>
+            <resource>
+                <directory>../Grammar</directory>
+            </resource>
+        </resources-->
+        
 		<plugins>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.2.1</version>
 				<configuration>
-					<mainClass>org.agfjord.graph.Main</mainClass>
+					<mainClass>org.agfjord.graph.Vasttrafik</mainClass>
+                    <arguments>
+                        <argument>-classpath</argument>
+                        <argument>/vagrant/bundle/Grammar</argument>
+                    </arguments>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -79,5 +89,10 @@
 			<artifactId>commons-io</artifactId>
 			<version>2.4</version>
 		</dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.3.2</version>
+        </dependency>
 	</dependencies>
 </project>

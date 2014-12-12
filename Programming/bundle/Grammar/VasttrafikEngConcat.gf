@@ -7,5 +7,5 @@ concrete VasttrafikEngConcat of Vasttrafik = SymbolEng ** {
 	lin
 	  SimpleQuery loc1 loc2 = ("Go from" | "From") ++ loc1 ++ "to" ++ loc2 ;
 	  Station s = s.s ;
-	  GeoLocation s = s.s ;
+	  -- GeoLocation s = s.s ;
 }

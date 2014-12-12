@@ -166,15 +166,15 @@ public class Grammar {
 			Set<String> lines = sendGfShellCommands(subCommands);
 			for(String line : lines) {
 				Set<String> linearizations = new LinkedHashSet<String>();
-				Scanner sc = new Scanner(line);
-				sc.useDelimiter(", ");
-				while(sc.hasNext()){
-					String linearization = sc.next();
-					if(!linearization.isEmpty()){
-						linearizations.add(linearization);
-					}
-				}
-				sc.close();
+                try (Scanner sc = new Scanner(line)) {
+                    sc.useDelimiter(", ");
+                    while(sc.hasNext()){
+                        String linearization = sc.next();
+                        if(!linearization.isEmpty()){
+                            linearizations.add(linearization);
+                        }
+                    }
+                }
 				result.add(linearizations);
 			}
 			System.out.println("Added " + from + " to " + to); 

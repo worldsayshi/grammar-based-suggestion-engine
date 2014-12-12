@@ -47,7 +47,8 @@ public class Parser {
     String solr_url; 
 	private SolrServer treesServer;
 	private SolrServer namesServer;
-	final private Properties prop = new Properties();
+    private static String[] name_types = {"Station"};
+	//final private Properties prop = new Properties();
     
     // Maximum nr of variants on the Abs trees
     Integer max_nr_of_trees = 10;
@@ -73,12 +74,12 @@ public class Parser {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		try {
+		/*try {
 			URL url = this.getClass().getClassLoader().getResource("config.properties");
 			prop.load(url.openStream());
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 		gr.getLanguages().get("InstrucsEngRGL").addLiteral("Symb", new NercLiteralCallback());
 		gr.getLanguages().get("InstrucsEngConcat").addLiteral("Symb", new NercLiteralCallback());
 		gr.getLanguages().get("InstrucsSweRGL").addLiteral("Symb", new NercLiteralCallback());
@@ -169,11 +170,11 @@ public class Parser {
 	
 	public Map<String,List<NameResult>> parseQuestionIntoNameResults(String nlQuestion) throws SolrServerException{
 		Map<String,List<NameResult>> names = new HashMap<String,List<NameResult>>();
-		Scanner sc = new Scanner((String) prop.get("name_types"));
-		sc.useDelimiter(", ");
-		while(sc.hasNext()){
-			names.put(sc.next(), new ArrayList<NameResult>());
-		}
+		//Scanner sc = new Scanner((String) prop.get("name_types"));
+		//sc.useDelimiter(", ");
+        for(String name:name_types){
+            names.put(name, new ArrayList<NameResult>());
+        }
 		SolrQuery treesQuery = new SolrQuery();
 		SolrQuery namesQuery = new SolrQuery();
 		namesQuery.addSort("score", ORDER.desc);
@@ -197,6 +198,7 @@ public class Parser {
 			// Word is a name, we check if it exists in our name core in Solr
 			// If it exists, we fix any misspellings.
 			else {
+                namesQuery.setQuery(word+"*");
 				namesQuery.setQuery(word + "~0.7");
 				namesQuery.addSort("abs(sub(length," + word.length() + "))", ORDER.asc);
 				rsp = namesServer.query(namesQuery);
@@ -350,9 +352,9 @@ public class Parser {
         // suggesting
         String linearization = templateLinearizationDoc.getLinearizations().get(0);
         List<Question> suggestions = new ArrayList<>();
-        SolrQuery namesQuery = new SolrQuery();
+        /*SolrQuery namesQuery = new SolrQuery();
         namesQuery.addSort("score", ORDER.desc);
-        namesQuery.addSort("length", ORDER.asc);
+        namesQuery.addSort("length", ORDER.asc);*/
         
         // Put the names that we think were in the original sentence
         // into the new linerization

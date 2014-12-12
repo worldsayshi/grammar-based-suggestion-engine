@@ -9,5 +9,5 @@ abstract Vasttrafik = Symbol ** {
 	fun
 	  SimpleQuery : Location -> Location -> Query ;
 	  Station : Symb -> Location ;
-	  GeoLocation : Symb -> Location ;
+	  -- GeoLocation : Symb -> Location ;
 }

@@ -28,6 +28,9 @@ import static org.apache.lucene.analysis.standard.UAX29URLEmailTokenizer.URL;
 
 public class Grammar {
 
+    private final static String placeholderPrefix = "{{";
+    private final static String placeholderSuffix = "}}";
+    
 	//private PGF gr;
     final private String[] nameFuns = new String[]{ "Station", "GeoLocation" };
 	final private String[] nameCats = new String[]{ "Station", "GeoLocation" };
@@ -75,7 +78,7 @@ public class Grammar {
 				}
 				nameCounts.put(nameCat, count);
 			}
-//			question.setAst(it.next());
+			question.setAst(it.next());
 			question.setNameCounts(nameCounts);
 			question.setLang(lang);
 			Instrucs.add(question);
@@ -92,16 +95,35 @@ public class Grammar {
 		commands.add("import " + abs_grammar_filename);
 		commands.add("gt -depth=6");
 		Set<String> asts = sendGfShellCommands(commands);
-		Set<String> result = new LinkedHashSet<String>();
+        Set<String> solrPreparedAsts = new HashSet<>();
+        for(String ast:asts){
+            String solrPreparedAst = processNameTypes2(ast);
+            solrPreparedAsts.add(solrPreparedAst);
+        }
+		/*Set<String> result = new LinkedHashSet<String>();
 		Iterator<String> it = asts.iterator();
 		while(it.hasNext()){
 			String ast = it.next();
 			if(!hasDuplicateRelations(ast)){
 				result.add(processNameTypes(ast));
 			}
-		}
-		return result;
+		}*/
+		return solrPreparedAsts;
 	}
+    
+    private String processNameTypes2(String ast) {
+        System.out.println();
+        System.out.println("processNameTypes2");
+        
+        Templating templ = new Templating("(", " (MkSymb \"Foo\")", null, null);
+        String varname = templ.getNextVarName(ast);
+        System.out.println(varname);
+        if(varname!=null){
+            ast = templ.replaceAll(ast,varname,"("+varname+" (MkSymb \""+placeholderPrefix+varname+placeholderSuffix+"\")");
+        }
+        System.out.println();
+        return ast;
+    }
 	/*
 	 * Modifies an abstract syntax tree. All names are by default named "Foo" by the gf-shell.
 	 * We change each name into its type + index.
@@ -117,7 +139,7 @@ public class Grammar {
 			while(sc.hasNext()){
 				sb.append(sc.next());
 				if(sc.hasNext()){
-					sb.append(nameFuns[j] + " (MkSymb \"" + nameCats[j] + id++ + "\")");
+					sb.append(nameFuns[j] + " (MkSymb \"" + nameCats[j] + "\")");
 				}
 			}
 			sc.close();

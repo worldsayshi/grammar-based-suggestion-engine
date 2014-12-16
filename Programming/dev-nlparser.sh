@@ -5,6 +5,7 @@ cd /vagrant/bundle/nlparser
 #export MAVEN_OPTS='-Xmx1500m -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=1044'
 # debug without suspend
 export MAVEN_OPTS='-Xmx1500m -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=1044 -Dsolr.base.url=http://localhost:8080/solr-instrucs'
+export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
 #export MAVEN_OPTS='-Xmx1500m'
 export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 

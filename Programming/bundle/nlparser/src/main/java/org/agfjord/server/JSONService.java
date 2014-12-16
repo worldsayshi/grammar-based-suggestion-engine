@@ -4,18 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-
-
-
-
-
-
-
-
-
-
-
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +28,8 @@ import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.neo4j.kernel.impl.core.NodeProxy;
 
 import com.google.gson.Gson;
+import org.agfjord.grammar.SolrGrammarSuggester;
+import org.agfjord.grammar.SolrNameSuggester;
 
 @Path("/")
 public class JSONService {
@@ -84,23 +74,14 @@ public class JSONService {
 //		return  callback + "(" + gson.toJson(p.completeQuery(question, "QuestionsEng")) + ")";
 //	}
 	
-    // Old method for completion
-	@GET
-	@Path("/completeSentenceDepthFirst")
-	@Produces(MediaType.APPLICATION_JSON)
-	public String completeSentenceDepthFirst(@QueryParam("q") String question, 
-			@QueryParam("callback") String callback, @QueryParam ("lang") String language) throws SolrServerException, IOException, ParseError {
-        Parser p = new Parser();
-		Gson gson = new Gson();
-		return  callback + "(" + gson.toJson(p.completeSentenceDepthFirst(question, language)) + ")";
-	}
     
     // New completion method
     @GET
 	@Path("/completeSentence")
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON+";charset=UTF-8")
 	public String completeSentence(@QueryParam("q") String question, 
-			@QueryParam("callback") String callback, @QueryParam ("lang") String language) throws SolrServerException, IOException, ParseError {
+			@QueryParam("callback") String callback, @QueryParam ("lang") String language) 
+            throws SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed {
         Parser p = new Parser();
 		Gson gson = new Gson();
 		return  callback + "(" + gson.toJson(p.completeSentenceBreadthFirst(question, language)) + ")";

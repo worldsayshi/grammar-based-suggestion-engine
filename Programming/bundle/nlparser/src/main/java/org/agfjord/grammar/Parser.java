@@ -46,8 +46,6 @@ public class Parser {
     private SolrNameSuggester nameSuggester;
 	//final private Properties prop = new Properties();
     
-    // Maximum nr of variants on the Abs trees
-    Integer max_nr_of_trees = 10;
     Integer nr_of_additional_suggestions = 5;
     
 	static Logger log = Logger.getLogger(
@@ -81,24 +79,7 @@ public class Parser {
 		gr.getLanguages().get("InstrucsEngConcat").addLiteral("Symb", new NercLiteralCallback());
 		gr.getLanguages().get("InstrucsSweRGL").addLiteral("Symb", new NercLiteralCallback());
 	}
-
-	public String closestQuestion(String nlQuestion){
-		String[] words = nlQuestion.split("\\s+");
-		int cut = -1;
-		for(int i=words.length-1; i > 0; i--){
-			if(words[i].equals("and") || words[i].equals("or")){
-				cut = i;
-				break;
-			}
-		}
-		StringBuilder closestQuestion = new StringBuilder();
-		for(int i=0; i < cut; i++){
-			closestQuestion.append(words[i] + " ");
-		}
-		closestQuestion.deleteCharAt(closestQuestion.length()-1);
-		return nlQuestion;
-	}
-	
+    
 	/*
 	 * Parse a string @question in a language @parseLang. Retrieve all distinct abstract syntax trees
 	 * and their distinct linearizations. I think there exists a bug in GF which causes a NLP-sentence
@@ -147,10 +128,13 @@ public class Parser {
 		// Add type and names to the hashmap names.
 		for(String word : words){
             
+            // Check if current word exists in a generated query
+            // We don't do namelookups for words that exist statically in the
+            // grammar. 
+            // E.g. word = 'people' or 'who' or 'and' ...
+            // This seems like an unnecessary limitation?
             boolean isGrammarWord = grammarSuggester.checkIfGrammarWord(word);
 			
-			// Check if current word exists in a generated query
-			// E.g. word = 'people' or 'who' or 'and' ...
 			if(!isGrammarWord){
                 
 				//List<NameResult> nameResults = rsp.getBeans(NameResult.class);
@@ -197,11 +181,12 @@ public class Parser {
 	 * @param nlQuestion - A question in a natural language
 	 * @param parseLang - A natural language
 	 * @return Valid questions
-	 * @throws SolrServerException
+     * @throws org.agfjord.grammar.SolrGrammarSuggester.GrammarLookupFailure
+     * @throws org.agfjord.grammar.SolrNameSuggester.NameLookupFailed
 	 */
     public List<String> completeSentenceBreadthFirst(String nlQuestion, String parseLang) 
             throws SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed{
-        List<String> questions = new ArrayList<String>();
+        List<String> questions = new ArrayList<>();
         
         
         
@@ -219,8 +204,7 @@ public class Parser {
             if(missingCounts.total>1){
                 continue;
             } else if (missingCounts.total<1) {
-                // Maybe just add the suggestion?
-                List<String> suggestions = createSuggestionsForLinearization2(
+                List<String> suggestions = createSuggestionsForLinearization(
                         namesInQuestion,
                         templateLinearizationDoc,
                         new ArrayList<NameResult>());
@@ -234,17 +218,8 @@ public class Parser {
             List<NameResult> additionalNames = nameSuggester.suggestNames(
                     missingNameType,namesInQuestion,nr_of_additional_suggestions+1);
             
-            // Now do something with missing counts
-            
-            // Find names that were not found in the current question
-            /*Map<String, List<NameResult>> namesNotInQuestion
-                    = findNamesNotInQuestion2(namesInQuestion,
-                            templateLinearizationDoc);*/
-            
-            // For each linearization template, create suggestions
-            // using various combination of names
             List<String> suggestions
-                    = createSuggestionsForLinearization2(
+                    = createSuggestionsForLinearization(
                     namesInQuestion,
                     templateLinearizationDoc,
                     additionalNames);
@@ -255,7 +230,7 @@ public class Parser {
         return questions;
     }
 
-    private List<String> createSuggestionsForLinearization2(
+    private List<String> createSuggestionsForLinearization(
             List<NameResult> namesInQuestion, 
             TreeResult templateLinearizationDoc, 
             List<NameResult> additionalNames) {
@@ -279,46 +254,6 @@ public class Parser {
         
         return suggestions;
     }
-
-    /*public Map<String, List<NameResult>> findNamesNotInQuestion(
-            Map<String, List<NameResult>> namesInQuestion, 
-            TreeResult templateLinearizationDoc,
-            Map<String, String> queryForNamesNotInQuestion) {
-        
-        SolrQuery namesQuery = new SolrQuery();
-        namesQuery.addSort("score", ORDER.desc);
-        namesQuery.addSort("length", ORDER.asc);
-        
-        Map<String,List<NameResult>> namesNotInQuestion = new HashMap<>();
-        for(String nameType : namesInQuestion.keySet()){
-            
-            int nameCountT = templateLinearizationDoc
-                    .getNameCounts()
-                    .get(nameType+"_i");
-            String queryForNamesNotInQuestionT = queryForNamesNotInQuestion.get(nameType);
-            List<NameResult> nameResultsT = namesInQuestion.get(nameType);
-            
-            SolrQuery namesQueryT = namesQuery.getCopy();
-            int numberOfPlaceholdersOfType = nameCountT - nameResultsT.size();
-            int numberOfWantedSuggestions = numberOfPlaceholdersOfType>0?
-                    numberOfPlaceholdersOfType + nr_of_additional_suggestions : 0;
-            namesQueryT.setRows(numberOfWantedSuggestions);
-            namesQueryT.setQuery("*:*");
-            namesQueryT.setFilterQueries(queryForNamesNotInQuestionT);
-            
-            // TODO We may be able to run queries before this method instead??
-            QueryResponse namesRespT = namesServer.query(namesQueryT);
-            
-            // We rotate the list of names *not in the question* until we have wrapped
-            // around. We should stop whenever we have a certain amount of suggestions.
-            
-            // Names in the current type that are not found in the question
-            List<NameResult> namesNotInQuestionT
-                    = namesRespT.getBeans(NameResult.class);
-            namesNotInQuestion.put(nameType,namesNotInQuestionT);
-        }
-        return namesNotInQuestion;
-    }*/
 
     class MissingCounts {
         public final Map<String, Integer> counts;
@@ -356,124 +291,4 @@ public class Parser {
         }
         return new MissingCounts(counts, total);
     }
-    
-    public List<Question> createSuggestionsForLinearization(
-            Map<String, List<NameResult>> namesInQuestion, 
-            TreeResult templateLinearizationDoc,
-             Map<String, List<NameResult>> namesNotInQuestion
-            // Map<String, String> queryForNamesNotInQuestion
-        ) {
-        // We only care about one of the linearizations when it comes to
-        // suggesting
-        String linearization = templateLinearizationDoc.getLinearizations().get(0);
-        List<Question> suggestions = new ArrayList<>();
-        /*SolrQuery namesQuery = new SolrQuery();
-        namesQuery.addSort("score", ORDER.desc);
-        namesQuery.addSort("length", ORDER.asc);*/
-        
-        // Put the names that we think were in the original sentence
-        // into the new linerization
-        for(String nameType : namesInQuestion.keySet()){
-            List<NameResult> namesInQuestionT = namesInQuestion.get(nameType);
-            
-            for (int i = 0; i < namesInQuestionT.size(); i++) {
-                NameResult nameInQuestionT = namesInQuestionT.get(i);
-                linearization = linearization.replace(nameInQuestionT.getType()+i, nameInQuestionT.getName());
-            }
-            
-        }
-        
-        // How many placeholders for each type remain?
-        Map<String,Integer> placeholderCount = getNumberOfFreePlaceholders(
-                templateLinearizationDoc,
-                namesInQuestion);
-        int totalPlaceHolderCount = 0;
-        for(Integer placeholderCount_:placeholderCount.values()){
-            totalPlaceHolderCount+=placeholderCount_;
-        }
-        if(totalPlaceHolderCount>1){
-            // We only want suggestions with one new name suggestion
-            return new ArrayList();
-        } else if (totalPlaceHolderCount==0){
-            Question question = new Question();
-            question.setLinearizations(new ArrayList<>(Arrays.asList(linearization)));
-            suggestions.add(question);
-            return suggestions;
-        }
-        for(String nameType : namesNotInQuestion.keySet()){
-            List<NameResult> namesNotInQuestionT = namesNotInQuestion.get(nameType);
-            if(namesNotInQuestionT.size()>0){
-                for(NameResult nameR : namesNotInQuestionT){
-                    String name = nameR.getName();
-                    //String name = namesNotInQuestionT.get(0).getName();
-                    String linearizationFilled = linearization.replaceFirst(nameType+"\\d{1}", name);
-                    Question question = new Question();
-                    question.setLinearizations(new ArrayList<>(Arrays.asList(linearizationFilled)));
-                    suggestions.add(question);
-                }
-            }
-        }
-        return suggestions;
-    }
-
-    public Map<String, String> createQueryForExcludingNames(Map<String, List<NameResult>> namesInQuestion) {
-        // For each name already used, create a query excluding it
-        // and sort the queries so that we have them separated by type
-        Map<String,String> queryForNamesNotInQuestion = new HashMap<>();
-        for(String nameType : namesInQuestion.keySet()){
-            String queryForNamesNotInQuestionT = "type:" + nameType;
-            List<NameResult> namesInQuestionT = namesInQuestion.get(nameType);
-            for (int i = 0; i < namesInQuestionT.size(); i++) {
-                NameResult nameInQuestionT = namesInQuestionT.get(i);
-                queryForNamesNotInQuestionT += " -name:" + nameInQuestionT.getName();
-            }
-            queryForNamesNotInQuestion.put(nameType, queryForNamesNotInQuestionT);
-        }
-        return queryForNamesNotInQuestion;
-    }
-
-	public List<String> replaceAll(List<String> list, CharSequence target, CharSequence replacement){
-		for(int i=0; i < list.size(); i++){
-			list.set(i, list.get(i).replace(target, replacement));
-		}
-		return list;
-	}
-
-
-    /**
-     * Shift the elements of a list once to the left and append the 
-     * shifted element to the end.
-     */
-    private <T> List<T> shiftOnce(List<T> listToShift) {
-        if(listToShift.isEmpty()){return listToShift;}
-        // LinkedList should be better for this particular use case but since 
-        // we also copy the list I'm not sure...
-        List<T> shiftedList = new LinkedList<>(listToShift);
-        T shiftedElem = shiftedList.remove(0);
-        shiftedList.add(shiftedElem);
-        return shiftedList;
-    }
-
-    private Map<String, Integer> getNumberOfFreePlaceholders(
-            TreeResult templateLinearizationDoc,
-            Map<String, List<NameResult>> namesInQuestion) {
-        HashMap<String, Integer> placeHolderCount = new HashMap<String, Integer>();
-        for(String nameType : namesInQuestion.keySet()){
-            placeHolderCount.put(nameType, 
-                    templateLinearizationDoc.getNameCounts().get(nameType+"_i")
-                        - namesInQuestion.get(nameType).size());
-        }
-        return placeHolderCount;
-    }
-
-    private Map<String, List<NameResult>> cloneNamesMap(Map<String, List<NameResult>> namesInQuestion) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private int numberOfPermutations(Map<String, Integer> placeholderCount) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    
-
 }

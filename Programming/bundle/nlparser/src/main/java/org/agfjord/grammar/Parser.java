@@ -192,7 +192,7 @@ public class Parser {
         
         // If the names are not unambiguously resolved, 
         // give suggestions based on the name interpretations
-        if(interpretations.size()>1){
+        /*if(interpretations.size()>1){
             for (List<NameResult> namesInQuestion : interpretations) {
                 // Produce a template using the names we have found
                 String templateCandidate = templateCandidate(nlQuestion, namesInQuestion);
@@ -204,71 +204,81 @@ public class Parser {
             }
         } else if (interpretations.isEmpty()) {
             return new ArrayList<>();
-        }
+        }*/
         
         // Form suggestions based on the first interpretation
-        List<NameResult> namesInQuestion = interpretations.get(0);
-        String interpretation = templateCandidate(nlQuestion, namesInQuestion);
+        //List<NameResult> namesInQuestion = interpretations.get(0);
         
-        List<TreeResult> templateLinearizationDocs = grammarSuggester.suggestRules(interpretation, parseLang, namesInQuestion);
+        suggestionLoop: 
+        
+        
+        for (List<NameResult> namesInQuestion : interpretations) {
+            
+        
+            String interpretation = templateCandidate(nlQuestion, namesInQuestion);
 
-        for (TreeResult templateLinearizationDoc : templateLinearizationDocs) {
+            List<TreeResult> templateLinearizationDocs = grammarSuggester.suggestRules(interpretation, parseLang, namesInQuestion);
 
-            MissingCounts missingCounts = countMissingName(
-                    namesInQuestion, templateLinearizationDoc);
-            if (missingCounts.total > 1) {
-                continue;
-            } else if (missingCounts.total < 1) {
-                List<String> suggestions = createSuggestionsForLinearization(
-                        namesInQuestion,
-                        templateLinearizationDoc,
-                        new ArrayList<NameResult>());
-                if (suggestions.size() > 1) {
-                    throw new InternalError(
-                            "Multiple suggestions for single template without unknowns");
-                }
-                questions.addAll(suggestions);
-                continue;
-            }
-            String missingNameType = missingCounts.counts.keySet().iterator().next();
-            List<NameResult> additionalNames = nameSuggester.suggestNames(
-                    missingNameType, namesInQuestion, nr_of_additional_suggestions + 1);
+            for (TreeResult templateLinearizationDoc : templateLinearizationDocs) {
 
-            List<String> suggestions
-                    = createSuggestionsForLinearization(
+                MissingCounts missingCounts = countMissingName(
+                        namesInQuestion, templateLinearizationDoc);
+                // We only care about one of the linearizations when it comes to
+                // suggesting
+                String linearization = templateLinearizationDoc.getLinearizations().get(0);
+                if (missingCounts.total > 1) {
+                    continue;
+                } else if (missingCounts.total < 1) {
+                    List<String> suggestions = createSuggestionsForLinearization(
                             namesInQuestion,
-                            templateLinearizationDoc,
-                            additionalNames);
+                            linearization,
+                            new ArrayList<NameResult>());
+                    if (suggestions.size() > 1) {
+                        throw new InternalError(
+                                "Multiple suggestions for single template without unknowns");
+                    }
+                    questions.addAll(suggestions);
+                } else {
+                    String missingNameType = missingCounts.counts.keySet().iterator().next();
+                    List<NameResult> additionalNames = nameSuggester.suggestNames(
+                            missingNameType, namesInQuestion, nr_of_additional_suggestions + 1);
 
-            questions.addAll(suggestions);
+                    List<String> suggestions
+                            = createSuggestionsForLinearization(
+                                    namesInQuestion,
+                                    linearization,
+                                    additionalNames);
+                    
+                    questions.addAll(suggestions);
+                }
+                if(questions.size()>=maxNumOfSuggestions){
+                    break suggestionLoop;
+                }
+            }
         }
-        
         return questions;
     }
 
     private List<String> createSuggestionsForLinearization(
             List<NameResult> namesInQuestion,
-            TreeResult templateLinearizationDoc,
+            String linearization,
             List<NameResult> additionalNames) {
 
         List<String> suggestions = new ArrayList<>();
-        // We only care about one of the linearizations when it comes to
-        // suggesting
-        String suggestion = templateLinearizationDoc.getLinearizations().get(0);
         
-        suggestion = fillTemplate(suggestion, namesInQuestion);
+        linearization = fillTemplate(linearization, namesInQuestion);
         
-        int nrUnknowns = defTempl.listVariables(suggestion).size();
+        int nrUnknowns = defTempl.listVariables(linearization).size();
         if(nrUnknowns>additionalNames.size()){
             throw new InternalError("No suggestions for unknown template variables.");
         }
         if(nrUnknowns==0){
-            return Arrays.asList(suggestion);
+            return Arrays.asList(linearization);
         }
         
         for (NameResult additionalName : additionalNames) {
             String type = additionalName.getType();
-            String suggestionForAdditionalName = suggestion;
+            String suggestionForAdditionalName = linearization;
             //suggestionForAdditionalName = defTempl.replaceFirst(suggestionForAdditionalName, type, additionalName.getName());
             //suggestions.add(suggestionForAdditionalName);
             suggestions.add(fillTemplate(suggestionForAdditionalName, additionalName));

@@ -45,15 +45,17 @@ public class SolrGrammarSuggester {
         SolrQuery treesQuery = new SolrQuery();
         // 
 		treesQuery.setRows(max_nr_of_trees);
-        treesQuery.setQuery("linearizations:" + ClientUtils.escapeQueryChars(nlQuestion));
+        treesQuery.setQuery("linearizations:" + ClientUtils.escapeQueryChars(nlQuestion)
+                +" "+boostByTypeQuery(namesInQuestion));
 		treesQuery.addFilterQuery("lang:" + parseLang);
         
+        //treesQuery.setParam(parseLang, )
         
         // My guess: Weighting suggestions based on what already appear in the query 
-        String sorting = getSort(namesInQuestion);
+        /*String sorting = getSort(namesInQuestion);
         if(sorting != null){
 			treesQuery.addSort(SolrQuery.SortClause.asc(sorting));			
-		}
+		}*/
         
         // Sorting based on suggestion length and score
         treesQuery.addSort(SolrQuery.SortClause.desc("score"));
@@ -115,6 +117,16 @@ public class SolrGrammarSuggester {
             }
         }
         return namesByType;
+    }
+
+    private String boostByTypeQuery(List<NameResult> namesInQuestion) {
+        Map<String,List<NameResult>> namesByType = getNamesByType(namesInQuestion);
+        String res = "";
+        for (String typeName : namesByType.keySet()) {
+            int count = namesByType.get(typeName).size();
+            res += typeName+"_i:"+count;
+        }
+        return res;
     }
     
     

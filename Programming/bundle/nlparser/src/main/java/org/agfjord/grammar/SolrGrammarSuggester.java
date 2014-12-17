@@ -1,5 +1,6 @@
 package org.agfjord.grammar;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.client.solrj.util.ClientUtils;
 
 /**
  *
@@ -43,7 +45,7 @@ public class SolrGrammarSuggester {
         SolrQuery treesQuery = new SolrQuery();
         // 
 		treesQuery.setRows(max_nr_of_trees);
-        treesQuery.setQuery("linearizations:" + nlQuestion);
+        treesQuery.setQuery("linearizations:" + ClientUtils.escapeQueryChars(nlQuestion));
 		treesQuery.addFilterQuery("lang:" + parseLang);
         
         
@@ -108,7 +110,8 @@ public class SolrGrammarSuggester {
                 List<NameResult> nameList = namesByType.get(name.getType());
                 nameList.add(name);
             } else {
-                namesByType.put(name.getType(), Arrays.asList(name));
+                namesByType.put(name.getType(), 
+                        new ArrayList<>(Arrays.asList(name)));
             }
         }
         return namesByType;

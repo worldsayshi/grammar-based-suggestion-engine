@@ -64,21 +64,22 @@ public class Grammar {
 	 * Create Instrucs from generated linearizations
 	 */
 	public List<Instruction> createInstrucs(Set<String> asts, List<Set<String>> linearizations, String lang){
-		List<Instruction> Instrucs = new ArrayList<Instruction>();
+		List<Instruction> Instrucs = new ArrayList<>();
 		Iterator<String> it = asts.iterator();
 		for(int i=0; i < linearizations.size(); i++){
 			Instruction question = new Instruction();
 			question.setLinearizations(linearizations.get(i).toArray(new String[linearizations.get(i).size()]));
 			String linearization = linearizations.get(i).iterator().next();
-			Map<String,Integer> nameCounts = new HashMap<String,Integer>();
-			for(String nameCat : nameCats){
+            String ast = it.next();
+			Map<String,Integer> nameCounts = countTemplateVariablesByType(ast);
+			/*for(String nameCat : nameCats){
 				int count = 0;
 				while(linearization.contains((nameCat + count))){
 					count++;
 				}
 				nameCounts.put(nameCat, count);
-			}
-			question.setAst(it.next());
+			}*/
+			question.setAst(ast);
 			question.setNameCounts(nameCounts);
 			question.setLang(lang);
 			Instrucs.add(question);
@@ -97,7 +98,7 @@ public class Grammar {
 		Set<String> asts = sendGfShellCommands(commands);
         Set<String> solrPreparedAsts = new HashSet<>();
         for(String ast:asts){
-            String solrPreparedAst = processNameTypes2(ast);
+            String solrPreparedAst = processNameTypes(ast);
             solrPreparedAsts.add(solrPreparedAst);
         }
 		/*Set<String> result = new LinkedHashSet<String>();
@@ -111,7 +112,13 @@ public class Grammar {
 		return solrPreparedAsts;
 	}
     
-    private String processNameTypes2(String ast) {
+    /*
+	 * Modifies an abstract syntax tree. All names are by default named "Foo" by the gf-shell.
+	 * We change each name into its type + index.
+	 * E.g. Question_I Person_N (Know_R (MkSkill (MkSymb "Foo"))) ==>
+	 *      Question_I Person_N (Know_R (MkSkill (MkSymb "Skill0")))
+	 */
+    private String processNameTypes(String ast) {
         System.out.println();
         System.out.println("processNameTypes2");
         
@@ -124,36 +131,13 @@ public class Grammar {
         System.out.println();
         return ast;
     }
-	/*
-	 * Modifies an abstract syntax tree. All names are by default named "Foo" by the gf-shell.
-	 * We change each name into its type + index.
-	 * E.g. Question_I Person_N (Know_R (MkSkill (MkSymb "Foo"))) ==>
-	 *      Question_I Person_N (Know_R (MkSkill (MkSymb "Skill0")))
-	 */
-	private String processNameTypes(String ast){
-		for(int j=0; j < nameCats.length; j++){
-			Scanner sc = new Scanner(ast);
-			sc.useDelimiter((nameFuns[j]  + " \\(MkSymb \"Foo\"\\)"));
-			StringBuilder sb = new StringBuilder();
-			int id = 0;
-			while(sc.hasNext()){
-				sb.append(sc.next());
-				if(sc.hasNext()){
-					sb.append(nameFuns[j] + " (MkSymb \"" + nameCats[j] + "\")");
-				}
-			}
-			sc.close();
-			ast = sb.toString();
-		}
-		return ast;
-	}
 	
 	/*
 	 * Determines if an abstract syntax tree has the same relation more than once
 	 * E.g. Question_I Person_N (And_I (Know_R (MkSkill (MkSymb "Skill0"))) (Know_R (MkSkill (MkSymb "Skill1"))))
 	 * contains Know_R two times. 
 	 */
-	private boolean hasDuplicateRelations(String ast){
+	/*private boolean hasDuplicateRelations(String ast){
 		Set<String> relations = new HashSet<String>();
         Pattern regex = Pattern.compile("\\w+\\_R ");
         Matcher m = regex.matcher(ast);
@@ -164,7 +148,7 @@ public class Grammar {
         		relations.add(m.group());
         	}
         } return false;
-	}
+	}*/
 	
 	/*
 	 * Generate linearizations from abstract syntax trees by using the GF-shell.
@@ -233,4 +217,19 @@ public class Grammar {
         }
         return result;
 	}
+
+    Templating defTempl = new Templating(placeholderPrefix, placeholderSuffix);
+    
+    private Map<String, Integer> countTemplateVariablesByType(String ast) {
+        Map<String, Integer> counts = new HashMap<>();
+        List<String> variables = defTempl.listVariables(ast);
+        for (String variable : variables) {
+            if(counts.containsKey(variable)){
+                counts.put(variable,counts.get(variable)+1);
+            } else {
+                counts.put(variable,1);
+            }
+        }
+        return counts;
+    }
 }

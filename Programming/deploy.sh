@@ -3,6 +3,7 @@ set -e
 
 #source /vagrant/reset-index.sh
 
+# Deploy Solr
 cd /vagrant/bundle/solr-mvn/
 mvn tomcat7:deploy
 
@@ -12,6 +13,10 @@ mvn install:install-file -Dfile=org.grammaticalframework.pgf.jar \
     -DgroupId=org.grammaticalframework \
     -DartifactId=pgf -Dversion=1.0 -Dpackaging=jar
 
+# Compile grammar into GF portable grammar format usable from Java
+cd /vagrant/bundle/Grammar
+./build
 
+# Deploy the user interface
 cd /vagrant/bundle/nlparser/
 mvn tomcat7:deploy

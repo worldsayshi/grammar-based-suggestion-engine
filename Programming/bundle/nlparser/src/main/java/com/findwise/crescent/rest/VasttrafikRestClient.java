@@ -24,7 +24,7 @@ import com.findwise.crescent.model.TripListWrapper;
  * @author mrb
  * 
  */
-public class SimpleRestClient {
+public class VasttrafikRestClient {
     private static final String LOCATION_NAME_URL = "http://api.vasttrafik.se/bin/rest.exe/v1/location.name";
     private static final String TRIP_URL = "http://api.vasttrafik.se/bin/rest.exe/v1/trip";
     private static final String AUTH_KEY = "9e3bd1d1-6904-4b61-9336-b9d05c4e549d";
@@ -124,7 +124,7 @@ public class SimpleRestClient {
     }
 
     public static void main(String[] args) {
-        SimpleRestClient client = new SimpleRestClient();
+        VasttrafikRestClient client = new VasttrafikRestClient();
         Location src = client.getBestMatchStop("Svingeln");
         // Location dest = client.getBestMatchCoord("Opaltorget");
         Location dest = client.getBestMatchCoord("Centralstationen");

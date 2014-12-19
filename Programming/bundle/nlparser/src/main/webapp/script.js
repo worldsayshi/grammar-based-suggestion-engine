@@ -56,11 +56,7 @@ function initWordCompletion(){
         autoFocus: true,
         source: function( request, response ) {
           var succFun = function(data) {
-              var suggestions = $.map( data, function(item) {
-              return {
-                 label: item.linearizations[0]
-              };
-            })
+              var suggestions = data;
             // 
             response( suggestions.slice(0,AUTOCOMPLETE_MAXLENGTH) );
           };
@@ -149,6 +145,9 @@ function initExampleInstrucs(){
  * Parse a question formulated in english into one or more abstract syntax trees and their linearizations.
  */
 function parse(query){
+    vasttrafikQuery(query);
+    return;
+    
     var successFun = function(response) {
             var html;
             var fetchedResult = false;
@@ -202,9 +201,19 @@ function parse(query){
         };
     var errFun = function(request, status, error) {
         $('#grammar_result').empty().append(status);
-            
     };
     ajaxRequest('parse', query, $('#language').val(),  successFun, errFun);
+}
+
+function vasttrafikQuery (query) {
+    var successFun = function(response) {
+        renderVasttrafikResult(response);
+//        $("#search_result").text(JSON.stringify(response));
+    };
+    var errFun = function(request, status, error) {
+        $('#grammar_result').empty().append(status);
+    };
+    ajaxRequest('vasttrafik', query, $('#language').val(),  successFun, errFun);
 }
 
 function fetchResult(solrQuery){
@@ -229,11 +238,11 @@ function fetchResult(solrQuery){
 }
 
 
-var DocumentTemplate;
+var DocumentTemplate, VasttrafikTemplate;
 $(function () {
     // Compile the document template using underscorejs
     DocumentTemplate = Handlebars.compile($('#doc_template').html());
-    
+    VasttrafikTemplate = Handlebars.compile($('#vasttrafik_doc_template').html());
     
     // Debug testing of a document!
     /*$("#search_result").empty()
@@ -277,6 +286,14 @@ function renderSolrResult (response) {
     }));
 }
 
+function renderVasttrafikResult (response) {
+    var docs = response.trip;
+    $("#search_result").empty().append($.map(docs,function (doc, ix) {
+        
+        return VasttrafikTemplate(doc);
+    }));
+}
+
 /*
  * Helper function to fetch current hostname and port
  */
@@ -294,8 +311,8 @@ function getHost(){
  */
 function ajaxRequest(path, query, language, successFun, errFun){
     var host = getHost();
-    $.ajax({
-        url: 'http://' + host + '/nlparser/api/' + path,
+    $.ajax({/*/nlparser*/
+        url: 'http://' + host + '/api/' + path,
         jsonp: "callback",
         dataType: "jsonp",
         data: {

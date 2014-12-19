@@ -14,16 +14,17 @@
 <link rel="stylesheet" type="text/css" href="jquery-ui-1.10.4.custom/css/smoothness/jquery-ui-1.10.4.custom.css">
 <link rel="stylesheet" type="text/css" href="style.css">
 <body>
-<div style="float:right; width: 400px;border: gray 1px solid;padding: 10px;">To get started with the demo try writing one or more of the following terms in the search box: <br><br>
-Java, people, customers, projects, copenhagen</div>
-<h2 id="MainTitle">Precision Search</h2>
+<!--div style="float:right; width: 400px;border: gray 1px solid;padding: 10px;">To get started with the demo try writing one or more of the following terms in the search box: <br><br>
+Java, people, customers, projects, copenhagen</div-->
+<h2 id="MainTitle">Västtrafik demo</h2>
 <input id="input" type="text" class="input-large" placeholder="Type your question.."></input>
-<select id="language">
+<input id="language" type="hidden" value="VasttrafikEngConcat" />
+<!--select id="language">
   <option value="VasttrafikEngConcat">English (concat)</option>
   <!--option value="InstrucsEngRGL">English (RGL)</option>
   <option value="InstrucsSweRGL">Swedish (RGL)</option-->
-</select>
-<div id="tech_info">
+</select-->
+<!--div id="tech_info">
     <pre id="ambiguous_result">Ambiguous question, we found the following interpretations:</pre>
     <pre id="grammar_result"></pre>
     <pre id="search_result_json"></pre>
@@ -36,7 +37,7 @@ Java, people, customers, projects, copenhagen</div>
     <a href="grammar/LexInstrucs.gf.txt">LexInstrucs.gf</a>
     <a href="grammar/LexInstrucsEng.gf.txt">LexInstrucsEng.gf</a>
     <a href="grammar/LexInstrucsSwe.gf.txt">LexInstrucsSwe.gf</a>
-</div>
+</div-->
 <ul id="search_result">
     
 </ul>
@@ -52,6 +53,21 @@ Java, people, customers, projects, copenhagen</div>
         </div>
     </li>
 </script>
+<script id="vasttrafik_doc_template" type="text/x-handlebars-template">
+    <li class="document">
+        <ul class="list-group well">
+            {{#each legList}}
+            <li class="list-group-item tripLeg">
+                <span class="trip-name badge badge-info">{{name}}</span>
+                <span class="trip-from badge">Från: {{origin.name}}</span>
+                <span class="trip-to badge">Till: {{destination.name}}</span>
+                <span class="trip-time badge">Tid: {{destination.time}}</span>
+            </li>
+            {{/each}}
+        </ul>
+    </li>
+</script>
+
 <!--
 
 <script id="entry-template" type="text/x-handlebars-template">

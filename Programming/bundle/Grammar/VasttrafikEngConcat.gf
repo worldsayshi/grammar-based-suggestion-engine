@@ -1,4 +1,4 @@
-concrete VasttrafikEngConcat of Vasttrafik = SymbolEng ** open Templating in {
+concrete VasttrafikEngConcat of Vasttrafik = SymbolEng ** in {
 
 	lincat
 	  Query = Str ;

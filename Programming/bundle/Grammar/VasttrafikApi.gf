@@ -1,4 +1,4 @@
-concrete VasttrafikApi of Vasttrafik = SymbolEng ** open Templating in {
+concrete VasttrafikApi of Vasttrafik = SymbolEng ** in {
 
 	lincat
 	  Query = Str ;

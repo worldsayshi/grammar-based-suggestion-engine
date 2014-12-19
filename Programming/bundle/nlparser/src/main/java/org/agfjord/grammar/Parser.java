@@ -1,11 +1,15 @@
 package org.agfjord.grammar;
 
+import com.findwise.crescent.model.StopLocation;
+import com.findwise.crescent.model.TripList;
+import com.findwise.crescent.rest.VasttrafikRestClient;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -16,11 +20,13 @@ import org.agfjord.server.result.NameResult;
 import org.agfjord.server.result.TreeResult;
 import org.apache.log4j.Logger;
 import org.grammaticalframework.pgf.Concr;
+import org.grammaticalframework.pgf.Expr;
 import org.grammaticalframework.pgf.ExprProb;
 import org.grammaticalframework.pgf.NercLiteralCallback;
 import org.grammaticalframework.pgf.PGF;
 import org.grammaticalframework.pgf.PGFError;
 import org.grammaticalframework.pgf.ParseError;
+
 
 /*
  Authors: Martin Agfjord, Per Fredelius
@@ -33,6 +39,8 @@ public class Parser {
 
     private PGF gr;
     final String solr_url;
+    
+    VasttrafikRestClient vasttrafikclient = new VasttrafikRestClient();
 
     private SolrGrammarSuggester grammarSuggester;
     private SolrNameSuggester nameSuggester;
@@ -53,7 +61,7 @@ public class Parser {
         grammarSuggester = new SolrGrammarSuggester(solr_url);
 
         try {
-            URL url = this.getClass().getClassLoader().getResource("Instrucs.pgf");
+            URL url = this.getClass().getClassLoader().getResource("Vasttrafik.pgf");
             gr = PGF.readPGF(url.openStream());
         } catch (PGFError e) {
             e.printStackTrace();
@@ -61,9 +69,11 @@ public class Parser {
             e.printStackTrace();
         }
 
-        gr.getLanguages().get("InstrucsEngRGL").addLiteral("Symb", new NercLiteralCallback());
-        gr.getLanguages().get("InstrucsEngConcat").addLiteral("Symb", new NercLiteralCallback());
-        gr.getLanguages().get("InstrucsSweRGL").addLiteral("Symb", new NercLiteralCallback());
+        //gr.getLanguages().get("VasttrafikSolr").addLiteral("Symb", new NercLiteralCallback());
+        gr.getLanguages().get("VasttrafikEngConcat").addLiteral("Symb", new NercLiteralCallback());
+        //gr.getLanguages().get("InstrucsEngRGL").addLiteral("Symb", new NercLiteralCallback());
+        //gr.getLanguages().get("InstrucsEngConcat").addLiteral("Symb", new NercLiteralCallback());
+        //gr.getLanguages().get("InstrucsSweRGL").addLiteral("Symb", new NercLiteralCallback());
     }
 
     /*
@@ -94,6 +104,62 @@ public class Parser {
             asts.add(new AbstractSyntaxTree(key, astQuery.get(key)));
         }
         return asts;
+    }
+    
+    List<Expr> parseToExpression(String question, String parseLang) throws ParseError {
+        Iterable<ExprProb> exprProbs;
+        List<Expr> expressions = new ArrayList<>();
+        exprProbs = gr.getLanguages()
+                .get(parseLang)
+                .parse(
+                        gr.getStartCat(), question);
+        for (ExprProb exprProb : exprProbs) {
+            Expr expr = exprProb.getExpr();
+            expressions.add(expr);
+        }
+        return expressions;
+    }
+    
+    public TripList performVasttrafikQuery (String question) throws ParseError {
+        List<Expr> exprs = parseToExpression(question,"VasttrafikEngConcat");
+        if(exprs.isEmpty()){
+            throw new Error("TODO");
+        }
+        Expr expr = exprs.get(0);
+        Concr apiLang = gr.getLanguages().get("VasttrafikApi");
+        String apiLinearization = apiLang.linearize(expr);
+        VasttrafikQuery q = parseVasttrafikApi(apiLinearization);
+        if(q.from==null || q.to==null){
+            // Not complete query - no route
+            TripList tripList = new TripList();
+            tripList.setTrip(new ArrayList());
+            return tripList;
+        }
+        StopLocation from = vasttrafikclient.getBestMatchStop(q.from);
+        StopLocation to = vasttrafikclient.getBestMatchStop(q.to);
+        return vasttrafikclient.findConnections(from, to, null);
+    }
+    
+    private VasttrafikQuery parseVasttrafikApi (String apiLinearization) {
+        String[] rows = apiLinearization.split(";");
+        Map<String,String> map = new HashMap<>();
+        for (String row : rows) {
+            String[] cols = row.split(":");
+            if(cols.length==2){
+                map.put(cols[0].trim(), cols[1].trim());
+            }
+        }
+        return new VasttrafikQuery(map.get("from"),map.get("to"));
+    }
+    
+    public class VasttrafikQuery {
+        public final String from;
+        public final String to;
+        public VasttrafikQuery (String from, String to) {
+            this.from=from;
+            this.to=to;
+        }
+        
     }
 
     Comparator<Query> comparator = new Comparator<Query>() {
@@ -186,7 +252,7 @@ public class Parser {
      */
     public List<String> completeSentenceBreadthFirst(String nlQuestion, String parseLang)
             throws SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed {
-        List<String> questions = new ArrayList<>();
+        //List<String> questions = new ArrayList<>();
 
         List<List<NameResult>> interpretations = interpretNamesOfNLQuestion(nlQuestion,maxNumOfSuggestions);
         
@@ -208,9 +274,8 @@ public class Parser {
         
         // Form suggestions based on the first interpretation
         //List<NameResult> namesInQuestion = interpretations.get(0);
-        
-        suggestionLoop: 
-        
+        int suggestionCount = 0;
+        List<Iterator<String>> suggestionsByInterpretations = new ArrayList<>();
         
         for (List<NameResult> namesInQuestion : interpretations) {
             
@@ -237,7 +302,9 @@ public class Parser {
                         throw new InternalError(
                                 "Multiple suggestions for single template without unknowns");
                     }
-                    questions.addAll(suggestions);
+                    //questions.addAll(suggestions);
+                    suggestionCount += suggestions.size();
+                    suggestionsByInterpretations.add(suggestions.iterator());
                 } else {
                     String missingNameType = missingCounts.counts.keySet().iterator().next();
                     List<NameResult> additionalNames = nameSuggester.suggestNames(
@@ -249,14 +316,52 @@ public class Parser {
                                     linearization,
                                     additionalNames);
                     
-                    questions.addAll(suggestions);
+                    //questions.addAll(suggestions);
+                    suggestionCount += suggestions.size();
+                    suggestionsByInterpretations.add(suggestions.iterator());
                 }
-                if(questions.size()>=maxNumOfSuggestions){
+                /*if(questions.size()>=maxNumOfSuggestions){
                     break suggestionLoop;
-                }
+                }*/
             }
         }
-        return questions;
+        List<String> finalSuggestions = new ArrayList<>();
+        int i = 0;
+        while(finalSuggestions.size()<=maxNumOfSuggestions){
+            boolean depletedIterators = true;
+            for (Iterator<String> suggestions : suggestionsByInterpretations) {
+                if(suggestions.hasNext()){
+                    depletedIterators = false;
+                    String suggestion = suggestions.next();
+                    finalSuggestions.add(suggestion);
+                }
+            }
+            if(depletedIterators){
+                break;
+            }
+        }
+        return finalSuggestions;
+    }
+    
+    private static <T> List<List<T>> transpose(List<List<T>> table) {
+        List<List<T>> ret = new ArrayList<>();
+        final int N = table.get(0).size();
+        for (int i = 0; i < N; i++) {
+            List<T> col = new ArrayList<>();
+            for (List<T> row : table) {
+                col.add(row.get(i));
+            }
+            ret.add(col);
+        }
+        return ret;
+    }
+    
+    private static <T> List<T> flatten(List<List<T>> list) {
+        List<T> flatList = new ArrayList<>();
+        for (List<T> l : list) {
+            flatList.addAll(l);
+        }
+        return flatList;
     }
 
     private List<String> createSuggestionsForLinearization(

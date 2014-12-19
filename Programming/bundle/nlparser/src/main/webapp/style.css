@@ -44,7 +44,7 @@ body { padding: 25px ; }
   display: none;
 }
 
-#search_result {
+#search_result,#search_result ul {
     list-style-type: none;
 }
 

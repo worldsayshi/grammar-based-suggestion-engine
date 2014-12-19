@@ -53,6 +53,27 @@ public class JSONService {
 		}
 		return callback + "(" + json + ")" ;	
 	}
+    
+    @GET
+	@Path("/vasttrafik")
+	@Produces(MediaType.APPLICATION_JSON+";charset=UTF-8")
+	public String vasttrafik(@QueryParam("q") String question, @QueryParam("callback") String callback) throws IOException, SolrServerException {
+		Parser p = new Parser();
+		Gson gson = new Gson();
+		String json = null;
+		List<AbstractSyntaxTree> asts = null;
+		try {
+            json = gson.toJson(p.performVasttrafikQuery(question));
+			/*asts = p.parse(question, "Vasttrafik");
+			json = gson.toJson(asts);*/
+		} catch(ParseError e){
+			e.printStackTrace();
+			json = "{ \"err\" : \"" + e.getToken() + "\" }";
+		}
+		return callback + "(" + json + ")" ;
+	}
+    
+    
 	
 	@GET
 	@Path("/solr/{query}")

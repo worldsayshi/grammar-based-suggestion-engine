@@ -1,4 +1,4 @@
-concrete VasttrafikEngConcat of Vasttrafik = SymbolEng ** in {
+concrete VasttrafikEngConcat of Vasttrafik = SymbolEng ** {
 
 	lincat
 	  Query = Str ;

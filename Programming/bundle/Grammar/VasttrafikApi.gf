@@ -1,4 +1,4 @@
-concrete VasttrafikApi of Vasttrafik = SymbolEng ** in {
+concrete VasttrafikApi of Vasttrafik = SymbolEng ** {
 
 	lincat
 	  Query = Str ;

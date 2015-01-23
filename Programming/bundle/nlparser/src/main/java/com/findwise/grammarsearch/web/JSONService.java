@@ -5,6 +5,8 @@ import com.findwise.grammarsearch.core.GrammarSearchDomain;
 import com.google.gson.Gson;
 import java.util.Map;
 import javax.ws.rs.*;
+import org.agfjord.grammar.SolrGrammarSuggester;
+import org.agfjord.grammar.SolrNameSuggester;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -40,7 +42,7 @@ public class JSONService {
     public String suggestSentences(
             @PathParam("grammarSearchDomain") String grammarSearchDomain,
             @QueryParam("q") String question,
-            @QueryParam("callback") String callback) {
+            @QueryParam("callback") String callback) throws SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed {
         return callback + "(" + gson.toJson( searchDomains.get(grammarSearchDomain).suggestSentences(question) ) + "}";
     }
     

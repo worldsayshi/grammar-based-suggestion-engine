@@ -35,7 +35,7 @@ import org.agfjord.grammar.SolrNameSuggester;
 public class JSONService {
 	
 	final SolrConnector solrConnector = new SolrConnector();
-
+/*
 	@GET
 	@Path("/parse")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -53,8 +53,9 @@ public class JSONService {
 			json = "{ \"err\" : \"" + e.getToken() + "\" }";
 		}
 		return callback + "(" + json + ")" ;	
-	}
+	}*/
     
+    /*
     @GET
 	@Path("/vasttrafik")
 	@Produces(MediaType.APPLICATION_JSON+";charset=UTF-8")
@@ -67,13 +68,13 @@ public class JSONService {
             json = gson.toJson(p.performVasttrafikQuery(question));
 			/*asts = p.parse(question, "Vasttrafik");
 			json = gson.toJson(asts);*/
-		} catch(ParseError e){
+		/*} catch(ParseError e){
 			e.printStackTrace();
 			json = "{ \"err\" : \"" + e.getToken() + "\" }";
 		}
 		return callback + "(" + json + ")" ;
 	}
-    
+    */
     
 	
 	@GET
@@ -96,7 +97,7 @@ public class JSONService {
 //		return  callback + "(" + gson.toJson(p.completeQuery(question, "QuestionsEng")) + ")";
 //	}
 	
-    
+    /*
     // New completion method
     @GET
 	@Path("/completeSentence")
@@ -108,7 +109,8 @@ public class JSONService {
 		Gson gson = new Gson();
 		return  callback + "(" + gson.toJson(p.completeSentenceBreadthFirst(question, language)) + ")";
 	}
-	
+	*/
+    
 	@POST
 	@Path("/neo4j")
 	@Consumes("application/x-www-form-urlencoded")

@@ -50,7 +50,7 @@ public class Parser {
             Parser.class.getName());
 
     // Move into GrammarSearchDomain
-    public Parser() {
+    /*public Parser() {
         solr_url = System.getProperty("solr.base.url");
         if (null == solr_url) {
             throw new IllegalStateException("Could not initialize parser: solr.base.url variable was not set!");
@@ -73,7 +73,7 @@ public class Parser {
         //gr.getLanguages().get("InstrucsEngRGL").addLiteral("Symb", new NercLiteralCallback());
         //gr.getLanguages().get("InstrucsEngConcat").addLiteral("Symb", new NercLiteralCallback());
         //gr.getLanguages().get("InstrucsSweRGL").addLiteral("Symb", new NercLiteralCallback());
-    }
+    }*/
 
     /*
      * Parse a string @question in a language @parseLang. Retrieve all distinct abstract syntax trees

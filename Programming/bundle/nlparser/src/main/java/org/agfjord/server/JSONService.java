@@ -39,6 +39,7 @@ public class JSONService {
 	@GET
 	@Path("/parse")
 	@Produces(MediaType.APPLICATION_JSON)
+    // Deprecated?
 	public String parseQuestion(@QueryParam("q") String question, @QueryParam("callback") String callback, @QueryParam ("lang") String language) throws IOException, SolrServerException {
 		Parser p = new Parser();
 		Gson gson = new Gson();

@@ -37,20 +37,26 @@ public class Parser {
     private final static String placeholderPrefix = "{{";
     private final static String placeholderSuffix = "}}";
 
-    private PGF gr;
+    // Inject into VasttrafikGrammarSearchClient
+    private PGF pgf;
+    // Move to VasttrafikGrammarSearchClient
     final String solr_url;
     
+    // Move to VasttrafikGrammarSearchClient
     VasttrafikRestClient vasttrafikclient = new VasttrafikRestClient();
 
+    // Move into GrammarSearchDomain
     private SolrGrammarSuggester grammarSuggester;
     private SolrNameSuggester nameSuggester;
 	//final private Properties prop = new Properties();
 
+    // Move into GrammarSearchDomain
     Integer nr_of_additional_suggestions = 5;
 
     static Logger log = Logger.getLogger(
             Parser.class.getName());
 
+    // Move into GrammarSearchDomain
     public Parser() {
         solr_url = System.getProperty("solr.base.url");
         if (null == solr_url) {
@@ -62,7 +68,7 @@ public class Parser {
 
         try {
             URL url = this.getClass().getClassLoader().getResource("Vasttrafik.pgf");
-            gr = PGF.readPGF(url.openStream());
+            pgf = PGF.readPGF(url.openStream());
         } catch (PGFError e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -70,7 +76,7 @@ public class Parser {
         }
 
         //gr.getLanguages().get("VasttrafikSolr").addLiteral("Symb", new NercLiteralCallback());
-        gr.getLanguages().get("VasttrafikEngConcat").addLiteral("Symb", new NercLiteralCallback());
+        pgf.getLanguages().get("VasttrafikEngConcat").addLiteral("Symb", new NercLiteralCallback());
         //gr.getLanguages().get("InstrucsEngRGL").addLiteral("Symb", new NercLiteralCallback());
         //gr.getLanguages().get("InstrucsEngConcat").addLiteral("Symb", new NercLiteralCallback());
         //gr.getLanguages().get("InstrucsSweRGL").addLiteral("Symb", new NercLiteralCallback());
@@ -83,13 +89,14 @@ public class Parser {
      * told me this bug existed.
      * 
      */
+    // Deprecated?
     public List<AbstractSyntaxTree> parse(String question, String parseLang) throws ParseError {
         Iterable<ExprProb> exprProbs;
         // Map is used to only have distinct asts, Set is used to only have distinct linearizations
         Map<String, Set<Query>> astQuery = new HashMap<String, Set<Query>>();
-        exprProbs = gr.getLanguages().get(parseLang).parse(gr.getStartCat(), question);
-        for (String key : gr.getLanguages().keySet()) {
-            Concr lang = gr.getLanguages().get(key);
+        exprProbs = pgf.getLanguages().get(parseLang).parse(pgf.getStartCat(), question);
+        for (String key : pgf.getLanguages().keySet()) {
+            Concr lang = pgf.getLanguages().get(key);
             for (ExprProb exprProb : exprProbs) {
                 Set<Query> qs = astQuery.get(exprProb.getExpr().toString());
                 if (qs == null) {
@@ -106,13 +113,14 @@ public class Parser {
         return asts;
     }
     
+    // Move to VasttrafikGrammarSearchClient
     List<Expr> parseToExpression(String question, String parseLang) throws ParseError {
         Iterable<ExprProb> exprProbs;
         List<Expr> expressions = new ArrayList<>();
-        exprProbs = gr.getLanguages()
+        exprProbs = pgf.getLanguages()
                 .get(parseLang)
                 .parse(
-                        gr.getStartCat(), question);
+                        pgf.getStartCat(), question);
         for (ExprProb exprProb : exprProbs) {
             Expr expr = exprProb.getExpr();
             expressions.add(expr);
@@ -120,13 +128,15 @@ public class Parser {
         return expressions;
     }
     
+    
+    // Move to VasttrafikGrammarSearchClient
     public TripList performVasttrafikQuery (String question) throws ParseError {
         List<Expr> exprs = parseToExpression(question,"VasttrafikEngConcat");
         if(exprs.isEmpty()){
             throw new Error("TODO");
         }
         Expr expr = exprs.get(0);
-        Concr apiLang = gr.getLanguages().get("VasttrafikApi");
+        Concr apiLang = pgf.getLanguages().get("VasttrafikApi");
         String apiLinearization = apiLang.linearize(expr);
         VasttrafikQuery q = parseVasttrafikApi(apiLinearization);
         if(q.from==null || q.to==null){
@@ -140,6 +150,7 @@ public class Parser {
         return vasttrafikclient.findConnections(from, to, null);
     }
     
+    // Move to VasttrafikGrammarSearchClient
     private VasttrafikQuery parseVasttrafikApi (String apiLinearization) {
         String[] rows = apiLinearization.split(";");
         Map<String,String> map = new HashMap<>();
@@ -152,6 +163,7 @@ public class Parser {
         return new VasttrafikQuery(map.get("from"),map.get("to"));
     }
     
+    // Move to VasttrafikGrammarSearchClient
     public class VasttrafikQuery {
         public final String from;
         public final String to;
@@ -170,6 +182,7 @@ public class Parser {
 
     // Returning a list of interpretations
     // Each interpretation has a list of potential names found in the natural language question
+    // Move into GrammarSearchDomain
     public List<List<NameResult>> interpretNamesOfNLQuestion(String nlQuestion, int maxNumOfInterpretations)
             throws SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed {
         List<List<NameResult>> interpretations = new ArrayList<>();
@@ -250,6 +263,7 @@ public class Parser {
      * @throws org.agfjord.grammar.SolrGrammarSuggester.GrammarLookupFailure
      * @throws org.agfjord.grammar.SolrNameSuggester.NameLookupFailed
      */
+    // Move into GrammarSearchDomain
     public List<String> completeSentenceBreadthFirst(String nlQuestion, String parseLang)
             throws SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed {
         //List<String> questions = new ArrayList<>();
@@ -364,6 +378,7 @@ public class Parser {
         return flatList;
     }
 
+    // Move into GrammarSearchDomain
     private List<String> createSuggestionsForLinearization(
             List<NameResult> namesInQuestion,
             String linearization,
@@ -420,10 +435,12 @@ public class Parser {
     }
     */
 
+    // Move into GrammarSearchDomain
     private String fillTemplate(String template, NameResult nameInQuestion) {
         String type = nameInQuestion.getType();
         return  defTempl.replaceFirst(template, type, nameInQuestion.getName());
     }
+    // Move into GrammarSearchDomain
     private String fillTemplate(String template, List<NameResult> namesInQuestion) {
         for (NameResult nameInQuestion : namesInQuestion) {
             template = fillTemplate(template, nameInQuestion);
@@ -431,6 +448,7 @@ public class Parser {
         return template;
     }
 
+    // Move into GrammarSearchDomain
     class MissingCounts {
 
         public final Map<String, Integer> counts;
@@ -442,6 +460,7 @@ public class Parser {
         }
     }
 
+    // Move into GrammarSearchDomain
     private MissingCounts countMissingName(
             List<NameResult> namesInQuestion,
             TreeResult templateLinearizationDoc) {

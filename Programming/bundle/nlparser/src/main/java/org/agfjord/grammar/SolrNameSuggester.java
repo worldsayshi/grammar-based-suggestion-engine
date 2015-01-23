@@ -21,7 +21,7 @@ public class SolrNameSuggester {
     
     }
 
-    List<NameResult> suggestNameResolution(String word) throws NameLookupFailed {
+    public List<NameResult> suggestNameResolution(String word) throws NameLookupFailed {
         SolrQuery namesQuery = new SolrQuery();
 		namesQuery.addSort("score", SolrQuery.ORDER.desc);
         namesQuery.setQuery(word+"*~0.7");
@@ -35,7 +35,7 @@ public class SolrNameSuggester {
         return rsp.getBeans(NameResult.class);
     }
 
-    List<NameResult> suggestNames(String missingNameType, 
+    public List<NameResult> suggestNames(String missingNameType, 
             List<NameResult> namesInQuestion, Integer nr_of_additional_suggestions) throws NameLookupFailed {
         SolrQuery namesQuery = new SolrQuery();
         namesQuery.addSort("score", SolrQuery.ORDER.desc);

@@ -10,6 +10,7 @@ import java.util.Map;
 import org.grammaticalframework.pgf.Concr;
 import org.grammaticalframework.pgf.Expr;
 import org.grammaticalframework.pgf.ExprProb;
+import org.grammaticalframework.pgf.NercLiteralCallback;
 import org.grammaticalframework.pgf.PGF;
 import org.grammaticalframework.pgf.ParseError;
 
@@ -23,14 +24,22 @@ public class VasttrafikGrammarSearchClient implements GrammarSearchClient<TripLi
     
     public VasttrafikGrammarSearchClient (PGF pgf) {
         this.pgf = pgf;
+        Map<String, Concr> languages = pgf.getLanguages();
+        
+        for (Concr language : languages.values()) {
+            language.addLiteral("Symb", new NercLiteralCallback());
+        }
     }
     
     // Move to VasttrafikGrammarSearchClient
     VasttrafikRestClient vasttrafikclient = new VasttrafikRestClient();
     
     // Move to VasttrafikGrammarSearchClient
-    public TripList performQuery (String question) throws ParseError {
-        List<Expr> exprs = parseToExpression(question,"VasttrafikEngConcat");
+    @Override
+    public TripList performQuery (String question, 
+            String lang /* = "VasttrafikEngConcat"*/) throws ParseError {
+        
+        List<Expr> exprs = parseToExpression(question,lang);
         if(exprs.isEmpty()){
             throw new Error("TODO");
         }

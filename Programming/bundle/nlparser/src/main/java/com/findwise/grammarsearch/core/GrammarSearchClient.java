@@ -8,5 +8,5 @@ import org.grammaticalframework.pgf.ParseError;
  */
 public interface GrammarSearchClient<T> {
 
-    public T performQuery (String question) throws ParseError;
+    public T performQuery (String question, String lang) throws ParseError;
 }

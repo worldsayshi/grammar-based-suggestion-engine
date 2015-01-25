@@ -7,8 +7,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.agfjord.grammar.SolrGrammarSuggester;
-import org.agfjord.grammar.SolrNameSuggester;
+import com.findwise.grammarsearch.core.SolrGrammarSuggester;
+import com.findwise.grammarsearch.core.SolrNameSuggester;
+import org.grammaticalframework.pgf.NercLiteralCallback;
 import org.grammaticalframework.pgf.PGF;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.context.annotation.Bean;
@@ -35,7 +36,7 @@ public class SearchConfig {
             Logger.getLogger(SearchConfig.class.getName()).log(Level.SEVERE, null, ex);
             throw new BeanCreationException("Could not import Vasttrafik pgf");
         }
-         
+        
         return new GrammarSearchDomain<>(new SolrNameSuggester(solr_url),
                 new SolrGrammarSuggester(solr_url),
                 new VasttrafikGrammarSearchClient(pgf));

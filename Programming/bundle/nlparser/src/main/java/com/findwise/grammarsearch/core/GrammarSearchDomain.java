@@ -6,15 +6,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import org.agfjord.grammar.SolrGrammarSuggester;
-import org.agfjord.grammar.SolrNameSuggester;
 import org.agfjord.grammar.Templating;
 import org.agfjord.server.result.NameResult;
 import org.agfjord.server.result.TreeResult;
+import org.grammaticalframework.pgf.ParseError;
 
 /**
  * Replacement for Parser
- * @author per.fredelius
+ * @author M. Agfjord & per.fredelius
  */
 public class GrammarSearchDomain<T> {
     
@@ -33,7 +32,8 @@ public class GrammarSearchDomain<T> {
             SolrNameSuggester nameSuggester,
             SolrGrammarSuggester grammarSuggester,
             GrammarSearchClient<T> grammarSearchClient) {
-        
+        this.nameSuggester = nameSuggester;
+        this.grammarSuggester = grammarSuggester;
         this.grammarSearchClient = grammarSearchClient;
     }
     
@@ -122,7 +122,7 @@ public class GrammarSearchDomain<T> {
      * @throws org.agfjord.grammar.SolrNameSuggester.NameLookupFailed
      */
     // Move into GrammarSearchDomain
-    public List<String> suggestSentences(String nlQuestion)
+    public List<String> suggestSentences(String nlQuestion, String concreteLang)
             throws SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed {
         //List<String> questions = new ArrayList<>();
 
@@ -154,7 +154,8 @@ public class GrammarSearchDomain<T> {
         
             String interpretation = templateCandidate(nlQuestion, namesInQuestion);
 
-            List<TreeResult> templateLinearizationDocs = grammarSuggester.suggestRules(interpretation, parseLang, namesInQuestion);
+            List<TreeResult> templateLinearizationDocs = grammarSuggester
+                    .suggestRules(interpretation, concreteLang, namesInQuestion);
 
             for (TreeResult templateLinearizationDoc : templateLinearizationDocs) {
 
@@ -278,8 +279,8 @@ public class GrammarSearchDomain<T> {
         return nlQuestion;
     }
 
-    public Object performQuery(String question) {
-        return grammarSearchClient.performQuery(question);
+    public Object performQuery(String question, String lang) throws ParseError {
+        return grammarSearchClient.performQuery(question,lang);
     }
     
     // Move into GrammarSearchDomain

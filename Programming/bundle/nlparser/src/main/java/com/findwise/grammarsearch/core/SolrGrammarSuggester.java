@@ -1,4 +1,4 @@
-package org.agfjord.grammar;
+package com.findwise.grammarsearch.core;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -41,7 +41,7 @@ import org.grammaticalframework.pgf.ParseError;
 /*
  Authors: Martin Agfjord, Per Fredelius
 */
-public class Parser {
+public class OldParser {
 
 	private PGF gr;
     String solr_url; 
@@ -56,7 +56,7 @@ public class Parser {
 	static Logger log = Logger.getLogger(
 			Parser.class.getName());
 
-	public Parser() throws SolrServerException, FileNotFoundException {
+	public OldParser() throws SolrServerException, FileNotFoundException {
         solr_url = System.getProperty("solr.base.url");
         if(null==solr_url){
             throw new IllegalStateException("Could not initialize parser: solr.base.url variable was not set!");

@@ -34,7 +34,7 @@ public class Vasttrafik {
             //
 			Grammar grammar = new Grammar(grammmar_dir,abs_grammar_name);
             
-            Set<String> asts = grammar.generateAbstractSyntaxTreesFromShell("("," (MkSymb \"Foo\")");
+            Set<String> asts = grammar.generateAbstractSyntaxTreesFromShell();
             
             System.out.println(asts);
             System.out.println();

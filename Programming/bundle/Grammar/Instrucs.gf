@@ -7,7 +7,7 @@ abstract Instrucs = Symbol ** {
 	  Internal ;
 	  External ; Resource ;
 	  InternalRelation ; ExternalRelation ; ResourceRelation ;
-	  Skill ; Organization ; Location ; Module ;
+	  SkillExpr ; OrganizationExpr ; LocationExpr ; ModuleExpr ;
 
 	fun
 	  -- Instructions
@@ -21,11 +21,11 @@ abstract Instrucs = Symbol ** {
 	  Project : Resource ;
 
       -- Relations
-	  Know_R : Skill -> InternalRelation ;
-	  UseExt_R : Module -> ExternalRelation ;
-	  UseRes_R : Module -> ResourceRelation ;
-	  WorkIn_R : Location -> InternalRelation ;
-	  WorkWith_R : Organization -> InternalRelation ;
+	  Know_R : SkillExpr -> InternalRelation ;
+	  UseExt_R : ModuleExpr -> ExternalRelation ;
+	  UseRes_R : ModuleExpr -> ResourceRelation ;
+	  WorkIn_R : LocationExpr -> InternalRelation ;
+	  WorkWith_R : OrganizationExpr -> InternalRelation ;
 
 	  -- Boolean operators for relations
 	  InternalAnd : InternalRelation -> InternalRelation -> InternalRelation ;
@@ -38,21 +38,21 @@ abstract Instrucs = Symbol ** {
   	  ResourceOr : ResourceRelation -> ResourceRelation -> ResourceRelation ;
 
   	  -- Unknown names
-	  MkSkill : Symb -> Skill ;
-	  MkOrganization : Symb -> Organization ;
-	  MkModule: Symb -> Module ;
-	  MkLocation : Symb -> Location ;
+	  Skill : Symb -> SkillExpr ;
+	  Organization : Symb -> OrganizationExpr ;
+	  Module: Symb -> ModuleExpr ;
+	  Location : Symb -> LocationExpr ;
 
 	  -- Boolean operators for Organizations
-      And_S : Skill -> Skill -> Skill ;
-      Or_S : Skill -> Skill -> Skill ;
+      And_S : SkillExpr -> SkillExpr -> SkillExpr ;
+      Or_S : SkillExpr -> SkillExpr -> SkillExpr ;
 
-      And_O : Organization -> Organization -> Organization ;
-      Or_O : Organization -> Organization -> Organization ;
+      And_O : OrganizationExpr -> OrganizationExpr -> OrganizationExpr ;
+      Or_O : OrganizationExpr -> OrganizationExpr -> OrganizationExpr ;
 
-      And_L : Location -> Location -> Location ;
-      Or_L : Location -> Location -> Location ;
+      And_L : LocationExpr -> LocationExpr -> LocationExpr ;
+      Or_L : LocationExpr -> LocationExpr -> LocationExpr ;
 
-      And_M : Module -> Module -> Module ;
-      Or_M : Module -> Module -> Module ;
+      And_M : ModuleExpr -> ModuleExpr -> ModuleExpr ;
+      Or_M : ModuleExpr -> ModuleExpr -> ModuleExpr ;
 }

@@ -3,7 +3,7 @@ incomplete concrete InstrucsI of Instrucs = open Syntax, LexInstrucs in {
       Instruction = Utt ;
       Internal, External, Resource = N ;
       InternalRelation, ExternalRelation, ResourceRelation = RS ;
-      Skill, Organization, Location, Module = NP ;
+      SkillExpr, OrganizationExpr, LocationExpr, ModuleExpr = NP ;
 
     lin
       -- Instructions
@@ -34,10 +34,10 @@ incomplete concrete InstrucsI of Instrucs = open Syntax, LexInstrucs in {
       ResourceOr rs1 rs2 = mkRS or_Conj rs1 rs2 ;
 
       -- Unknown names
-      MkSkill s = mkNP (SymbPN s) ;
-      MkOrganization s = mkNP (SymbPN s) ;
-      MkModule s = mkNP (SymbPN s) ;
-      MkLocation s = mkNP (SymbPN s) ;
+      Skill s = mkNP (SymbPN s) ;
+      Organization s = mkNP (SymbPN s) ;
+      Module s = mkNP (SymbPN s) ;
+      Location s = mkNP (SymbPN s) ;
 
       -- Boolean operators for names
       And_S s1 s2 = mkNP and_Conj s1 s2 ;

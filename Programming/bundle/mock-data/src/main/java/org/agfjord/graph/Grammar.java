@@ -90,7 +90,7 @@ public class Grammar {
 	/*
 	 * Generates abstract syntax trees from the GF-shell
 	 */
-	public Set<String> generateAbstractSyntaxTreesFromShell(String prefix,String suffix) throws IOException{
+	public Set<String> generateAbstractSyntaxTreesFromShell() throws IOException{
 		//Generate trees by using the GF-shell
 		List<String> commands = new ArrayList<String>();
 		commands.add("import " + abs_grammar_filename);
@@ -98,7 +98,7 @@ public class Grammar {
 		Set<String> asts = sendGfShellCommands(commands);
         Set<String> solrPreparedAsts = new HashSet<>();
         for(String ast:asts){
-            String solrPreparedAst = processNameTypes(ast,prefix,suffix);
+            String solrPreparedAst = processNameTypes(ast);
             solrPreparedAsts.add(solrPreparedAst);
         }
 		/*Set<String> result = new LinkedHashSet<String>();
@@ -118,17 +118,19 @@ public class Grammar {
 	 * E.g. Question_I Person_N (Know_R (MkSkill (MkSymb "Foo"))) ==>
 	 *      Question_I Person_N (Know_R (MkSkill (MkSymb "Skill0")))
 	 */
-    private String processNameTypes(String ast,String prefix,String suffix) {
-        System.out.println();
-        System.out.println("processNameTypes2");
+    private String processNameTypes(String ast) {
         
-        Templating templ = new Templating(prefix, suffix, null, null);
-        String varname = templ.getNextVarName(ast);
-        System.out.println(varname);
-        if(varname!=null){
-            ast = templ.replaceAll(ast,varname,"("+varname+" (MkSymb \""+placeholderPrefix+varname+placeholderSuffix+"\")");
+        Templating templ = new Templating("(", " (MkSymb \"Foo\")", null, null);
+        List<String> varnames = templ.listVariables(ast);
+        for(String varname : varnames){
+            System.out.println(varname);
+            if(varname!=null){
+                ast = templ.replaceAll(ast,varname,"("+varname+" (MkSymb \""+placeholderPrefix+varname+placeholderSuffix+"\")");
+            }
         }
-        System.out.println();
+        if(ast.contains("Foo")){
+            System.out.println("Warning: ast processing was likely incomplete!");
+        }
         return ast;
     }
 	

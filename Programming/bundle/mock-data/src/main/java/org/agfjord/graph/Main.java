@@ -72,7 +72,7 @@ public class Main {
 	}
 	
 	public void importInstrucsSolr() throws IOException, SolrServerException, ParseError{
-		Set<String> asts = grammar.generateAbstractSyntaxTreesFromShell("(Mk"," (MkSymb \"Foo\")");
+		Set<String> asts = grammar.generateAbstractSyntaxTreesFromShell();
 		System.out.format("Successfully generated %d abstract syntax trees\n", asts.size() );
 		{
             List<Set<String>> linearizations = grammar.generateLinearizations(asts, "InstrucsEngRGL.gf", "InstrucsEngRGL");

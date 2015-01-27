@@ -3,7 +3,7 @@ concrete InstrucsSolr of Instrucs = SymbolEng ** {
       Instruction = Str ;
       Internal, External, Resource = Str ;
       InternalRelation, ExternalRelation, ResourceRelation = Str ;
-      Skill, Organization, Location, Module = Str ;
+      SkillExpr, OrganizationExpr, LocationExpr, ModuleExpr = Str ;
 
 	lin
 	  -- Instructions
@@ -34,10 +34,10 @@ concrete InstrucsSolr of Instrucs = SymbolEng ** {
       ResourceOr s1 s2 = "(" ++ s1 ++ " OR " ++ s2 ++ ")";
 
    	  -- Unknown names
-	  MkSkill s = "(" ++ s.s ++ ")" ;
-	  MkOrganization s = "(" ++ s.s ++ ")" ;
-	  MkLocation s = "(" ++ s.s ++ ")" ;
-	  MkModule s = "(" ++ s.s ++ ")" ;
+	  Skill s = "(" ++ s.s ++ ")" ;
+	  Organization s = "(" ++ s.s ++ ")" ;
+	  Location s = "(" ++ s.s ++ ")" ;
+	  Module s = "(" ++ s.s ++ ")" ;
 
 	  -- Boolean operators for names
 	  And_S s1 s2 = "(" ++ s1 ++ " AND" ++ s2 ++ ")";

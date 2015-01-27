@@ -68,3 +68,10 @@ chmod +x /vagrant/dev-nlparser.sh
 chmod +x /vagrant/reset-index.sh
 
 
+echo "[bootstrap.sh] Installing GF java runtime bindings"
+# At least that's what I think this is..
+cd /vagrant/bundle/
+su vagrant -c 'mvn install:install-file -Dfile=org.grammaticalframework.pgf.jar \
+    -DgroupId=org.grammaticalframework \
+    -DartifactId=pgf -Dversion=1.0 -Dpackaging=jar'
+

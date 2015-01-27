@@ -7,12 +7,6 @@ set -e
 cd /vagrant/bundle/solr-mvn/
 mvn tomcat7:deploy
 
-# Why not part of provisioning?
-cd /vagrant/bundle/
-mvn install:install-file -Dfile=org.grammaticalframework.pgf.jar \
-    -DgroupId=org.grammaticalframework \
-    -DartifactId=pgf -Dversion=1.0 -Dpackaging=jar
-
 # Compile grammar into GF portable grammar format usable from Java
 cd /vagrant/bundle/Grammar
 ./build

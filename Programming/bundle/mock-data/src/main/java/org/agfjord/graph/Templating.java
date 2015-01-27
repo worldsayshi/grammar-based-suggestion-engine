@@ -57,26 +57,33 @@ public class Templating {
     }
     
     public String getNextVarName (String template) {
-        Pattern pat = Pattern.compile(
-                Pattern.quote(prefix)+"\\s*(.+?)\\s*"+Pattern.quote(suffix));
+        Pattern pat = compileFindAllVarsPattern(prefix,suffix);
+        /*Pattern pat = Pattern.compile(
+                Pattern.quote(prefix)+"\\s*(.+?)\\s*"+Pattern.quote(suffix));*/
         Matcher matcher = pat.matcher(template);
         if(matcher.find()){
-            return matcher.group(1);
+            return matcher.group(2);
         }
         return null;
     }
     
     
     public List<String> listVariables (String template) {
-        Pattern pat = Pattern.compile(
-                Pattern.quote(prefix)+"\\s*(.+?)\\s*"+Pattern.quote(suffix));
+        Pattern pat = compileFindAllVarsPattern(prefix,suffix);
+                //Pattern.quote(prefix)+"\\s*(.+?)\\s*"+Pattern.quote(suffix));
         Matcher matcher = pat.matcher(template);
         List<String> vars = new ArrayList<>();
         while(matcher.find()){
-            String var = matcher.group(1);
+            String var = matcher.group(2);
             vars.add(var);
         }
         return vars;
+    }
+    
+    private Pattern compileFindAllVarsPattern (String prefix, String suffix) {
+        
+        String pattern = "("+Pattern.quote(prefix)+")\\s*(((?!"+Pattern.quote(prefix)+"|"+Pattern.quote(suffix)+"|\\s).)*)\\s*("+Pattern.quote(suffix)+")";
+        return Pattern.compile(pattern);
     }
     
 }

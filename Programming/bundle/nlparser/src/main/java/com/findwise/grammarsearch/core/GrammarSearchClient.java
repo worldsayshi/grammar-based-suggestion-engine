@@ -1,5 +1,9 @@
 package com.findwise.grammarsearch.core;
 
+import java.util.ArrayList;
+import java.util.List;
+import org.grammaticalframework.pgf.Expr;
+import org.grammaticalframework.pgf.ExprProb;
 import org.grammaticalframework.pgf.ParseError;
 
 /**

@@ -16,19 +16,24 @@ public class DataImportSolr {
 	private SolrServer relationsServer = new HttpSolrServer("http://localhost:8080/solr-instrucs/relations");
 	private int id = 0;
 	private int InstrucsId = 0;
-	public void deleteAllNames() throws SolrServerException, IOException{
+	/*public void deleteAllNames() throws SolrServerException, IOException{
 		namesServer.deleteByQuery("*:*");
 		namesServer.commit();
-	}
+	}*/
+    
+    void deleteNamesOfAbsLang(String absLangName) throws SolrServerException, IOException {
+        namesServer.deleteByQuery("abs_lang:"+absLangName);
+		namesServer.commit();
+    }
 	
 	public void deleteAllRelations() throws SolrServerException, IOException{
 		relationsServer.deleteByQuery("*:*");
 		relationsServer.commit();
 	}
 
-	public void importNames(String type, List<Map<String,Object>> nodes) throws SolrServerException, IOException {
+	public void importNames(String type, List<Map<String,Object>> nodes, String absLang) throws SolrServerException, IOException {
 		for(Map<String,Object> node : nodes){
-			namesServer.add(createNameDocument(type, (String) node.get("name"), Long.toString((long)node.get("count")), id++));
+			namesServer.add(createNameDocument(type, (String) node.get("name"), Long.toString((long)node.get("count")), (String) node.get("name"), absLang));
 		}
 		namesServer.commit();
 //		System.out.println("Imported " + type + " to Solr");
@@ -59,7 +64,7 @@ public class DataImportSolr {
 	
 	public void importRelations(List<Map<String,Object>> nodes) throws SolrServerException, IOException{
 		for(Map<String,Object> node : nodes){
-			relationsServer.add(createSolrDocument(node, id++));
+			relationsServer.add(createSolrDocument(node, (String) node.get("name")));
 		}
 		relationsServer.commit();
 	}
@@ -88,6 +93,12 @@ public class DataImportSolr {
 		treesServer.deleteByQuery("*:*");
 		treesServer.commit();
 	}
+    
+    void deleteLinearizationsOfLang(String lang)  throws SolrServerException, IOException {
+        treesServer.deleteByQuery("lang:"+lang);
+		treesServer.commit();
+    }
+    
 	/*
 	 * Add names to the Solr name core
 	 */
@@ -106,17 +117,18 @@ public class DataImportSolr {
 	/*
 	 * Private methods used by other methods in this class
 	 */
-	private SolrInputDocument createNameDocument(String type, String name, String count, int id){
+	private SolrInputDocument createNameDocument(String type, String name, String count, String id, String absLang){
 		Map<String,Object> fieldsAndValues = new HashMap<String,Object>();
 		fieldsAndValues.put("type", type);
 		fieldsAndValues.put("name", name);
 		fieldsAndValues.put("count", count);
+        fieldsAndValues.put("abs_lang", absLang);
 		fieldsAndValues.put("length", Integer.toString(name.length()));
 		return createSolrDocument(fieldsAndValues, id);
 	}
 
 
-	private SolrInputDocument createSolrDocument(Map<String,Object> fieldsAndValues, int id){
+	private SolrInputDocument createSolrDocument(Map<String,Object> fieldsAndValues, String id){
 		SolrInputDocument solrInputDoc = new SolrInputDocument();
 		solrInputDoc.addField("id", id);
 		for(String key : fieldsAndValues.keySet()){

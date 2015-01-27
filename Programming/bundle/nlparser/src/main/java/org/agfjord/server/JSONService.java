@@ -28,8 +28,8 @@ import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.neo4j.kernel.impl.core.NodeProxy;
 
 import com.google.gson.Gson;
-import org.agfjord.grammar.SolrGrammarSuggester;
-import org.agfjord.grammar.SolrNameSuggester;
+import com.findwise.grammarsearch.core.SolrGrammarSuggester;
+import com.findwise.grammarsearch.core.SolrNameSuggester;
 
 @Path("/")
 public class JSONService {

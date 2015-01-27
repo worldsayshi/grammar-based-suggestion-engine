@@ -42,7 +42,7 @@ public class JSONService {
         return callback + "(" + gson.toJson( 
                 searchDomains
                         .get(grammarSearchDomain)
-                        .performQuery(question,concreteLang) ) + "}";
+                        .performQuery(question,concreteLang) ) + ")";
     }
     
     @GET
@@ -56,6 +56,14 @@ public class JSONService {
         return callback + "(" + gson.toJson( 
                 searchDomains
                         .get(grammarSearchDomain)
-                        .suggestSentences(question,concreteLang) ) + "}";
+                        .suggestSentences(question,concreteLang) ) + ")";
+    }
+    
+    @GET
+    @Path("/listDomains")
+    @Produces(MediaType.APPLICATION_JSON+";charset=UTF-8")
+    public String listDomains (
+        @QueryParam("callback") String callback){
+        return callback + "(" + gson.toJson( searchDomains.keySet() ) + ")";
     }
 }

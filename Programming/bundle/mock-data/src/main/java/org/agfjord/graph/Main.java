@@ -43,6 +43,8 @@ public class Main {
 		main.dataImport.shutdown();
 		// Add all persons with its relations to solr
 		main.solr.importRelationsFromNeo4j();
+        
+        new Vasttrafik().run();
 	}
 	
 	public void importDocumentsNeo4j() throws IOException{
@@ -60,22 +62,24 @@ public class Main {
 	}
 	
 	public void importNamesSolr() throws SolrServerException, IOException{
-		solr.deleteAllNames();
-		solr.importNames("Skill", dataImport.fetchAllLabelWithRelation("Expertise"));
-		solr.importNames("Location", dataImport.fetchAllLabelWithRelation("Location"));
-		solr.importNames("Organization", dataImport.fetchAllLabelWithRelation("Organization"));
-		solr.importNames("Module", dataImport.fetchAllLabelWithRelation("Module"));
+        String absLangName = "Instrucs";
+		solr.deleteNamesOfAbsLang(absLangName);
+        
+		solr.importNames("Skill", dataImport.fetchAllLabelWithRelation("Expertise"),absLangName);
+		solr.importNames("Location", dataImport.fetchAllLabelWithRelation("Location"),absLangName);
+		solr.importNames("Organization", dataImport.fetchAllLabelWithRelation("Organization"),absLangName);
+		solr.importNames("Module", dataImport.fetchAllLabelWithRelation("Module"),absLangName);
 	}
 	
 	public void importInstrucsSolr() throws IOException, SolrServerException, ParseError{
-		Set<String> asts = grammar.generateAbstractSyntaxTreesFromShell();
+		Set<String> asts = grammar.generateAbstractSyntaxTreesFromShell("(Mk"," (MkSymb \"Foo\")");
 		System.out.format("Successfully generated %d abstract syntax trees\n", asts.size() );
-		solr.deleteAllInstrucs();
 		{
             List<Set<String>> linearizations = grammar.generateLinearizations(asts, "InstrucsEngRGL.gf", "InstrucsEngRGL");
             System.out.format("Successfully generated %d English linearizations\n", linearizations.size());
             List<Instruction> Instrucs = grammar.createInstrucs(asts, linearizations, "InstrucsEngRGL");
             System.out.format("Successfully instantiated %d English linearizations\n", Instrucs.size());
+            solr.deleteLinearizationsOfLang("InstrucsEngRGL");
             solr.addInstrucsToSolr(Instrucs);
             System.out.format("Successfully added English linearizations to solr\n");
 
@@ -85,6 +89,7 @@ public class Main {
             System.out.format("Successfully generated %d Swedish linearizations\n", linearizations.size());
             List<Instruction> Instrucs = grammar.createInstrucs(asts, linearizations, "InstrucsSweRGL");
             System.out.format("Successfully instantiated %d Swedish linearizations\n", Instrucs.size());
+            solr.deleteLinearizationsOfLang("InstrucsSweRGL");
             solr.addInstrucsToSolr(Instrucs);
             System.out.format("Successfully added Swedish linearizations to solr\n");
         }
@@ -93,6 +98,7 @@ public class Main {
             System.out.format("Successfully generated %d Concat English linearizations\n", linearizations.size());
             List<Instruction> Instrucs = grammar.createInstrucs(asts, linearizations, "InstrucsEngConcat");
             System.out.format("Successfully instantiated %d Concat English linearizations\n", Instrucs.size());
+            solr.deleteLinearizationsOfLang("InstrucsEngConcat");
             solr.addInstrucsToSolr(Instrucs);
             System.out.format("Successfully added Concat English linearizations to solr\n");
         }

@@ -29,15 +29,17 @@ public class Vasttrafik {
         
 		try {
             DataImportSolr solrData = new DataImportSolr();
-            solrData.deleteAllInstrucs();
+            
             String abs_grammar_name = "Vasttrafik";
+            //
 			Grammar grammar = new Grammar(grammmar_dir,abs_grammar_name);
             
-            Set<String> asts = grammar.generateAbstractSyntaxTreesFromShell();
+            Set<String> asts = grammar.generateAbstractSyntaxTreesFromShell("("," (MkSymb \"Foo\")");
             
             System.out.println(asts);
             System.out.println();
             System.out.println("LIN");
+            
             List<Set<String>> linearizations = 
                     grammar.generateLinearizations(asts, 
                             abs_grammar_name+"EngConcat.gf", 
@@ -48,11 +50,13 @@ public class Vasttrafik {
             List<Instruction> instrucs = grammar
                     .createInstrucs(asts, linearizations, abs_grammar_name+"EngConcat");
             System.out.println(instrucs);
+            
+            solrData.deleteLinearizationsOfLang(abs_grammar_name+"EngConcat");
             solrData.addInstrucsToSolr(instrucs);
             
-            
+            solrData.deleteNamesOfAbsLang(abs_grammar_name);
             // Add temp stations:
-            solrData.importNames("Station", createTempStations());
+            solrData.importNames("Station", createTempStations(),abs_grammar_name);
             
             
             

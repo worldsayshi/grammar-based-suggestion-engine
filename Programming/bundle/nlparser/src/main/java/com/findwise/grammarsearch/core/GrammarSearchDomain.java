@@ -22,16 +22,18 @@ public class GrammarSearchDomain<T> {
     private final static String placeholderSuffix = "}}";
     private final static Integer nr_of_additional_suggestions = 5;
     
-    // Move into GrammarSearchDomain
+    private String absGrammarName;
     private SolrGrammarSuggester grammarSuggester;
     private SolrNameSuggester nameSuggester;
     private GrammarSearchClient<T> grammarSearchClient;
     
     
     public GrammarSearchDomain(
+            String absGrammarName,
             SolrNameSuggester nameSuggester,
             SolrGrammarSuggester grammarSuggester,
             GrammarSearchClient<T> grammarSearchClient) {
+        this.absGrammarName = absGrammarName;
         this.nameSuggester = nameSuggester;
         this.grammarSuggester = grammarSuggester;
         this.grammarSearchClient = grammarSearchClient;
@@ -181,6 +183,7 @@ public class GrammarSearchDomain<T> {
                 } else {
                     String missingNameType = missingCounts.counts.keySet().iterator().next();
                     List<NameResult> additionalNames = nameSuggester.suggestNames(
+                            absGrammarName,
                             missingNameType, namesInQuestion, nr_of_additional_suggestions + 1);
 
                     List<String> suggestions

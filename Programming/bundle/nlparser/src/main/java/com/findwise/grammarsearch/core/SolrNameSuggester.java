@@ -35,12 +35,15 @@ public class SolrNameSuggester {
         return rsp.getBeans(NameResult.class);
     }
 
-    public List<NameResult> suggestNames(String missingNameType, 
+    public List<NameResult> suggestNames(
+            String absGrammarName,
+            String missingNameType, 
             List<NameResult> namesInQuestion, Integer nr_of_additional_suggestions) throws NameLookupFailed {
         SolrQuery namesQuery = new SolrQuery();
         namesQuery.addSort("score", SolrQuery.ORDER.desc);
         namesQuery.addSort("length", SolrQuery.ORDER.asc);
-        String queryForNamesNotInQuestion = "type:" + missingNameType;
+        String queryForNamesNotInQuestion = "abs_lang:"+absGrammarName
+                +" type:" + missingNameType;
         for(NameResult nameInQuestion:namesInQuestion){
             queryForNamesNotInQuestion += " -name:" + nameInQuestion.getName();
         }

@@ -75,3 +75,5 @@ su vagrant -c 'mvn install:install-file -Dfile=org.grammaticalframework.pgf.jar 
     -DgroupId=org.grammaticalframework \
     -DartifactId=pgf -Dversion=1.0 -Dpackaging=jar'
 
+su vagrant -c 'cd /vagrant;sudo ./reset-index.sh'
+su vagrant -c 'cd /vagrant;./deploy.sh'

@@ -58,8 +58,8 @@ cp /vagrant/vagrant-patches/.profile /home/vagrant
 
 echo "[bootstrap.sh] Installing Cabal and GF"
 apt-get install -y haskell-platform libncurses5-dev
-cabal update
-cabal install gf
+su vagrant -c 'cabal update'
+su vagrant -c 'cabal install gf'
 
 echo "[bootstrap.sh] Making utility scripts executable"
 chmod +x /vagrant/deploy.sh

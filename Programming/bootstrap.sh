@@ -33,8 +33,8 @@ export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 # -fPIC
 
 echo "[bootstrap.sh] Downloading Eclipse (for headless build of GF java runtime)"
-mkdir -p /vagrant/exec
-cd /vagrant/exec
+mkdir -p /home/vagrant/exec
+cd /home/vagrant/exec
 # skip downloading eclipse if it is already downloaded
 if [ ! -f eclipse-cpp-luna-SR1-linux-gtk.tar.gz ]; then
 	wget --output-document=eclipse-cpp-luna-SR1-linux-gtk.tar.gz 'http://ftp-stud.fht-esslingen.de/pub/Mirrors/eclipse/technology/epp/downloads/release/luna/SR1/eclipse-cpp-luna-SR1-linux-gtk.tar.gz'
@@ -43,7 +43,7 @@ tar xvfz eclipse-cpp-luna-SR1-linux-gtk.tar.gz
 
 echo "[bootstrap.sh] Building GF java runtime"
 cd /vagrant/GF/src/runtime/java/
-/vagrant/exec/eclipse/eclipse -nosplash \
+/home/vagrant/exec/eclipse/eclipse -nosplash \
     --launcher.suppressErrors \
     -application org.eclipse.cdt.managedbuilder.core.headlessbuild \
     -import ./ \

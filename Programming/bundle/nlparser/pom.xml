@@ -110,6 +110,16 @@
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-moxy</artifactId>
 		</dependency>
+        
+        <dependency>
+            <groupId>org.glassfish.jersey.ext</groupId>
+            <artifactId>jersey-mvc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.glassfish.jersey.ext</groupId>
+            <artifactId>jersey-mvc-jsp</artifactId>
+        </dependency>
 
 		<!-- GF -->
 		<dependency>

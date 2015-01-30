@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import java.util.Map;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import org.glassfish.jersey.server.mvc.Viewable;
 import com.findwise.grammarsearch.core.SolrGrammarSuggester;
 import com.findwise.grammarsearch.core.SolrNameSuggester;
 import org.grammaticalframework.pgf.ParseError;
@@ -29,10 +30,14 @@ public class JSONService {
         searchDomains = ctx.getBeansOfType(GrammarSearchDomain.class);
     }
     
-    
+    @GET
+    @Produces("text/html")
+    public Viewable index() {
+        return new Viewable("/index");
+    }
     
     @GET
-    @Path("/{grammarSearchDomain}/search")
+    @Path("/api/{grammarSearchDomain}/search")
     @Produces(MediaType.APPLICATION_JSON+";charset=UTF-8")
     public String search(
             @PathParam("grammarSearchDomain") String grammarSearchDomain,
@@ -46,7 +51,7 @@ public class JSONService {
     }
     
     @GET
-    @Path("/{grammarSearchDomain}/suggestSentences")
+    @Path("/api/{grammarSearchDomain}/suggestSentences")
     @Produces(MediaType.APPLICATION_JSON+";charset=UTF-8")
     public String suggestSentences(
             @PathParam("grammarSearchDomain") String grammarSearchDomain,
@@ -60,7 +65,7 @@ public class JSONService {
     }
     
     @GET
-    @Path("/listDomains")
+    @Path("/api/listDomains")
     @Produces(MediaType.APPLICATION_JSON+";charset=UTF-8")
     public String listDomains (
         @QueryParam("callback") String callback){

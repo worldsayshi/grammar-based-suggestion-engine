@@ -7,8 +7,8 @@ abstract Vasttrafik = Symbol ** {
 	  Location ;
 
 	fun
-	  FromQuery : Location -> Query ;
-	  ToQuery : Location -> Query ;
+	  -- FromQuery : Location -> Query ;
+	  -- ToQuery : Location -> Query ;
 	  SimpleQuery : Location -> Location -> Query ;
 	  Station : Symb -> Location ;
 	  -- GeoLocation : Symb -> Location ;

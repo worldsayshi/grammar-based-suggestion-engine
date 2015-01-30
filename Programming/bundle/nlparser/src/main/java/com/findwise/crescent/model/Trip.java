@@ -5,7 +5,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@JsonIgnoreProperties({ "valid", "alternative" })
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Trip {
     @JsonProperty("Leg")
     private List<Leg> legList;
@@ -14,6 +14,4 @@ public class Trip {
     public String toString() {
         return "\nTrip [legList=" + legList + "]";
     }
-    
-    
 }

@@ -2,7 +2,7 @@ package com.findwise.crescent.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties({ "routeIdx", "$" })
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class LegItem {
     private String name;
     private String type;

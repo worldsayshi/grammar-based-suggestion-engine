@@ -3,7 +3,7 @@ package com.findwise.crescent.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@JsonIgnoreProperties({ "fgColor", "bgColor", "stroke" })
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Leg {
     private String name;
     private String sname;

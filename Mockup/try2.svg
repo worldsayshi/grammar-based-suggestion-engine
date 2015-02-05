@@ -730,11 +730,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.8101934"
-     inkscape:cx="791.76757"
-     inkscape:cy="-831.4516"
+     inkscape:zoom="0.22627417"
+     inkscape:cx="-1290.18"
+     inkscape:cy="-343.9577"
      inkscape:document-units="px"
-     inkscape:current-layer="g9271"
+     inkscape:current-layer="layer1"
      showgrid="false"
      guidecolor="#7901ff"
      guideopacity="0.25098039"
@@ -1145,7 +1145,10 @@
        height="26.163021"
        width="148.13881"
        id="rect5358"
-       style="fill:#5e5e60;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:#5e5e60;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <path
        sodipodi:type="star"
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:3.72570086;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -1162,7 +1165,10 @@
        inkscape:randomized="0"
        d="m 1444.2914,2005.2098 -60.6934,-31.2961 -60.1891,32.2555 11.0091,-67.3939 -49.2762,-47.2757 67.4974,-10.3556 29.7346,-61.4735 30.7067,60.9938 67.6533,9.283 -48.5198,48.0518 z"
        inkscape:transform-center-x="0.25219056"
-       inkscape:transform-center-y="-9.5794295" />
+       inkscape:transform-center-y="-9.5794295"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <rect
        y="460.13657"
        x="40.836872"
@@ -1951,7 +1957,10 @@
        x="409.54962"
        y="1282.2162"
        rx="2.5771599"
-       ry="1.8009529" />
+       ry="1.8009529"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <rect
        rx="2.575"
        ry="2.575"
@@ -1961,7 +1970,10 @@
        width="255.82623"
        height="30.51376"
        x="442.7132"
-       y="1374.3174" />
+       y="1374.3174"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <image
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1"
        width="19.37442"
@@ -1969,21 +1981,30 @@
        xlink:href="data:image/png;base64,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 "
        id="image8046"
        x="448.76407"
-       y="1382.3745" />
+       y="1382.3745"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <image
        width="111.11757"
        height="23.953487"
        xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKcAAAAkCAYAAADsMiqaAAAABHNCSVQICAgIfAhkiAAAAV5JREFU eJzt2D9OAkEcxfH3WyailFhJwp+GM3AOES04DRqOghuj8SRcAdbFUNIQC5Esjo0WxljPL+H76QjN K17ezI7FGONq9ao8z1UUL9rtdgJSaDTO1O/3NR6P1WpdbK0sV3EyuVVVVamzAZKker2u6fTuLcxm 9zocDjKz1JkASdJ+v1eeP5xmy+UydRbgj6IoQmA14VFVVQqimPDITIFqwiOTWE44xXLCK5YTfpkp 8KUOj8xMWeoQwH9YTrjEcsI1lhMusZxwjeWES8ZTErwyE8c6/KKccItywi3unHCJpyS4RjnhFuWE W9w54ZKJOycco5xwi2MdPvGUBM8oJ9zKarVa6gzAHyEEhU6no7IsU2cBfmm324dsNBoqyzjd4UcI QVfDy53FGONisdDj07PW63XqXDhiZqZer6ub65G63e7WYoznP3/O5/PGZrM5SRkQx6vZbH4MBoP3 75+fX6g7UoKoVwLdAAAAAElFTkSuQmCC "
        id="image8048"
        x="444.73178"
-       y="1310.2554" />
+       y="1310.2554"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        sodipodi:linespacing="125%"
        id="text8050"
        y="1325.3927"
        x="476.51727"
        style="font-style:normal;font-weight:normal;font-size:26.61498642px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none"
-       xml:space="preserve"><tspan
+       xml:space="preserve"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.98062038px;font-family:Sans;-inkscape-font-specification:'Helvetica Bold';fill:#ffffff;fill-opacity:1"
          y="1325.3927"
          x="476.51727"
@@ -1991,7 +2012,10 @@
          sodipodi:role="line">to: Romfort</tspan></text>
     <g
        transform="matrix(0.57858457,0,0,0.57858457,104.05041,941.8383)"
-       id="g8054">
+       id="g8054"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111">
       <path
          style="fill:#f9f9f9;stroke:#ffffff;stroke-width:3.52293587;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter6267)"
          d="m 598.51147,668.60071 20.47706,-20.47706"
@@ -2011,7 +2035,10 @@
        x="443.54404"
        y="1357.4456"
        id="text8060"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          sodipodi:role="line"
          id="tspan8062"
          x="443.54404"
@@ -2021,13 +2048,19 @@
        style="fill:none;stroke:#000000;stroke-width:0.85548174px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 471.52915,1381.1798 0,17.9652"
        id="path8064"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <path
        style="fill:none;stroke:#000000;stroke-width:7;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Send)"
        d="m 740.87633,1409.543 106,0"
        id="path8072"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cc" />
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <rect
        ry="1.8009529"
        rx="2.5771599"
@@ -2036,14 +2069,20 @@
        height="170.6534"
        width="330.27679"
        id="rect8444"
-       style="fill:none;stroke:#000000;stroke-width:3.34660602;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:none;stroke:#000000;stroke-width:3.34660602;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
        x="751.73419"
        y="1388.543"
        id="text8446"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          sodipodi:role="line"
          id="tspan8448"
          x="751.73419"
@@ -2058,14 +2097,20 @@
        style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#a0a0a0;stroke-width:1.6737498;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none;enable-background:accumulate"
        inkscape:label="text_field"
        ry="2.575"
-       rx="2.575" />
+       rx="2.575"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        sodipodi:linespacing="125%"
        id="text8452"
        y="1357.4456"
        x="1350.8497"
        style="font-style:normal;font-weight:normal;font-size:35.371418px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none"
-       xml:space="preserve"><tspan
+       xml:space="preserve"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13.26428127px;font-family:Sans;-inkscape-font-specification:'Helvetica Bold';fill:#2c2c2c;fill-opacity:1"
          y="1357.4456"
          x="1350.8497"
@@ -2079,7 +2124,10 @@
        height="170.6534"
        width="330.27679"
        id="rect8480"
-       style="fill:none;stroke:#000000;stroke-width:3.34660602;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:none;stroke:#000000;stroke-width:3.34660602;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <rect
        y="1079.8153"
        x="442.7132"
@@ -2089,14 +2137,20 @@
        style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#a0a0a0;stroke-width:1.6737498;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none;enable-background:accumulate"
        inkscape:label="text_field"
        ry="2.575"
-       rx="2.575" />
+       rx="2.575"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        sodipodi:linespacing="125%"
        id="text8498"
        y="1062.9435"
        x="443.54404"
        style="font-style:normal;font-weight:normal;font-size:35.371418px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none"
-       xml:space="preserve"><tspan
+       xml:space="preserve"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13.26428127px;font-family:Sans;-inkscape-font-specification:'Helvetica Bold';fill:#2c2c2c;fill-opacity:1"
          y="1062.9435"
          x="443.54404"
@@ -2106,7 +2160,10 @@
        inkscape:connector-curvature="0"
        id="path8502"
        d="m 487.89668,1086.6777 0,17.9652"
-       style="fill:none;stroke:#000000;stroke-width:0.85548174px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+       style="fill:none;stroke:#000000;stroke-width:0.85548174px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        xml:space="preserve"
        style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -2121,7 +2178,10 @@
          y="691.47516" /></text>
     <g
        id="g9772"
-       transform="translate(198.74596,338.10468)">
+       transform="translate(198.74596,338.10468)"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111">
       <rect
          transform="matrix(1.3093089,0,0,1,-73.863502,0)"
          style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.6;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.60000002;marker:none;filter:url(#filter7943);enable-background:accumulate"
@@ -2197,7 +2257,10 @@
     </g>
     <g
        id="g9759"
-       transform="translate(302.33079,345.87354)">
+       transform="translate(302.33079,345.87354)"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/direct-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111">
       <rect
          y="782.36218"
          x="240"
@@ -2277,7 +2340,10 @@
        y="1100.8741"
        x="451.08255"
        style="font-style:normal;font-weight:normal;font-size:35.371418px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none"
-       xml:space="preserve"><tspan
+       xml:space="preserve"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13.26428127px;font-family:Sans;-inkscape-font-specification:Helvetica;fill:#2c2c2c;fill-opacity:1"
          y="1100.8741"
          x="451.08255"
@@ -2288,14 +2354,20 @@
        inkscape:connector-curvature="0"
        id="path8589"
        d="m 510.35952,1213.9171 1.3482,60.1041"
-       style="fill:none;stroke:#000000;stroke-width:7;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Send)" />
+       style="fill:none;stroke:#000000;stroke-width:7;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Send)"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        sodipodi:linespacing="125%"
        id="text8591"
        y="1247.1216"
        x="525.46002"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
-       xml:space="preserve"><tspan
+       xml:space="preserve"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          style="font-weight:bold;font-size:15px;-inkscape-font-specification:'Sans Bold'"
          y="1247.1216"
          x="525.46002"
@@ -2309,20 +2381,29 @@
        height="242.65344"
        width="330.27679"
        id="rect8595"
-       style="fill:none;stroke:#000000;stroke-width:3.34660602;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:none;stroke:#000000;stroke-width:3.34660602;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <path
        style="fill:none;stroke:#000000;stroke-width:7;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Send)"
        d="m 510.35952,1449.9171 1.3482,60.1041"
        id="path8619"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cc" />
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
        x="525.46002"
        y="1483.1216"
        id="text8621"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          sodipodi:role="line"
          id="tspan8623"
          x="525.46002"
@@ -2414,11 +2495,17 @@
        width="255.82623"
        height="30.51376"
        x="435.02689"
-       y="1596.2737" />
+       y="1596.2737"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <g
        inkscape:label="menu"
        transform="translate(191.69004,852.13708)"
-       id="g8653">
+       id="g8653"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111">
       <rect
          transform="matrix(1.3093089,0,0,1,-73.863502,0)"
          style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.6;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.60000002;marker:none;filter:url(#filter7943);enable-background:accumulate"
@@ -2499,21 +2586,30 @@
        xlink:href="data:image/png;base64,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 "
        id="image8677"
        x="441.07779"
-       y="1604.3308" />
+       y="1604.3308"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <image
        width="111.11757"
        height="23.953487"
        xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKcAAAAkCAYAAADsMiqaAAAABHNCSVQICAgIfAhkiAAAAV5JREFU eJzt2D9OAkEcxfH3WyailFhJwp+GM3AOES04DRqOghuj8SRcAdbFUNIQC5Esjo0WxljPL+H76QjN K17ezI7FGONq9ao8z1UUL9rtdgJSaDTO1O/3NR6P1WpdbK0sV3EyuVVVVamzAZKker2u6fTuLcxm 9zocDjKz1JkASdJ+v1eeP5xmy+UydRbgj6IoQmA14VFVVQqimPDITIFqwiOTWE44xXLCK5YTfpkp 8KUOj8xMWeoQwH9YTrjEcsI1lhMusZxwjeWES8ZTErwyE8c6/KKccItywi3unHCJpyS4RjnhFuWE W9w54ZKJOycco5xwi2MdPvGUBM8oJ9zKarVa6gzAHyEEhU6no7IsU2cBfmm324dsNBoqyzjd4UcI QVfDy53FGONisdDj07PW63XqXDhiZqZer6ub65G63e7WYoznP3/O5/PGZrM5SRkQx6vZbH4MBoP3 75+fX6g7UoKoVwLdAAAAAElFTkSuQmCC "
        id="image8679"
        x="437.0455"
-       y="1532.2117" />
+       y="1532.2117"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        sodipodi:linespacing="125%"
        id="text8681"
        y="1547.349"
        x="468.83102"
        style="font-style:normal;font-weight:normal;font-size:26.61498642px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none"
-       xml:space="preserve"><tspan
+       xml:space="preserve"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.98062038px;font-family:Sans;-inkscape-font-specification:'Helvetica Bold';fill:#ffffff;fill-opacity:1"
          y="1547.349"
          x="468.83102"
@@ -2521,7 +2617,10 @@
          sodipodi:role="line">to: Romfort</tspan></text>
     <g
        transform="matrix(0.57858457,0,0,0.57858457,96.364122,1163.7946)"
-       id="g8685">
+       id="g8685"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111">
       <path
          style="fill:#f9f9f9;stroke:#ffffff;stroke-width:3.52293587;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter6267)"
          d="m 598.51147,668.60071 20.47706,-20.47706"
@@ -2541,7 +2640,10 @@
        x="435.85776"
        y="1579.4019"
        id="text8691"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          sodipodi:role="line"
          id="tspan8693"
          x="435.85776"
@@ -2551,14 +2653,20 @@
        style="fill:none;stroke:#000000;stroke-width:0.85548174px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 487.84286,1603.1361 0,17.9651"
        id="path8695"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        sodipodi:linespacing="125%"
        id="text8697"
        y="1616.8785"
        x="466.26334"
        style="font-style:normal;font-weight:normal;font-size:35.371418px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none"
-       xml:space="preserve"><tspan
+       xml:space="preserve"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13.26428127px;font-family:Sans;-inkscape-font-specification:Helvetica;fill:#2c2c2c;fill-opacity:1"
          y="1616.8785"
          x="466.26334"
@@ -2566,7 +2674,10 @@
          sodipodi:role="line">We</tspan></text>
     <g
        id="g9271"
-       transform="translate(1279.7525,194.82458)">
+       transform="translate(1279.7525,194.82458)"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111">
       <rect
          ry="2.575"
          rx="2.575"
@@ -2576,14 +2687,20 @@
          height="42"
          width="151"
          id="rect8707"
-         style="fill:#ffffff;fill-opacity:1;stroke:#5788f1;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+         style="fill:#ffffff;fill-opacity:1;stroke:#5788f1;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+         inkscape:export-xdpi="111"
+         inkscape:export-ydpi="111" />
       <text
          sodipodi:linespacing="125%"
          id="text8703"
          y="1459.3622"
          x="-491"
          style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
-         xml:space="preserve"><tspan
+         xml:space="preserve"
+         inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+         inkscape:export-xdpi="111"
+         inkscape:export-ydpi="111"><tspan
            style="font-size:15px"
            y="1459.3622"
            x="-491"
@@ -2595,21 +2712,30 @@
          id="path8709"
          d="m -589.39029,1170.7058 90.80291,-24.1175"
          style="fill:none;stroke:#5788f1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:none"
-         sodipodi:nodetypes="cc" />
+         sodipodi:nodetypes="cc"
+         inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+         inkscape:export-xdpi="111"
+         inkscape:export-ydpi="111" />
     </g>
     <path
        style="fill:none;stroke:#000000;stroke-width:7;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Send)"
        d="m 510.35952,1747.0756 1.3482,60.1041"
        id="path9277"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cc" />
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
        x="525.46002"
        y="1780.2802"
        id="text9279"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          sodipodi:role="line"
          id="tspan9281"
          x="525.46002"
@@ -2623,7 +2749,10 @@
        height="170.6534"
        width="330.27679"
        id="rect9283"
-       style="fill:none;stroke:#000000;stroke-width:3.34660602;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:none;stroke:#000000;stroke-width:3.34660602;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <rect
        y="1910.3043"
        x="442.7132"
@@ -2633,7 +2762,10 @@
        style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#a0a0a0;stroke-width:1.6737498;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none;enable-background:accumulate"
        inkscape:label="text_field"
        ry="2.575"
-       rx="2.575" />
+       rx="2.575"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <image
        y="1918.3615"
        x="448.76407"
@@ -2641,14 +2773,20 @@
        xlink:href="data:image/png;base64,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 "
        height="15.750652"
        width="19.37442"
-       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:26.61498642px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none"
        x="476.51727"
        y="1861.3796"
        id="text9291"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          sodipodi:role="line"
          id="tspan9293"
          x="476.51727"
@@ -2656,7 +2794,10 @@
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.98062038px;font-family:Sans;-inkscape-font-specification:'Helvetica Bold';fill:#ffffff;fill-opacity:1">from: West Croydon</tspan></text>
     <g
        id="g9295"
-       transform="matrix(0.57858457,0,0,0.57858457,106.05041,1477.8253)">
+       transform="matrix(0.57858457,0,0,0.57858457,106.05041,1477.8253)"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111">
       <path
          transform="matrix(0.91088913,0,0,0.91088913,54.871245,57.04223)"
          inkscape:connector-curvature="0"
@@ -2676,7 +2817,10 @@
        y="1893.4325"
        x="443.54404"
        style="font-style:normal;font-weight:normal;font-size:35.371418px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none"
-       xml:space="preserve"><tspan
+       xml:space="preserve"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13.26428127px;font-family:Sans;-inkscape-font-specification:'Helvetica Bold';fill:#2c2c2c;fill-opacity:1"
          y="1893.4325"
          x="443.54404"
@@ -2686,14 +2830,20 @@
        inkscape:connector-curvature="0"
        id="path9305"
        d="m 471.52915,1917.1667 0,17.9652"
-       style="fill:none;stroke:#000000;stroke-width:0.85548174px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+       style="fill:none;stroke:#000000;stroke-width:0.85548174px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:35.371418px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none"
        x="475.21307"
        y="1930.834"
        id="text9319"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          sodipodi:role="line"
          id="tspan9321"
          x="475.21307"
@@ -2707,7 +2857,10 @@
        x="854.54962"
        y="1818.2031"
        rx="2.5771599"
-       ry="1.8009529" />
+       ry="1.8009529"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <rect
        rx="2.575"
        ry="2.575"
@@ -2717,7 +2870,10 @@
        width="255.82623"
        height="30.51376"
        x="887.7132"
-       y="1910.3043" />
+       y="1910.3043"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <image
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1"
        width="19.37442"
@@ -2725,7 +2881,10 @@
        xlink:href="data:image/png;base64,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 "
        id="image9327"
        x="893.7641"
-       y="1918.3615" />
+       y="1918.3615"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        sodipodi:linespacing="125%"
        id="text9359"
@@ -2743,14 +2902,20 @@
        inkscape:connector-curvature="0"
        id="path9363"
        d="m 740.87633,1930.543 106,0"
-       style="fill:none;stroke:#000000;stroke-width:7;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Send)" />
+       style="fill:none;stroke:#000000;stroke-width:7;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Send)"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        sodipodi:linespacing="125%"
        id="text9365"
        y="1909.543"
        x="765.73419"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
-       xml:space="preserve"><tspan
+       xml:space="preserve"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          style="font-weight:bold;font-size:15px;-inkscape-font-specification:'Sans Bold'"
          y="1909.543"
          x="765.73419"
@@ -2762,14 +2927,20 @@
        xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKcAAAAkCAYAAADsMiqaAAAABHNCSVQICAgIfAhkiAAAAV5JREFU eJzt2D9OAkEcxfH3WyailFhJwp+GM3AOES04DRqOghuj8SRcAdbFUNIQC5Esjo0WxljPL+H76QjN K17ezI7FGONq9ao8z1UUL9rtdgJSaDTO1O/3NR6P1WpdbK0sV3EyuVVVVamzAZKker2u6fTuLcxm 9zocDjKz1JkASdJ+v1eeP5xmy+UydRbgj6IoQmA14VFVVQqimPDITIFqwiOTWE44xXLCK5YTfpkp 8KUOj8xMWeoQwH9YTrjEcsI1lhMusZxwjeWES8ZTErwyE8c6/KKccItywi3unHCJpyS4RjnhFuWE W9w54ZKJOycco5xwi2MdPvGUBM8oJ9zKarVa6gzAHyEEhU6no7IsU2cBfmm324dsNBoqyzjd4UcI QVfDy53FGONisdDj07PW63XqXDhiZqZer6ub65G63e7WYoznP3/O5/PGZrM5SRkQx6vZbH4MBoP3 75+fX6g7UoKoVwLdAAAAAElFTkSuQmCC "
        id="image9369"
        x="887.74506"
-       y="1868.2423" />
+       y="1868.2423"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        sodipodi:linespacing="125%"
        id="text9371"
        y="1883.3796"
        x="919.53052"
        style="font-style:normal;font-weight:normal;font-size:26.61498642px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none"
-       xml:space="preserve"><tspan
+       xml:space="preserve"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.98062038px;font-family:Sans;-inkscape-font-specification:'Helvetica Bold';fill:#ffffff;fill-opacity:1"
          y="1883.3796"
          x="919.53052"
@@ -2777,7 +2948,10 @@
          sodipodi:role="line">when: Now</tspan></text>
     <g
        transform="matrix(0.57858457,0,0,0.57858457,547.06365,1499.8253)"
-       id="g9375">
+       id="g9375"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111">
       <path
          style="fill:#f9f9f9;stroke:#ffffff;stroke-width:3.52293587;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter6267)"
          d="m 598.51147,668.60071 20.47706,-20.47706"
@@ -2808,7 +2982,10 @@
        d="m 1185.8763,1930.543 106,0"
        id="path9385"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cc" />
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        xml:space="preserve"
        style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -2827,7 +3004,10 @@
        x="1383.6088"
        y="1916.5159"
        id="text9393"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          sodipodi:role="line"
          x="1383.6088"
          y="1916.5159"
@@ -2846,7 +3026,10 @@
        x="409.54962"
        y="2063.2031"
        rx="2.5771599"
-       ry="1.8009529" />
+       ry="1.8009529"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <rect
        rx="2.575"
        ry="2.575"
@@ -2856,7 +3039,10 @@
        width="255.82623"
        height="30.51376"
        x="442.7132"
-       y="2155.3042" />
+       y="2155.3042"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <image
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1"
        width="19.37442"
@@ -2864,14 +3050,20 @@
        xlink:href="data:image/png;base64,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 "
        id="image9409"
        x="448.76407"
-       y="2163.3613" />
+       y="2163.3613"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:35.371418px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none"
        x="443.54404"
        y="2138.4324"
        id="text9423"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          sodipodi:role="line"
          id="tspan9425"
          x="443.54404"
@@ -2881,20 +3073,29 @@
        style="fill:none;stroke:#000000;stroke-width:0.85548174px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 494.40415,2162.1667 0,17.9652"
        id="path9427"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <path
        sodipodi:nodetypes="cc"
        inkscape:connector-curvature="0"
        id="path9445"
        d="m 510.35952,1989.0756 1.3482,60.1041"
-       style="fill:none;stroke:#000000;stroke-width:7;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Send)" />
+       style="fill:none;stroke:#000000;stroke-width:7;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Send)"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        sodipodi:linespacing="125%"
        id="text9447"
        y="2022.2802"
        x="525.46002"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
-       xml:space="preserve"><tspan
+       xml:space="preserve"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          style="font-weight:bold;font-size:15px;-inkscape-font-specification:'Sans Bold'"
          y="2022.2802"
          x="525.46002"
@@ -2906,7 +3107,10 @@
        x="471.26334"
        y="2175.8784"
        id="text9451"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          sodipodi:role="line"
          id="tspan9453"
          x="471.26334"
@@ -2927,7 +3131,10 @@
     <g
        id="g9459"
        transform="translate(199.19004,1413.6371)"
-       inkscape:label="menu">
+       inkscape:label="menu"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111">
       <rect
          y="782.36218"
          x="240"
@@ -3007,7 +3214,10 @@
        y="1272.5775"
        x="1314.5912"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
-       xml:space="preserve"><tspan
+       xml:space="preserve"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          style="font-weight:bold;font-size:15px;-inkscape-font-specification:'Sans Bold'"
          y="1272.5775"
          x="1314.5912"
@@ -3021,7 +3231,10 @@
        height="170.6534"
        width="330.27679"
        id="rect9489"
-       style="fill:none;stroke:#000000;stroke-width:3.34660602;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:none;stroke:#000000;stroke-width:3.34660602;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <rect
        y="1374.3174"
        x="889.60468"
@@ -3031,7 +3244,10 @@
        style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#a0a0a0;stroke-width:1.6737498;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none;enable-background:accumulate"
        inkscape:label="text_field"
        ry="2.575"
-       rx="2.575" />
+       rx="2.575"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <image
        y="1382.3745"
        x="895.65558"
@@ -3039,21 +3255,30 @@
        xlink:href="data:image/png;base64,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 "
        height="15.750652"
        width="19.37442"
-       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <image
        y="1310.2554"
        x="891.62329"
        id="image9495"
        xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKcAAAAkCAYAAADsMiqaAAAABHNCSVQICAgIfAhkiAAAAV5JREFU eJzt2D9OAkEcxfH3WyailFhJwp+GM3AOES04DRqOghuj8SRcAdbFUNIQC5Esjo0WxljPL+H76QjN K17ezI7FGONq9ao8z1UUL9rtdgJSaDTO1O/3NR6P1WpdbK0sV3EyuVVVVamzAZKker2u6fTuLcxm 9zocDjKz1JkASdJ+v1eeP5xmy+UydRbgj6IoQmA14VFVVQqimPDITIFqwiOTWE44xXLCK5YTfpkp 8KUOj8xMWeoQwH9YTrjEcsI1lhMusZxwjeWES8ZTErwyE8c6/KKccItywi3unHCJpyS4RjnhFuWE W9w54ZKJOycco5xwi2MdPvGUBM8oJ9zKarVa6gzAHyEEhU6no7IsU2cBfmm324dsNBoqyzjd4UcI QVfDy53FGONisdDj07PW63XqXDhiZqZer6ub65G63e7WYoznP3/O5/PGZrM5SRkQx6vZbH4MBoP3 75+fX6g7UoKoVwLdAAAAAElFTkSuQmCC "
        height="23.953487"
-       width="111.11757" />
+       width="111.11757"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:26.61498642px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none"
        x="923.40875"
        y="1325.3927"
        id="text9497"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          sodipodi:role="line"
          id="tspan9499"
          x="923.40875"
@@ -3061,7 +3286,10 @@
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.98062038px;font-family:Sans;-inkscape-font-specification:'Helvetica Bold';fill:#ffffff;fill-opacity:1">to: Romfort</tspan></text>
     <g
        id="g9501"
-       transform="matrix(0.57858457,0,0,0.57858457,550.9419,941.8383)">
+       transform="matrix(0.57858457,0,0,0.57858457,550.9419,941.8383)"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111">
       <path
          transform="matrix(0.91088913,0,0,0.91088913,54.871245,57.04223)"
          inkscape:connector-curvature="0"
@@ -3081,7 +3309,10 @@
        y="1357.4456"
        x="890.43555"
        style="font-style:normal;font-weight:normal;font-size:35.371418px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none"
-       xml:space="preserve"><tspan
+       xml:space="preserve"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13.26428127px;font-family:Sans;-inkscape-font-specification:'Helvetica Bold';fill:#2c2c2c;fill-opacity:1"
          y="1357.4456"
          x="890.43555"
@@ -3095,20 +3326,29 @@
        x="893.6825"
        y="1378.6542"
        rx="2.5771599"
-       ry="1.8009529" />
+       ry="1.8009529"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <path
        sodipodi:nodetypes="cc"
        inkscape:connector-curvature="0"
        id="path9515"
        d="m 1187.7678,1409.543 106,0"
-       style="fill:none;stroke:#000000;stroke-width:7;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Send)" />
+       style="fill:none;stroke:#000000;stroke-width:7;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Send)"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        sodipodi:linespacing="125%"
        id="text9517"
        y="1388.543"
        x="1198.6257"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
-       xml:space="preserve"><tspan
+       xml:space="preserve"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          style="font-weight:bold;font-size:15px;-inkscape-font-specification:'Sans Bold'"
          y="1388.543"
          x="1198.6257"
@@ -3118,19 +3358,28 @@
        inkscape:connector-curvature="0"
        id="path9521"
        d="m 1356.8268,1381.1798 0,17.9652"
-       style="fill:none;stroke:#000000;stroke-width:0.85548174px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+       style="fill:none;stroke:#000000;stroke-width:0.85548174px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <path
        style="fill:none;stroke:#000000;stroke-width:7;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Send)"
        d="m 1551.19,1283.4993 c 0,-180 -811.99996,-176 -811.99996,-176"
        id="path9525"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
        x="1123.4601"
        y="1097.1216"
        id="text9717"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          sodipodi:role="line"
          id="tspan9719"
          x="1123.4601"
@@ -3144,7 +3393,10 @@
        x="1931.1345"
        y="1050.983"
        rx="2.5771599"
-       ry="1.8009529" />
+       ry="1.8009529"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/direct-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <rect
        rx="2.575"
        ry="2.575"
@@ -3154,14 +3406,20 @@
        width="255.82623"
        height="30.51376"
        x="1964.2981"
-       y="1087.5842" />
+       y="1087.5842"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/direct-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:35.371418px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none"
        x="1965.1289"
        y="1070.7124"
        id="text9725"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/direct-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          sodipodi:role="line"
          id="tspan9727"
          x="1965.1289"
@@ -3171,14 +3429,20 @@
        style="fill:none;stroke:#000000;stroke-width:0.85548174px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 2079.4814,1094.4466 0,17.9652"
        id="path9729"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/direct-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:35.371418px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none"
        x="1972.6674"
        y="1108.6431"
        id="text9753"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/direct-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          sodipodi:role="line"
          id="tspan9755"
          x="1972.6674"
@@ -3192,14 +3456,20 @@
        height="42"
        width="151"
        id="rect9817"
-       style="fill:#ffffff;fill-opacity:1;stroke:#5788f1;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:#ffffff;fill-opacity:1;stroke:#5788f1;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/direct-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        sodipodi:linespacing="125%"
        id="text9819"
        y="1105.5031"
        x="1851.8657"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none"
-       xml:space="preserve"><tspan
+       xml:space="preserve"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/direct-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          style="font-size:15px;text-align:center;text-anchor:middle"
          y="1105.5031"
          x="1851.8657"
@@ -3214,7 +3484,10 @@
        inkscape:connector-curvature="0"
        id="path9823"
        d="m 1911.1305,1129.5031 56,14"
-       style="fill:none;stroke:#5788f1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:none" />
+       style="fill:none;stroke:#5788f1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:none"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/direct-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        sodipodi:linespacing="125%"
        id="text9833"
@@ -3269,20 +3542,29 @@
        sodipodi:sides="5"
        id="path9851"
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:3.72570086;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       sodipodi:type="star" />
+       sodipodi:type="star"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/direct-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <path
        sodipodi:nodetypes="cc"
        inkscape:connector-curvature="0"
        id="path9853"
        d="m 2263.4611,1146.3119 106,0"
-       style="fill:none;stroke:#000000;stroke-width:7;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Send)" />
+       style="fill:none;stroke:#000000;stroke-width:7;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Send)"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/direct-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        sodipodi:linespacing="125%"
        id="text9855"
        y="1132.2848"
        x="2461.1934"
        style="font-style:normal;font-weight:normal;font-size:32.29821777px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
-       xml:space="preserve"><tspan
+       xml:space="preserve"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/direct-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          style="font-size:24.22366333px;text-align:center;text-anchor:middle"
          id="tspan9857"
          y="1132.2848"
@@ -3299,7 +3581,10 @@
        x="2287.3188"
        y="1123.3119"
        id="text9861"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/direct-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          sodipodi:role="line"
          id="tspan9863"
          x="2287.3188"
@@ -3310,14 +3595,20 @@
        inkscape:connector-curvature="0"
        id="path9931"
        d="m 2082.1356,1148.8282 4.8482,166.6188"
-       style="fill:none;stroke:#000000;stroke-width:7;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Send)" />
+       style="fill:none;stroke:#000000;stroke-width:7;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Send)"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/direct-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        sodipodi:linespacing="125%"
        id="text9933"
        y="1273.8905"
        x="2099.5596"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
-       xml:space="preserve"><tspan
+       xml:space="preserve"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/direct-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          style="font-weight:bold;font-size:15px;-inkscape-font-specification:'Sans Bold'"
          y="1273.8905"
          x="2099.5596"
@@ -3331,7 +3622,10 @@
        x="1931.1345"
        y="1323.972"
        rx="2.5771599"
-       ry="1.8009529" />
+       ry="1.8009529"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/direct-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <rect
        rx="2.575"
        ry="2.575"
@@ -3341,7 +3635,10 @@
        width="255.82623"
        height="30.51376"
        x="1964.2981"
-       y="1416.0732" />
+       y="1416.0732"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/direct-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <image
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1"
        width="19.37442"
@@ -3349,14 +3646,20 @@
        xlink:href="data:image/png;base64,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 "
        id="image9941"
        x="1970.3489"
-       y="1424.1304" />
+       y="1424.1304"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/direct-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:35.371418px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none"
        x="1965.1289"
        y="1399.2014"
        id="text9955"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/direct-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          sodipodi:role="line"
          id="tspan9957"
          x="1965.1289"
@@ -3366,14 +3669,20 @@
        style="fill:none;stroke:#000000;stroke-width:0.85548174px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 1993.1139,1422.9356 0,17.9652"
        id="path9959"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/direct-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        sodipodi:linespacing="125%"
        id="text9973"
        y="1436.6029"
        x="1996.798"
        style="font-style:normal;font-weight:normal;font-size:35.371418px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none"
-       xml:space="preserve"><tspan
+       xml:space="preserve"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/direct-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13.26428127px;font-family:Sans;-inkscape-font-specification:Helvetica;fill:#a4a4a4;fill-opacity:1"
          y="1436.6029"
          x="1996.798"
@@ -3382,26 +3691,32 @@
     <text
        sodipodi:linespacing="125%"
        id="text9977"
-       y="1009.1216"
-       x="401.46002"
+       y="927.36237"
+       x="772.6911"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
-       xml:space="preserve"><tspan
+       xml:space="preserve"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          style="font-weight:bold;font-size:15px;-inkscape-font-specification:'Sans Bold'"
-         y="1009.1216"
-         x="401.46002"
+         y="927.36237"
+         x="772.6911"
          id="tspan9979"
          sodipodi:role="line">Single field at a time</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
-       x="1935.0449"
-       y="1010.8904"
+       x="2054.3691"
+       y="920.2923"
        id="text9981"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/direct-import.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          sodipodi:role="line"
          id="tspan9983"
-         x="1935.0449"
-         y="1010.8904"
+         x="2054.3691"
+         y="920.2923"
          style="font-weight:bold;font-size:15px;-inkscape-font-specification:'Sans Bold'">Multiple fields at the same time</tspan></text>
     <rect
        style="fill:#5e5e60;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -3410,14 +3725,20 @@
        height="26.162964"
        x="604.12225"
        y="1844.6377"
-       ry="3.8890951" />
+       ry="3.8890951"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        sodipodi:linespacing="125%"
        id="text5382"
        y="1861.3796"
        x="634.90918"
        style="font-style:normal;font-weight:normal;font-size:26.61498642px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none"
-       xml:space="preserve"><tspan
+       xml:space="preserve"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.98062038px;font-family:Sans;-inkscape-font-specification:'Helvetica Bold';fill:#ffffff;fill-opacity:1"
          y="1861.3796"
          x="634.90918"
@@ -3425,7 +3746,10 @@
          sodipodi:role="line">to: Romfort</tspan></text>
     <g
        transform="matrix(0.57858457,0,0,0.57858457,264.44233,1477.8253)"
-       id="g5386">
+       id="g5386"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111">
       <path
          style="fill:#f9f9f9;stroke:#ffffff;stroke-width:3.52293587;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter6267)"
          d="m 598.51147,668.60071 20.47706,-20.47706"
@@ -3446,14 +3770,20 @@
        height="26.163021"
        width="148.13881"
        id="rect5416"
-       style="fill:#5e5e60;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:#5e5e60;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:26.61498642px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none"
        x="918.58032"
        y="1852.4091"
        id="text5418"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          sodipodi:role="line"
          id="tspan5420"
          x="918.58032"
@@ -3461,7 +3791,10 @@
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.98062038px;font-family:Sans;-inkscape-font-specification:'Helvetica Bold';fill:#ffffff;fill-opacity:1">from: West Croydon</tspan></text>
     <g
        id="g5422"
-       transform="matrix(0.57858457,0,0,0.57858457,548.11347,1468.8547)">
+       transform="matrix(0.57858457,0,0,0.57858457,548.11347,1468.8547)"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111">
       <path
          transform="matrix(0.91088913,0,0,0.91088913,54.871245,57.04223)"
          inkscape:connector-curvature="0"
@@ -3482,14 +3815,20 @@
        height="26.162964"
        x="1046.1853"
        y="1835.6671"
-       ry="3.8890951" />
+       ry="3.8890951"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        sodipodi:linespacing="125%"
        id="text5430"
        y="1852.4091"
        x="1076.9723"
        style="font-style:normal;font-weight:normal;font-size:26.61498642px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none"
-       xml:space="preserve"><tspan
+       xml:space="preserve"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.98062038px;font-family:Sans;-inkscape-font-specification:'Helvetica Bold';fill:#ffffff;fill-opacity:1"
          y="1852.4091"
          x="1076.9723"
@@ -3497,7 +3836,10 @@
          sodipodi:role="line">to: Romfort</tspan></text>
     <g
        transform="matrix(0.57858457,0,0,0.57858457,706.50539,1468.8547)"
-       id="g5434">
+       id="g5434"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111">
       <path
          style="fill:#f9f9f9;stroke:#ffffff;stroke-width:3.52293587;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter6267)"
          d="m 598.51147,668.60071 20.47706,-20.47706"
@@ -3518,14 +3860,20 @@
        height="26.163021"
        width="148.13881"
        id="rect5440"
-       style="fill:#5e5e60;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:#5e5e60;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:26.61498642px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none"
        x="473.68884"
        y="2100.3816"
        id="text5442"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          sodipodi:role="line"
          id="tspan5444"
          x="473.68884"
@@ -3533,7 +3881,10 @@
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.98062038px;font-family:Sans;-inkscape-font-specification:'Helvetica Bold';fill:#ffffff;fill-opacity:1">from: West Croydon</tspan></text>
     <g
        id="g5446"
-       transform="matrix(0.57858457,0,0,0.57858457,103.22198,1716.8274)">
+       transform="matrix(0.57858457,0,0,0.57858457,103.22198,1716.8274)"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111">
       <path
          transform="matrix(0.91088913,0,0,0.91088913,54.871245,57.04223)"
          inkscape:connector-curvature="0"
@@ -3554,14 +3905,20 @@
        height="26.162964"
        x="601.29382"
        y="2083.6396"
-       ry="3.8890951" />
+       ry="3.8890951"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        sodipodi:linespacing="125%"
        id="text5454"
        y="2100.3816"
        x="632.08081"
        style="font-style:normal;font-weight:normal;font-size:26.61498642px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none"
-       xml:space="preserve"><tspan
+       xml:space="preserve"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.98062038px;font-family:Sans;-inkscape-font-specification:'Helvetica Bold';fill:#ffffff;fill-opacity:1"
          y="2100.3816"
          x="632.08081"
@@ -3569,7 +3926,10 @@
          sodipodi:role="line">to: Romfort</tspan></text>
     <g
        transform="matrix(0.57858457,0,0,0.57858457,261.6139,1716.8274)"
-       id="g5458">
+       id="g5458"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/multi-part-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111">
       <path
          style="fill:#f9f9f9;stroke:#ffffff;stroke-width:3.52293587;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter6267)"
          d="m 598.51147,668.60071 20.47706,-20.47706"
@@ -3590,14 +3950,20 @@
        height="26.163021"
        width="148.13881"
        id="rect5464"
-       style="fill:#5e5e60;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:#5e5e60;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/direct-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:26.61498642px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none"
        x="1992.9015"
        y="1362.8601"
        id="text5466"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/direct-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          sodipodi:role="line"
          id="tspan5468"
          x="1992.9015"
@@ -3605,7 +3971,10 @@
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.98062038px;font-family:Sans;-inkscape-font-specification:'Helvetica Bold';fill:#ffffff;fill-opacity:1">from: West Croydon</tspan></text>
     <g
        id="g5470"
-       transform="matrix(0.57858457,0,0,0.57858457,1622.4346,979.30566)">
+       transform="matrix(0.57858457,0,0,0.57858457,1622.4346,979.30566)"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/direct-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111">
       <path
          transform="matrix(0.91088913,0,0,0.91088913,54.871245,57.04223)"
          inkscape:connector-curvature="0"
@@ -3626,14 +3995,20 @@
        height="26.162964"
        x="2120.5063"
        y="1346.1182"
-       ry="3.8890951" />
+       ry="3.8890951"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/direct-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <text
        sodipodi:linespacing="125%"
        id="text5478"
        y="1362.8601"
        x="2151.2935"
        style="font-style:normal;font-weight:normal;font-size:26.61498642px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none"
-       xml:space="preserve"><tspan
+       xml:space="preserve"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/direct-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111"><tspan
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.98062038px;font-family:Sans;-inkscape-font-specification:'Helvetica Bold';fill:#ffffff;fill-opacity:1"
          y="1362.8601"
          x="2151.2935"
@@ -3641,7 +4016,10 @@
          sodipodi:role="line">to: Romfort</tspan></text>
     <g
        transform="matrix(0.57858457,0,0,0.57858457,1780.8265,979.30566)"
-       id="g5482">
+       id="g5482"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/direct-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111">
       <path
          style="fill:#f9f9f9;stroke:#ffffff;stroke-width:3.52293587;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter6267)"
          d="m 598.51147,668.60071 20.47706,-20.47706"
@@ -3661,7 +4039,10 @@
        cx="2081.969"
        cy="1135.4001"
        rx="110.30865"
-       ry="14.142136" />
+       ry="14.142136"
+       inkscape:export-filename="/Users/per.fredelius/workspace/agfjord-graph-search/grammar-based-suggestion-engine/Mockup/exports/direct-input.png"
+       inkscape:export-xdpi="111"
+       inkscape:export-ydpi="111" />
     <rect
        style="fill:none;stroke:#000000;stroke-width:3.34660602;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect5544"
@@ -5482,21 +5863,21 @@ rkJggg==
        id="rect6612"
        width="527.1687"
        height="148.12512"
-       x="1493.4908"
-       y="2129.9956"
+       x="1433.8287"
+       y="788.70245"
        rx="0"
        ry="0" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="1537.7175"
-       y="2222.5178"
+       x="1478.0554"
+       y="881.22467"
        id="text5496"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan5498"
-         x="1537.7175"
-         y="2222.5178"
+         x="1478.0554"
+         y="881.22467"
          style="font-size:50px">Time table search</tspan></text>
     <rect
        ry="0"

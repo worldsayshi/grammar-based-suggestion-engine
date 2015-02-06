@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import org.agfjord.grammar.Templating;
+import com.findwise.grammarsearch.util.Templating;
 import org.agfjord.server.result.NameResult;
 import org.agfjord.server.result.TreeResult;
 import org.grammaticalframework.pgf.ParseError;
@@ -44,7 +44,6 @@ public class GrammarSearchDomain<T> {
     
     // Returning a list of interpretations
     // Each interpretation has a list of potential names found in the natural language question
-    // Move into GrammarSearchDomain
     public List<List<NameResult>> interpretNamesOfNLQuestion(String nlQuestion, int maxNumOfInterpretations)
             throws SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed {
         List<List<NameResult>> interpretations = new ArrayList<>();
@@ -123,7 +122,6 @@ public class GrammarSearchDomain<T> {
      * @throws org.agfjord.grammar.SolrGrammarSuggester.GrammarLookupFailure
      * @throws org.agfjord.grammar.SolrNameSuggester.NameLookupFailed
      */
-    // Move into GrammarSearchDomain
     public List<String> suggestSentences(String nlQuestion, String concreteLang)
             throws SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed {
         //List<String> questions = new ArrayList<>();
@@ -218,30 +216,8 @@ public class GrammarSearchDomain<T> {
         }
         return finalSuggestions;
     }
-    /*
-    private static <T> List<List<T>> transpose(List<List<T>> table) {
-        List<List<T>> ret = new ArrayList<>();
-        final int N = table.get(0).size();
-        for (int i = 0; i < N; i++) {
-            List<T> col = new ArrayList<>();
-            for (List<T> row : table) {
-                col.add(row.get(i));
-            }
-            ret.add(col);
-        }
-        return ret;
-    }
-    
-    private static <T> List<T> flatten(List<List<T>> list) {
-        List<T> flatList = new ArrayList<>();
-        for (List<T> l : list) {
-            flatList.addAll(l);
-        }
-        return flatList;
-    }*/
     
     
-    // Move into GrammarSearchDomain
     private List<String> createSuggestionsForLinearization(
             List<NameResult> namesInQuestion,
             String linearization,
@@ -286,7 +262,7 @@ public class GrammarSearchDomain<T> {
         return grammarSearchClient.performQuery(question,lang);
     }
     
-    // Move into GrammarSearchDomain
+    
     class MissingCounts {
 
         public final Map<String, Integer> counts;
@@ -298,7 +274,7 @@ public class GrammarSearchDomain<T> {
         }
     }
     
-    // Move into GrammarSearchDomain
+    
     private MissingCounts countMissingName(
             List<NameResult> namesInQuestion,
             TreeResult templateLinearizationDoc) {
@@ -328,12 +304,11 @@ public class GrammarSearchDomain<T> {
     }
     
     
-    // Move into GrammarSearchDomain
     private String fillTemplate(String template, NameResult nameInQuestion) {
         String type = nameInQuestion.getType();
         return  defTempl.replaceFirst(template, type, nameInQuestion.getName());
     }
-    // Move into GrammarSearchDomain
+    
     private String fillTemplate(String template, List<NameResult> namesInQuestion) {
         for (NameResult nameInQuestion : namesInQuestion) {
             template = fillTemplate(template, nameInQuestion);

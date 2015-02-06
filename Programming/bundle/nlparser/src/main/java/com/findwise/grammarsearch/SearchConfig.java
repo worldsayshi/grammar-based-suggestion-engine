@@ -1,5 +1,6 @@
 package com.findwise.grammarsearch;
 
+import com.findwise.grammarsearch.core.SolrGrammarSearchClient;
 import com.findwise.crescent.model.TripList;
 import com.findwise.grammarsearch.core.GrammarSearchDomain;
 import com.findwise.grammarsearch.core.VasttrafikGrammarSearchClient;

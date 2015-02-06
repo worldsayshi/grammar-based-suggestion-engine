@@ -1,4 +1,4 @@
-package com.findwise.grammarsearch;
+package com.findwise.grammarsearch.core;
 
 import com.findwise.grammarsearch.core.GrammarSearchClient;
 import com.google.gson.JsonElement;
@@ -34,7 +34,7 @@ import org.grammaticalframework.pgf.ParseError;
  *
  * @author per.fredelius
  */
-class SolrGrammarSearchClient implements GrammarSearchClient<SolrDocumentList>{
+public class SolrGrammarSearchClient implements GrammarSearchClient<SolrDocumentList>{
 
     PGF pgf;
     SolrServer server;

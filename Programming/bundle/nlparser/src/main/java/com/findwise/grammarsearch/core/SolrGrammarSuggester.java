@@ -22,7 +22,7 @@ import org.apache.solr.client.solrj.util.ClientUtils;
  */
 public class SolrGrammarSuggester {
     private SolrServer treesServer;
-    private Integer max_nr_of_trees = 10;
+    private Integer max_nr_of_trees = 40;
     public SolrGrammarSuggester (String solr_url) {
         treesServer = new HttpSolrServer(solr_url+"/trees");
     }

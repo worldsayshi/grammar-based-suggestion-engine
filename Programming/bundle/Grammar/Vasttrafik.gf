@@ -6,14 +6,24 @@ abstract Vasttrafik = Symbol ** {
 	  Query ;
 	  Location ;
 	  Time ;
-	  Action ;
+	  Mean ;
+	  Mode;
+	  Offset;
 
 	fun
-	  -- FromQuery : Location -> Query ;
-	  -- ToQuery : Location -> Query ;
-	  SimpleQuery : Location -> Location -> Action -> Time -> Query ;
-	  Station : Symb -> Location ;
-	  Depart, Arrive: Action;
-	  Now, Soon, Tomorrow : Time;
-	  -- GeoLocation : Symb -> Location ;
+	  -- SimpleQuery : Location -> Location -> Action -> Time -> Query ;
+	  -- Station : Symb -> Location ;
+	  -- Depart, Arrive: Action;
+	  -- Now, Soon, Tomorrow : Time;
+	  
+	  MainQuery : Mean -> Location -> Location -> Time -> Query;
+	  Bus,Tram,Boat,Train,AllMeans : Mean;
+	  Station: Symb -> Location;
+	  NoTime: Time;
+	  RelativeTime: Mode -> Offset -> Time;
+	  Arriving, Departing: Mode;
+	  Now ,Quarter, Half, ThreeQuarters, One, Two, Three, Four, Five: Offset;
+	  
+	  
+	  
 }

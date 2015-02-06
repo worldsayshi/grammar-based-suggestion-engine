@@ -17,7 +17,7 @@ import org.grammaticalframework.pgf.ParseError;
  */
 public class GrammarSearchDomain<T> {
     
-    private final static Integer maxNumOfSuggestions = 10;
+    private final static Integer maxNumOfSuggestions = 40;
     private final static String placeholderPrefix = "{{";
     private final static String placeholderSuffix = "}}";
     private final static Integer nr_of_additional_suggestions = 5;
@@ -210,6 +210,10 @@ public class GrammarSearchDomain<T> {
                     depletedIterators = false;
                     String suggestion = suggestions.next();
                     finalSuggestions.add(suggestion);
+                }
+                
+                if(finalSuggestions.size() == maxNumOfSuggestions){
+                    break;
                 }
             }
             if(depletedIterators){

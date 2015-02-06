@@ -83,7 +83,15 @@ public class VasttrafikGrammarSearchClient implements GrammarSearchClient<TripLi
                 map.put(cols[0].trim(), cols[1].trim());
             }
         }
-        return new VasttrafikQuery(map.get("from"),map.get("to"));
+        Date date = new Date(System.currentTimeMillis() + Integer.parseInt(map.get("offset")) * 60000);
+        boolean departingDate = map.get("mode").equals("departure");
+        boolean useTrain = map.get("mean").equals("all") || map.get("mean").equals("train");
+        boolean useBus = map.get("mean").equals("all") || map.get("mean").equals("bus");
+        boolean useBoat = map.get("mean").equals("all") || map.get("mean").equals("boat");
+        boolean useTram = map.get("mean").equals("all") || map.get("mean").equals("tram");
+        
+        
+        return new VasttrafikQuery(map.get("from"),map.get("to"),date, departingDate, useTrain, useBus, useTram, useBoat);
     }
     
     // Move to VasttrafikGrammarSearchClient

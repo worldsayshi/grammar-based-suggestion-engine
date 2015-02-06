@@ -59,8 +59,8 @@ public class VasttrafikRestClient {
      *            may be null (will search using current time)
      * @return
      */
-    public TripList findConnections(Location src, Location dest, Date date) {
-        String url = buildTripUrl(src, dest, date);
+    public TripList findConnections( Location src, Location dest, VasttrafikQuery params) {
+        String url = buildTripUrl(src, dest, params);
         url = url.replaceAll("\\s+", "%20");
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
@@ -74,7 +74,7 @@ public class VasttrafikRestClient {
         return null;
     }
 
-    private String buildTripUrl(Location src, Location dest, Date date) {
+    private String buildTripUrl(Location src, Location dest, VasttrafikQuery params) {
         StringBuilder sb = new StringBuilder(TRIP_URL + URL_APPENDED_PART);
         if (src instanceof StopLocation) {
             sb.append("&originId=" + ((StopLocation) src).getId());
@@ -90,13 +90,30 @@ public class VasttrafikRestClient {
             sb.append("&destCoordLat=" + dest.getLatitude());
             sb.append("&destCoordLong=" + dest.getLongitude());
         }
-        if (date != null) {
+        if (params.date != null) {
             SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
             SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm");
-            String dateFormatted = sdfDate.format(date);
-            String timeFormatted = sdfTime.format(date);
+            String dateFormatted = sdfDate.format(params.date);
+            String timeFormatted = sdfTime.format(params.date);
             sb.append("&date=" + dateFormatted);
             sb.append("&time=" + timeFormatted);
+        }
+        if(!params.departingDate){
+            sb.append("&searchForArrival=1");
+        }
+        if(!params.useBoat){
+            sb.append("useBoat=0");
+        }
+        if(!params.useBus){
+            sb.append("useBus=0");
+        }
+        if(!params.useTram){
+            sb.append("useTram=0");
+        }
+        if(!params.useTrain){
+            sb.append("useVas=0");
+            sb.append("useLDTrain=0");
+            sb.append("useRegTrain=0");
         }
         return sb.toString();
     }
@@ -133,7 +150,7 @@ public class VasttrafikRestClient {
         c.set(GregorianCalendar.HOUR_OF_DAY,
                 c.get(GregorianCalendar.HOUR_OF_DAY) + 3);
 
-        System.out.println(client.findConnections(src, dest, c.getTime()));
+        System.out.println(client.findConnections(src, dest, new VasttrafikQuery("", "", null, true, true, true, true, true)));
         System.out.println(client.findConnections(src, dest, null));
     }
 }

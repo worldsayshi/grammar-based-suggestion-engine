@@ -3,10 +3,7 @@ package com.findwise.grammarsearch.core;
 import com.findwise.crescent.model.StopLocation;
 import com.findwise.crescent.model.TripList;
 import com.findwise.crescent.rest.VasttrafikRestClient;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import org.grammaticalframework.pgf.Concr;
 import org.grammaticalframework.pgf.Expr;
 import org.grammaticalframework.pgf.ExprProb;
@@ -93,9 +90,22 @@ public class VasttrafikGrammarSearchClient implements GrammarSearchClient<TripLi
     public class VasttrafikQuery {
         public final String from;
         public final String to;
-        public VasttrafikQuery (String from, String to) {
+        public final Date date;
+        public final boolean departingDate;
+        public final boolean useTrain;
+        public final boolean useBus;
+        public final boolean useTram;
+        public final boolean useBoat;
+        
+        public VasttrafikQuery (String from, String to, Date date, boolean departingDate, boolean useTrain, boolean useBus, boolean useTram, boolean useBoat) {
             this.from=from;
             this.to=to;
+            this.date = date;
+            this.departingDate = departingDate;
+            this.useTrain = useTrain;
+            this.useBus = useBus;
+            this.useTram = useTram;
+            this.useBoat = useBoat;
         }
         
     }

@@ -60,8 +60,8 @@ public class VasttrafikRestClient {
      *            may be null (will search using current time)
      * @return
      */
-    public TripList findConnections( Location src, Location dest, VasttrafikQuery params) {
-        String url = buildTripUrl(src, dest, params);
+    public TripList findConnections(VasttrafikQuery params) {
+        String url = buildTripUrl(params);
         url = url.replaceAll("\\s+", "%20");
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
@@ -75,8 +75,10 @@ public class VasttrafikRestClient {
         return null;
     }
 
-    private String buildTripUrl(Location src, Location dest, VasttrafikQuery params) {
+    private String buildTripUrl(VasttrafikQuery params) {
         StringBuilder sb = new StringBuilder(TRIP_URL + URL_APPENDED_PART);
+        Location src = params.from;
+        Location dest = params.to;
         if (src instanceof StopLocation) {
             sb.append("&originId=" + ((StopLocation) src).getId());
         } else {
@@ -99,7 +101,7 @@ public class VasttrafikRestClient {
             sb.append("&date=" + dateFormatted);
             sb.append("&time=" + timeFormatted);
         }
-        if(!params.departingDate){
+        if(!params.isDepartureDate){
             sb.append("&searchForArrival=1");
         }
         
@@ -149,7 +151,6 @@ public class VasttrafikRestClient {
         c.set(GregorianCalendar.HOUR_OF_DAY,
                 c.get(GregorianCalendar.HOUR_OF_DAY) + 3);
 
-        System.out.println(client.findConnections(src, dest, new VasttrafikQuery("", "", null, true, EnumSet.allOf(MeansOfTransport.class))));
-        System.out.println(client.findConnections(src, dest, null));
+        System.out.println(client.findConnections(new VasttrafikQuery(src, dest, null, true, EnumSet.allOf(MeansOfTransport.class))));
     }
 }

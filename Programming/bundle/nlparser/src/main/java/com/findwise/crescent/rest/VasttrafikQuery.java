@@ -1,5 +1,6 @@
 package com.findwise.crescent.rest;
 
+import com.findwise.crescent.model.Location;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.Set;
@@ -10,17 +11,17 @@ import java.util.Set;
  */
 public class VasttrafikQuery {
 
-    public final String from;
-    public final String to;
+    public final Location from;
+    public final Location to;
     public final Date date;
-    public final boolean departingDate;
+    public final boolean isDepartureDate;
     public final EnumSet<MeansOfTransport> usedTransportMeans;
 
-    public VasttrafikQuery(String from, String to, Date date, boolean departingDate, EnumSet<MeansOfTransport> usedTransportMeans) {
+    public VasttrafikQuery(Location from, Location to, Date date, boolean isDepartureDate, EnumSet<MeansOfTransport> usedTransportMeans) {
         this.from = from;
         this.to = to;
         this.date = date;
-        this.departingDate = departingDate;
+        this.isDepartureDate = isDepartureDate;
         this.usedTransportMeans = usedTransportMeans;
     }
 }

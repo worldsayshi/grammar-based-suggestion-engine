@@ -5,18 +5,11 @@ concrete VasttrafikEngConcat of Vasttrafik = SymbolEng ** {
 	  Location = Str ;
 	  Time = Str ;
 	  Mean = Str ;
-	  Mode = Str ;
-	  Offset = Str ;
+	  TimeReferencePoint = Str ;
+	  TimeOffset = Str ;
 		
 	lin
-	  -- SimpleQuery loc1 loc2 action time = ("Travel from" | "Go from" | "From") ++ loc1 ++ "to" ++ loc2 ++ action ++ time;
-	  -- Station s = s.s;
-	  -- Depart = "departing";
-	  -- Arrive = "arriving";
-	  -- Now = "now";
-	  -- Soon = "soon";
-	  -- Tomorrow = "tomorrow";
-	  
+	
 	  MainQuery mean loc1 loc2 time = mean ++ loc1 ++ "to" ++ loc2 ++ time;
 	  
 	  AllMeans = ("Travel from" | "Go from" | "Get from" | "From" );
@@ -28,7 +21,7 @@ concrete VasttrafikEngConcat of Vasttrafik = SymbolEng ** {
 	  Station s = s.s;
 	  
 	  NoTime = "";
-	  RelativeTime mode offset = mode ++ offset;
+	  RelativeTime reference offset = reference ++ offset;
 	  Departing = ("departing" | "leaving");
 	  Arriving = "arriving";
 	  Now = "now";

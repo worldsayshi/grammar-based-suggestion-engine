@@ -2,6 +2,7 @@ package com.findwise.grammarsearch.core;
 
 import com.findwise.crescent.model.StopLocation;
 import com.findwise.crescent.model.TripList;
+import com.findwise.crescent.rest.MeansOfTransport;
 import com.findwise.crescent.rest.VasttrafikQuery;
 import com.findwise.crescent.rest.VasttrafikRestClient;
 import java.util.*;
@@ -85,13 +86,13 @@ public class VasttrafikGrammarSearchClient implements GrammarSearchClient<TripLi
             }
         }
         Date date = new Date(System.currentTimeMillis() + Integer.parseInt(map.get("offset")) * 60000);
-        boolean departingDate = map.get("mode").equals("departure");
-        boolean useTrain = map.get("mean").equals("all") || map.get("mean").equals("train");
-        boolean useBus = map.get("mean").equals("all") || map.get("mean").equals("bus");
-        boolean useBoat = map.get("mean").equals("all") || map.get("mean").equals("boat");
-        boolean useTram = map.get("mean").equals("all") || map.get("mean").equals("tram");
-        
-        
-        return new VasttrafikQuery(map.get("from"),map.get("to"),date, departingDate, useTrain, useBus, useTram, useBoat);
+        boolean departingDate = map.get("reference").equals("departure");
+        EnumSet<MeansOfTransport> usedTransportMeans = EnumSet.noneOf(MeansOfTransport.class);
+        if(map.get("mean").equals("all") || map.get("mean").equals("train")) {usedTransportMeans.add(MeansOfTransport.Train);}
+        if(map.get("mean").equals("all") || map.get("mean").equals("bus")) {usedTransportMeans.add(MeansOfTransport.Bus);}
+        if(map.get("mean").equals("all") || map.get("mean").equals("boat")) {usedTransportMeans.add(MeansOfTransport.Boat);}
+        if(map.get("mean").equals("all") || map.get("mean").equals("tram")) {usedTransportMeans.add(MeansOfTransport.Tram);}
+                
+        return new VasttrafikQuery(map.get("from"),map.get("to"),date, departingDate, usedTransportMeans);
     }    
 }

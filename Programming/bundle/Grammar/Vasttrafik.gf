@@ -7,23 +7,16 @@ abstract Vasttrafik = Symbol ** {
 	  Location ;
 	  Time ;
 	  Mean ;
-	  Mode;
-	  Offset;
+	  TimeReferencePoint;
+	  TimeOffset;
 
 	fun
-	  -- SimpleQuery : Location -> Location -> Action -> Time -> Query ;
-	  -- Station : Symb -> Location ;
-	  -- Depart, Arrive: Action;
-	  -- Now, Soon, Tomorrow : Time;
-	  
+	 
 	  MainQuery : Mean -> Location -> Location -> Time -> Query;
 	  Bus,Tram,Boat,Train,AllMeans : Mean;
 	  Station: Symb -> Location;
 	  NoTime: Time;
-	  RelativeTime: Mode -> Offset -> Time;
-	  Arriving, Departing: Mode;
-	  Now ,Quarter, Half, ThreeQuarters, One, Two, Three, Four, Five: Offset;
-	  
-	  
-	  
+	  RelativeTime: TimeReferencePoint -> TimeOffset -> Time;
+	  Arriving, Departing: TimeReferencePoint;
+	  Now ,Quarter, Half, ThreeQuarters, One, Two, Three, Four, Five: TimeOffset;	  
 }

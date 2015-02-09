@@ -16,6 +16,7 @@ import com.findwise.crescent.model.LocationListWrapper;
 import com.findwise.crescent.model.StopLocation;
 import com.findwise.crescent.model.TripList;
 import com.findwise.crescent.model.TripListWrapper;
+import java.util.EnumSet;
 
 /**
  * A simple Vasttrafik REST client, uses the model classes as Jackson databind
@@ -101,20 +102,18 @@ public class VasttrafikRestClient {
         if(!params.departingDate){
             sb.append("&searchForArrival=1");
         }
-        if(!params.useBoat){
-            sb.append("useBoat=0");
+        
+        for(MeansOfTransport mean : MeansOfTransport.values())
+        {
+            if(!params.usedTransportMeans.contains(mean)){
+                for(String paramName : mean.getRestParamNames()){
+                    sb.append("&");
+                    sb.append(paramName);
+                    sb.append("=0");
+                }
+            }
         }
-        if(!params.useBus){
-            sb.append("useBus=0");
-        }
-        if(!params.useTram){
-            sb.append("useTram=0");
-        }
-        if(!params.useTrain){
-            sb.append("useVas=0");
-            sb.append("useLDTrain=0");
-            sb.append("useRegTrain=0");
-        }
+
         return sb.toString();
     }
 
@@ -150,7 +149,7 @@ public class VasttrafikRestClient {
         c.set(GregorianCalendar.HOUR_OF_DAY,
                 c.get(GregorianCalendar.HOUR_OF_DAY) + 3);
 
-        System.out.println(client.findConnections(src, dest, new VasttrafikQuery("", "", null, true, true, true, true, true)));
+        System.out.println(client.findConnections(src, dest, new VasttrafikQuery("", "", null, true, EnumSet.allOf(MeansOfTransport.class))));
         System.out.println(client.findConnections(src, dest, null));
     }
 }

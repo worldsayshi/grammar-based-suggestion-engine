@@ -5,13 +5,11 @@ concrete VasttrafikApi of Vasttrafik = SymbolEng ** {
 	  Location = Str ;
 	  Time = Str ;
 	  Mean = Str ;
-	  Mode = Str ;
-	  Offset = Str ;
+	  TimeReferencePoint = Str ;
+	  TimeOffset = Str ;
 
 	lin
-	  -- SimpleQuery loc1 loc2 action time = "from" ++ ":" ++ loc1 ++ ";" ++ "to" ++ ":" ++ loc2;
-	  -- Station s = s.s;
-	  
+	
 	  MainQuery mean loc1 loc2 time = time ++ "mean" ++ ":" ++ mean ++ ";" ++ "from" ++ ":" ++ loc1 ++ ";" ++ "to" ++ ":" ++ loc2;
 	  
 	  AllMeans = "all";
@@ -22,8 +20,8 @@ concrete VasttrafikApi of Vasttrafik = SymbolEng ** {
 	  
 	  Station s = s.s;
 	  
-	  NoTime = "mode : departing ; offset : 0 ;" ;
-	  RelativeTime mode offset = "mode" ++ ":" ++  mode ++ ";" ++ "offset" ++ ":" ++ offset ++ ";" ;
+	  NoTime = "reference : departing ; offset : 0 ;" ;
+	  RelativeTime reference offset = "reference" ++ ":" ++  reference ++ ";" ++ "offset" ++ ":" ++ offset ++ ";" ;
 	  Departing = "departure";
 	  Arriving = "arrival";
 	  Now = "0";

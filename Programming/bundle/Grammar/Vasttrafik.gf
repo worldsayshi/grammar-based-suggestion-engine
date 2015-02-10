@@ -5,11 +5,18 @@ abstract Vasttrafik = Symbol ** {
 	cat
 	  Query ;
 	  Location ;
+	  Time ;
+	  Mean ;
+	  TimeReferencePoint;
+	  TimeOffset;
 
 	fun
-	  -- FromQuery : Location -> Query ;
-	  -- ToQuery : Location -> Query ;
-	  SimpleQuery : Location -> Location -> Query ;
-	  Station : Symb -> Location ;
-	  -- GeoLocation : Symb -> Location ;
+	 
+	  MainQuery : Mean -> Location -> Location -> Time -> Query;
+	  Bus,Tram,Boat,Train,AllMeans : Mean;
+	  Station: Symb -> Location;
+	  NoTime: Time;
+	  RelativeTime: TimeReferencePoint -> TimeOffset -> Time;
+	  Arriving, Departing: TimeReferencePoint;
+	  Now ,Quarter, Half, ThreeQuarters, One, Two, Three, Four, Five: TimeOffset;	  
 }

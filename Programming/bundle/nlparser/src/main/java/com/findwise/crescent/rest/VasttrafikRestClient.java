@@ -16,6 +16,7 @@ import com.findwise.crescent.model.LocationListWrapper;
 import com.findwise.crescent.model.StopLocation;
 import com.findwise.crescent.model.TripList;
 import com.findwise.crescent.model.TripListWrapper;
+import java.util.EnumSet;
 
 /**
  * A simple Vasttrafik REST client, uses the model classes as Jackson databind
@@ -59,8 +60,8 @@ public class VasttrafikRestClient {
      *            may be null (will search using current time)
      * @return
      */
-    public TripList findConnections(Location src, Location dest, Date date) {
-        String url = buildTripUrl(src, dest, date);
+    public TripList findConnections(VasttrafikQuery params) {
+        String url = buildTripUrl(params);
         url = url.replaceAll("\\s+", "%20");
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
@@ -74,8 +75,10 @@ public class VasttrafikRestClient {
         return null;
     }
 
-    private String buildTripUrl(Location src, Location dest, Date date) {
+    private String buildTripUrl(VasttrafikQuery params) {
         StringBuilder sb = new StringBuilder(TRIP_URL + URL_APPENDED_PART);
+        Location src = params.from;
+        Location dest = params.to;
         if (src instanceof StopLocation) {
             sb.append("&originId=" + ((StopLocation) src).getId());
         } else {
@@ -90,14 +93,29 @@ public class VasttrafikRestClient {
             sb.append("&destCoordLat=" + dest.getLatitude());
             sb.append("&destCoordLong=" + dest.getLongitude());
         }
-        if (date != null) {
+        if (params.date != null) {
             SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
             SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm");
-            String dateFormatted = sdfDate.format(date);
-            String timeFormatted = sdfTime.format(date);
+            String dateFormatted = sdfDate.format(params.date);
+            String timeFormatted = sdfTime.format(params.date);
             sb.append("&date=" + dateFormatted);
             sb.append("&time=" + timeFormatted);
         }
+        if(!params.isDepartureDate){
+            sb.append("&searchForArrival=1");
+        }
+        
+        for(MeansOfTransport mean : MeansOfTransport.values())
+        {
+            if(!params.usedTransportMeans.contains(mean)){
+                for(String paramName : mean.getRestParamNames()){
+                    sb.append("&");
+                    sb.append(paramName);
+                    sb.append("=0");
+                }
+            }
+        }
+
         return sb.toString();
     }
 
@@ -133,7 +151,6 @@ public class VasttrafikRestClient {
         c.set(GregorianCalendar.HOUR_OF_DAY,
                 c.get(GregorianCalendar.HOUR_OF_DAY) + 3);
 
-        System.out.println(client.findConnections(src, dest, c.getTime()));
-        System.out.println(client.findConnections(src, dest, null));
+        System.out.println(client.findConnections(new VasttrafikQuery(src, dest, null, true, EnumSet.allOf(MeansOfTransport.class))));
     }
 }

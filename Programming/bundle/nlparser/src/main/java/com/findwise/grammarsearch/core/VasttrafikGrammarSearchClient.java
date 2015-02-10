@@ -1,12 +1,12 @@
 package com.findwise.grammarsearch.core;
 
+import com.findwise.crescent.model.Location;
 import com.findwise.crescent.model.StopLocation;
 import com.findwise.crescent.model.TripList;
+import com.findwise.crescent.rest.MeansOfTransport;
+import com.findwise.crescent.rest.VasttrafikQuery;
 import com.findwise.crescent.rest.VasttrafikRestClient;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import org.grammaticalframework.pgf.Concr;
 import org.grammaticalframework.pgf.Expr;
 import org.grammaticalframework.pgf.ExprProb;
@@ -53,9 +53,7 @@ public class VasttrafikGrammarSearchClient implements GrammarSearchClient<TripLi
             tripList.setTrip(new ArrayList());
             return tripList;
         }
-        StopLocation from = vasttrafikclient.getBestMatchStop(q.from);
-        StopLocation to = vasttrafikclient.getBestMatchStop(q.to);
-        return vasttrafikclient.findConnections(from, to, null);
+        return vasttrafikclient.findConnections(q);
     }
     
     // Move to VasttrafikGrammarSearchClient
@@ -74,7 +72,20 @@ public class VasttrafikGrammarSearchClient implements GrammarSearchClient<TripLi
     }
     
     
-    
+    private VasttrafikQuery buildQuery (Map<String,String> inputParams){
+                Date date = new Date(System.currentTimeMillis() + Integer.parseInt(inputParams.get("offset")) * 60000);
+        boolean departingDate = inputParams.get("reference").equals("departure");
+        EnumSet<MeansOfTransport> usedTransportMeans = EnumSet.noneOf(MeansOfTransport.class);
+        if(inputParams.get("mean").equals("all") || inputParams.get("mean").equals("train")) {usedTransportMeans.add(MeansOfTransport.Train);}
+        if(inputParams.get("mean").equals("all") || inputParams.get("mean").equals("bus")) {usedTransportMeans.add(MeansOfTransport.Bus);}
+        if(inputParams.get("mean").equals("all") || inputParams.get("mean").equals("boat")) {usedTransportMeans.add(MeansOfTransport.Boat);}
+        if(inputParams.get("mean").equals("all") || inputParams.get("mean").equals("tram")) {usedTransportMeans.add(MeansOfTransport.Tram);}
+        
+        Location src = inputParams.containsKey("from") ? vasttrafikclient.getBestMatchStop(inputParams.get("from")) : null;
+        Location dest = inputParams.containsKey("to") ? vasttrafikclient.getBestMatchStop(inputParams.get("to")) : null;
+                
+        return new VasttrafikQuery(src,dest,date, departingDate, usedTransportMeans);
+    }
     
     // Move to VasttrafikGrammarSearchClient
     private VasttrafikQuery parseVasttrafikApi (String apiLinearization) {
@@ -86,18 +97,7 @@ public class VasttrafikGrammarSearchClient implements GrammarSearchClient<TripLi
                 map.put(cols[0].trim(), cols[1].trim());
             }
         }
-        return new VasttrafikQuery(map.get("from"),map.get("to"));
-    }
-    
-    // Move to VasttrafikGrammarSearchClient
-    public class VasttrafikQuery {
-        public final String from;
-        public final String to;
-        public VasttrafikQuery (String from, String to) {
-            this.from=from;
-            this.to=to;
-        }
         
-    }
-    
+        return buildQuery(map);
+    }    
 }

@@ -74,7 +74,7 @@ public class VasttrafikGrammarSearchClient implements GrammarSearchClient<TripLi
     
     private VasttrafikQuery buildQuery (Map<String,String> inputParams){
                 Date date = new Date(System.currentTimeMillis() + Integer.parseInt(inputParams.get("offset")) * 60000);
-        boolean departingDate = inputParams.get("mode").equals("departure");
+        boolean departingDate = inputParams.get("reference").equals("departure");
         EnumSet<MeansOfTransport> usedTransportMeans = EnumSet.noneOf(MeansOfTransport.class);
         if(inputParams.get("mean").equals("all") || inputParams.get("mean").equals("train")) {usedTransportMeans.add(MeansOfTransport.Train);}
         if(inputParams.get("mean").equals("all") || inputParams.get("mean").equals("bus")) {usedTransportMeans.add(MeansOfTransport.Bus);}

@@ -37,7 +37,7 @@ mkdir -p /home/vagrant/exec
 cd /home/vagrant/exec
 # skip downloading eclipse if it is already downloaded
 if [ ! -f eclipse-cpp-luna-SR1-linux-gtk.tar.gz ]; then
-	wget --output-document=eclipse-cpp-luna-SR1-linux-gtk.tar.gz 'http://ftp-stud.fht-esslingen.de/pub/Mirrors/eclipse/technology/epp/downloads/release/luna/SR1/eclipse-cpp-luna-SR1-linux-gtk.tar.gz'
+	wget --output-document=eclipse-cpp-luna-SR1-linux-gtk.tar.gz 'http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/luna/SR1/eclipse-cpp-luna-SR1-linux-gtk.tar.gz'
 fi
 tar xvfz eclipse-cpp-luna-SR1-linux-gtk.tar.gz 
 

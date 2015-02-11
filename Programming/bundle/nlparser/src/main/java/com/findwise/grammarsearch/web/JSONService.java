@@ -7,6 +7,9 @@ import java.util.Map;
 import javax.ws.rs.core.MediaType;
 import com.findwise.grammarsearch.core.SolrGrammarSuggester;
 import com.findwise.grammarsearch.core.SolrNameSuggester;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import org.grammaticalframework.pgf.ParseError;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,7 +49,17 @@ public class JSONService {
             method=RequestMethod.GET, 
             produces = MediaType.TEXT_HTML)
     public ModelAndView index() {
-        return new ModelAndView("index");
+        Map<String, Map<String,List<String>>> model = new HashMap<>();
+        
+        Map<String,List<String>> domainsModel = new HashMap<>();
+        for(String searchDomainName:searchDomains.keySet()){
+            GrammarSearchDomain dom = searchDomains.get(searchDomainName);
+            List languages = dom.getLanguages();
+            domainsModel.put(searchDomainName, languages);
+        }
+        model.put("searchDomains", domainsModel);
+        
+        return new ModelAndView("index",model);
     }
     
     //@GET
@@ -60,12 +73,11 @@ public class JSONService {
     public String search(
             @PathVariable("grammarSearchDomain") String grammarSearchDomain,
             @RequestParam(value = "q",required = true) String question,
-            @RequestParam(value = "lang",required = true) String concreteLang,
-            @RequestParam(value = "callback", required = false) String callback) throws ParseError {
-        return callback + "(" + gson.toJson( 
+            @RequestParam(value = "lang",required = true) String concreteLang) throws ParseError {
+        return gson.toJson( 
                 searchDomains
                         .get(grammarSearchDomain)
-                        .performQuery(question,concreteLang) ) + ")";
+                        .performQuery(question,concreteLang) );
     }
     
     //@GET
@@ -80,12 +92,11 @@ public class JSONService {
     public String suggestSentences(
             @PathVariable String grammarSearchDomain,
             @RequestParam(value = "q",required = true) String question,
-            @RequestParam(value = "lang",required = true) String concreteLang,
-            @RequestParam(value = "callback", required = false) String callback) throws SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed {
-        return callback + "(" + gson.toJson( 
+            @RequestParam(value = "lang",required = true) String concreteLang) throws SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed {
+        return gson.toJson( 
                 searchDomains
                         .get(grammarSearchDomain)
-                        .suggestSentences(question,concreteLang) ) + ")";
+                        .suggestSentences(question,concreteLang) );
     }
     
     //@GET

@@ -319,4 +319,9 @@ public class GrammarSearchDomain<T> {
         }
         return template;
     }
+    
+    
+    public List<String> getLanguages() {
+        return grammarSearchClient.getLanguages();
+    }
 }

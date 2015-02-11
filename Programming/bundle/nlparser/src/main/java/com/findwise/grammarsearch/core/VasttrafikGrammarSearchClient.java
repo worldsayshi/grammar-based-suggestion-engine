@@ -100,4 +100,9 @@ public class VasttrafikGrammarSearchClient implements GrammarSearchClient<TripLi
         
         return buildQuery(map);
     }    
+
+    @Override
+    public List<String> getLanguages() {
+        return new ArrayList<>(pgf.getLanguages().keySet());
+    }
 }

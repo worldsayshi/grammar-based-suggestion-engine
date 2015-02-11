@@ -105,4 +105,9 @@ public class SolrGrammarSearchClient implements GrammarSearchClient<SolrDocument
                 u.getQuery(),
                 u.getRef());
     }
+    
+    @Override
+    public List<String> getLanguages() {
+        return new ArrayList<>(pgf.getLanguages().keySet());
+    }
 }

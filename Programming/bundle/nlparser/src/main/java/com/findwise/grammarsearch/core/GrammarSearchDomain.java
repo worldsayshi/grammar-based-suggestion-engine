@@ -110,7 +110,7 @@ public class GrammarSearchDomain<T> {
 
         //there was no known names -> return one "empty" interpretation
         if (!anyKnownName) {
-            interpretations.add(Collections.EMPTY_LIST);
+            interpretations.add(new ArrayList<NameResult>());
         }
 
         return interpretations;
@@ -131,7 +131,7 @@ public class GrammarSearchDomain<T> {
      * @throws org.agfjord.grammar.SolrGrammarSuggester.GrammarLookupFailure
      * @throws org.agfjord.grammar.SolrNameSuggester.NameLookupFailed
      */
-    public List<String> suggestSentences(String nlQuestion, String concreteLang)
+    public List<String> suggestSentences(String nlQuestion, String concreteLang, Set<String> noRepetitionTypes)
             throws Exception, SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed {
         //List<String> questions = new ArrayList<>();
 
@@ -171,10 +171,10 @@ public class GrammarSearchDomain<T> {
                 // We only care about one of the linearizations when it comes to
                 // suggesting
 
-                //MARCIN TODO: WYBRAC ODPOWIEDNIE LINEARIZATION
-                //MARCIN TODO: tak sugerowac names, zeby sie nie powtarzaly (ew parametr)
+                //MARCIN TODO: WYBRAC ODPOWIEDNIE LINEARIZATION (napisac komentarz co i jak)
+                //MARCIN TODO: tak sugerowac names, zeby sie nie powtarzaly (ew parametr) (jest parametr, napisac komentarze)
                 //MARCIN TODO: tak przebudowac, zeby najpierw byly te ktore dodaja najmniej info
-                //MARCIN TODO: napisz ze getBest moze zwrocic null
+                //MARCIN TODO: napisz ze getBest moze zwrocic null (jezeli wszystkie traca informacje)
                 
                 String linearization = getBestLinearization(interpretation, templateLinearizationDoc.getLinearizations());
                 
@@ -204,10 +204,19 @@ public class GrammarSearchDomain<T> {
 
                         String missingNameType = missingCountsIterator.next();
 
+                        List<NameResult> forbiddenNames = new LinkedList<>(namesInQuestion);
+                        
                         for (int i = 0; i < missingCounts.counts.get(missingNameType); i++) {
-                            additionalNames.add(nameSuggester.suggestNames(
+                            
+                            List<NameResult> currentNames = nameSuggester.suggestNames(
                                     absGrammarName,
-                                    missingNameType, namesInQuestion, nr_of_additional_suggestions + 1));
+                                    missingNameType, forbiddenNames, nr_of_additional_suggestions + 1);
+                            
+                            additionalNames.add(currentNames);
+                            
+                            if(noRepetitionTypes.contains(missingNameType.toLowerCase())){
+                                forbiddenNames.addAll(currentNames);
+                            }
                         }
                     }
 

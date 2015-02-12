@@ -7,9 +7,7 @@ import java.util.Map;
 import javax.ws.rs.core.MediaType;
 import com.findwise.grammarsearch.core.SolrGrammarSuggester;
 import com.findwise.grammarsearch.core.SolrNameSuggester;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import org.grammaticalframework.pgf.ParseError;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -84,6 +82,15 @@ public class JSONService {
     //@Path("/api/{grammarSearchDomain}/suggestSentences")
     //@Produces(MediaType.APPLICATION_JSON+";charset=UTF-8")
     
+    /**
+     * 
+     * @param grammarSearchDomain
+     * @param question
+     * @param concreteLang
+     * @return
+     * @throws com.findwise.grammarsearch.core.SolrGrammarSuggester.GrammarLookupFailure
+     * @throws com.findwise.grammarsearch.core.SolrNameSuggester.NameLookupFailed
+     */
     @RequestMapping(
             value = "/api/{grammarSearchDomain}/suggestSentences",
             method=RequestMethod.GET,
@@ -92,11 +99,18 @@ public class JSONService {
     public String suggestSentences(
             @PathVariable String grammarSearchDomain,
             @RequestParam(value = "q",required = true) String question,
-            @RequestParam(value = "lang",required = true) String concreteLang) throws SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed {
+            @RequestParam(value = "lang",required = true) String concreteLang,
+            @RequestParam(value = "norep", required = false) String noRepetitionTypes) throws SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed, Exception {
+        
+        Set<String> noRepetitionTypesSet = new HashSet<>();
+        if(noRepetitionTypes!=null && !noRepetitionTypes.isEmpty()){
+            noRepetitionTypesSet.addAll(Arrays.asList(noRepetitionTypes.toLowerCase().split(",")));
+        }
+        
         return gson.toJson( 
                 searchDomains
                         .get(grammarSearchDomain)
-                        .suggestSentences(question,concreteLang) );
+                        .suggestSentences(question,concreteLang,noRepetitionTypesSet) );
     }
     
     //@GET

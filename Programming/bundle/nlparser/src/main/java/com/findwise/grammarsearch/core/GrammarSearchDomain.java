@@ -22,7 +22,7 @@ public class GrammarSearchDomain<T> {
     private final static Integer maxNumOfSuggestions = 40;
     private final static String placeholderPrefix = "{{";
     private final static String placeholderSuffix = "}}";
-    private final static Integer nr_of_additional_suggestions = 5;
+    private final static Integer nr_of_additional_suggestions = 2;
     private String absGrammarName;
     private SolrGrammarSuggester grammarSuggester;
     private SolrNameSuggester nameSuggester;
@@ -133,7 +133,7 @@ public class GrammarSearchDomain<T> {
      */
     public List<String> suggestSentences(String nlQuestion, String concreteLang, Set<String> noRepetitionTypes)
             throws Exception, SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed {
-        //List<String> questions = new ArrayList<>();
+        List<String> questions = new LinkedList<>();
 
         List<List<NameResult>> interpretations = interpretNamesOfNLQuestion(nlQuestion, maxNumOfSuggestions);
 
@@ -155,7 +155,9 @@ public class GrammarSearchDomain<T> {
         // Form suggestions based on the first interpretation
         //List<NameResult> namesInQuestion = interpretations.get(0);
         int suggestionCount = 0;
-        List<Iterator<String>> suggestionsByInterpretations = new ArrayList<>();
+        //List<Iterator<String>> suggestionsByInterpretations = new ArrayList<>();
+        
+        
 
         for (List<NameResult> namesInQuestion : interpretations) {
 
@@ -175,6 +177,7 @@ public class GrammarSearchDomain<T> {
                 //MARCIN TODO: tak sugerowac names, zeby sie nie powtarzaly (ew parametr) (jest parametr, napisac komentarze)
                 //MARCIN TODO: tak przebudowac, zeby najpierw byly te ktore dodaja najmniej info
                 //MARCIN TODO: napisz ze getBest moze zwrocic null (jezeli wszystkie traca informacje)
+                //MARCI TODO: konfigurowalne number of additional suggestions
                 
                 String linearization = getBestLinearization(interpretation, templateLinearizationDoc.getLinearizations());
                 
@@ -191,9 +194,14 @@ public class GrammarSearchDomain<T> {
                         throw new InternalError(
                                 "Multiple suggestions for single template without unknowns");
                     }
-                    //questions.addAll(suggestions);
+                    questions.addAll(suggestions);
                     suggestionCount += suggestions.size();
-                    suggestionsByInterpretations.add(suggestions.iterator());
+                    
+                    if(suggestionCount >= maxNumOfSuggestions){
+                        return questions.subList(0, maxNumOfSuggestions);
+                    }
+                    
+                    //suggestionsByInterpretations.add(suggestions.iterator());
                 }
                 else {
                     Iterator<String> missingCountsIterator = missingCounts.counts.keySet().iterator();
@@ -225,36 +233,40 @@ public class GrammarSearchDomain<T> {
                             linearization,
                             additionalNames);
 
-                    //questions.addAll(suggestions);
+                    questions.addAll(suggestions);
                     suggestionCount += suggestions.size();
-                    suggestionsByInterpretations.add(suggestions.iterator());
+                    
+                    if(suggestionCount >= maxNumOfSuggestions){
+                        return questions.subList(0, maxNumOfSuggestions);
+                    }
+                    //suggestionsByInterpretations.add(suggestions.iterator());
                 }
-                /*
-                 * if(questions.size()>=maxNumOfSuggestions){ break
-                 * suggestionLoop; }
-                 */
+                                 
             }
         }
-        List<String> finalSuggestions = new ArrayList<>();
-        int i = 0;
-        while (finalSuggestions.size() <= maxNumOfSuggestions) {
-            boolean depletedIterators = true;
-            for (Iterator<String> suggestions : suggestionsByInterpretations) {
-                if (suggestions.hasNext()) {
-                    depletedIterators = false;
-                    String suggestion = suggestions.next();
-                    finalSuggestions.add(suggestion);
-                }
-
-                if (finalSuggestions.size() == maxNumOfSuggestions) {
-                    break;
-                }
-            }
-            if (depletedIterators) {
-                break;
-            }
-        }
-        return finalSuggestions;
+        
+        return questions;
+        
+//        List<String> finalSuggestions = new ArrayList<>();
+//        int i = 0;
+//        while (finalSuggestions.size() <= maxNumOfSuggestions) {
+//            boolean depletedIterators = true;
+//            for (Iterator<String> suggestions : suggestionsByInterpretations) {
+//                if (suggestions.hasNext()) {
+//                    depletedIterators = false;
+//                    String suggestion = suggestions.next();
+//                    finalSuggestions.add(suggestion);
+//                }
+//
+//                if (finalSuggestions.size() == maxNumOfSuggestions) {
+//                    break;
+//                }
+//            }
+//            if (depletedIterators) {
+//                break;
+//            }
+//        }
+//        return finalSuggestions;
     }
 
     private String getBestLinearization(String interpretation, List<String> linearizations) throws Exception {

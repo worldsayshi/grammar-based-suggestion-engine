@@ -36,12 +36,12 @@ Java, people, customers, projects, copenhagen</div-->
   <!--option value="InstrucsEngRGL">English (RGL)</option>
   <option value="InstrucsSweRGL">Swedish (RGL)</option-->
 </select-->
-<ul id="search_result"></ul>
-<%--@include file="handlebars/documents.jsp" --%>
+
+<%@include file="handlebars/documents.jsp" %>
 
 <%@include file="tabs.jsp" %>
 
-
+<ul id="search_result"></ul>
 
 </body>
 </html>

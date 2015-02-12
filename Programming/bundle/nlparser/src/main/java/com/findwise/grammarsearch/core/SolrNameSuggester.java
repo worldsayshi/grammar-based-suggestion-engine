@@ -15,16 +15,18 @@ import org.apache.solr.client.solrj.response.QueryResponse;
  * @author per.fredelius
  */
 public class SolrNameSuggester {
+
     private SolrServer namesServer;
-    public SolrNameSuggester (String solr_url) {
-        namesServer = new HttpSolrServer(solr_url+"/names");
-    
+
+    public SolrNameSuggester(String solr_url) {
+        namesServer = new HttpSolrServer(solr_url + "/names");
+
     }
 
     public List<NameResult> suggestNameResolution(String word) throws NameLookupFailed {
         SolrQuery namesQuery = new SolrQuery();
-		namesQuery.addSort("score", SolrQuery.ORDER.desc);
-        namesQuery.setQuery(word+"*~0.7");
+        namesQuery.addSort("score", SolrQuery.ORDER.desc);
+        namesQuery.setQuery(word + "*~0.7");
         namesQuery.addSort("abs(sub(length," + word.length() + "))", SolrQuery.ORDER.asc);
         QueryResponse rsp;
         try {
@@ -37,16 +39,19 @@ public class SolrNameSuggester {
 
     public List<NameResult> suggestNames(
             String absGrammarName,
-            String missingNameType, 
+            String missingNameType,
             List<NameResult> namesInQuestion, Integer nr_of_additional_suggestions) throws NameLookupFailed {
+        
         SolrQuery namesQuery = new SolrQuery();
         namesQuery.addSort("score", SolrQuery.ORDER.desc);
         namesQuery.addSort("length", SolrQuery.ORDER.asc);
-        String queryForNamesNotInQuestion = "abs_lang:"+absGrammarName
-                +" type:" + missingNameType;
-        for(NameResult nameInQuestion:namesInQuestion){
+        String queryForNamesNotInQuestion = "abs_lang:" + absGrammarName
+                + " type:" + missingNameType;
+        
+        for (NameResult nameInQuestion : namesInQuestion) {
             queryForNamesNotInQuestion += " -name:" + nameInQuestion.getName();
         }
+        
         namesQuery.setFilterQueries(queryForNamesNotInQuestion);
         namesQuery.setQuery("*:*");
         int numberOfWantedSuggestions = nr_of_additional_suggestions;

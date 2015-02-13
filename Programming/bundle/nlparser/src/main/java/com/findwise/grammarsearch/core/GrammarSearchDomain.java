@@ -1,5 +1,6 @@
 package com.findwise.grammarsearch.core;
 
+import com.findwise.crescent.rest.SuggestionParams;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -18,11 +19,8 @@ import org.grammaticalframework.pgf.ParseError;
  * @author M. Agfjord & per.fredelius
  */
 public class GrammarSearchDomain<T> {
-
-    private final static Integer maxNumOfSuggestions = 40;
     private final static String placeholderPrefix = "{{";
     private final static String placeholderSuffix = "}}";
-    private final static Integer nr_of_additional_suggestions = 2;
     private String absGrammarName;
     private SolrGrammarSuggester grammarSuggester;
     private SolrNameSuggester nameSuggester;
@@ -131,11 +129,11 @@ public class GrammarSearchDomain<T> {
      * @throws org.agfjord.grammar.SolrGrammarSuggester.GrammarLookupFailure
      * @throws org.agfjord.grammar.SolrNameSuggester.NameLookupFailed
      */
-    public List<String> suggestSentences(String nlQuestion, String concreteLang, Set<String> noRepetitionTypes)
+    public List<String> suggestSentences(String nlQuestion, String concreteLang, SuggestionParams params)
             throws Exception, SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed {
         List<String> questions = new LinkedList<>();
 
-        List<List<NameResult>> interpretations = interpretNamesOfNLQuestion(nlQuestion, maxNumOfSuggestions);
+        List<List<NameResult>> interpretations = interpretNamesOfNLQuestion(nlQuestion, params.getMaxSuggestions());
 
         // If the names are not unambiguously resolved, 
         // give suggestions based on the name interpretations
@@ -197,8 +195,8 @@ public class GrammarSearchDomain<T> {
                     questions.addAll(suggestions);
                     suggestionCount += suggestions.size();
                     
-                    if(suggestionCount >= maxNumOfSuggestions){
-                        return questions.subList(0, maxNumOfSuggestions);
+                    if(suggestionCount >= params.getMaxSuggestions()){
+                        return questions.subList(0, params.getMaxSuggestions());
                     }
                     
                     //suggestionsByInterpretations.add(suggestions.iterator());
@@ -218,11 +216,11 @@ public class GrammarSearchDomain<T> {
                             
                             List<NameResult> currentNames = nameSuggester.suggestNames(
                                     absGrammarName,
-                                    missingNameType, forbiddenNames, nr_of_additional_suggestions + 1);
+                                    missingNameType, forbiddenNames, params.getMaxAdditionalSuggestedNames() + 1);
                             
                             additionalNames.add(currentNames);
                             
-                            if(noRepetitionTypes.contains(missingNameType.toLowerCase())){
+                            if(params.getNoRepetitionTypes().contains(missingNameType.toLowerCase())){
                                 forbiddenNames.addAll(currentNames);
                             }
                         }
@@ -236,8 +234,8 @@ public class GrammarSearchDomain<T> {
                     questions.addAll(suggestions);
                     suggestionCount += suggestions.size();
                     
-                    if(suggestionCount >= maxNumOfSuggestions){
-                        return questions.subList(0, maxNumOfSuggestions);
+                    if(suggestionCount >= params.getMaxSuggestions()){
+                        return questions.subList(0, params.getMaxSuggestions());
                     }
                     //suggestionsByInterpretations.add(suggestions.iterator());
                 }

@@ -1,5 +1,6 @@
 package com.findwise.grammarsearch.web;
 
+import com.findwise.crescent.rest.SuggestionParams;
 import com.findwise.grammarsearch.SearchConfig;
 import com.findwise.grammarsearch.core.GrammarSearchDomain;
 import com.google.gson.Gson;
@@ -100,17 +101,48 @@ public class JSONService {
             @PathVariable String grammarSearchDomain,
             @RequestParam(value = "q",required = true) String question,
             @RequestParam(value = "lang",required = true) String concreteLang,
-            @RequestParam(value = "norep", required = false) String noRepetitionTypes) throws SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed, Exception {
+            @RequestParam(value = "norep", required = false) String noRepetitionTypes,
+            @RequestParam(value = "n", required = false) String maxSuggestions,
+            @RequestParam(value = "add", required = false) String addCombinations,
+            @RequestParam(value = "hint", required = false) String continueHint,
+            @RequestParam(value = "continue", required = false) String enableContinue,
+            @RequestParam(value = "alter", required = false) String enableAlter,
+            @RequestParam(value = "sim", required = false) String alterSimilarity) throws SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed, Exception {
         
-        Set<String> noRepetitionTypesSet = new HashSet<>();
-        if(noRepetitionTypes!=null && !noRepetitionTypes.isEmpty()){
-            noRepetitionTypesSet.addAll(Arrays.asList(noRepetitionTypes.toLowerCase().split(",")));
-        }
+        SuggestionParams params = buildSuggestionParams(noRepetitionTypes, maxSuggestions, addCombinations, continueHint, enableContinue, enableAlter, alterSimilarity);
         
         return gson.toJson( 
                 searchDomains
                         .get(grammarSearchDomain)
-                        .suggestSentences(question,concreteLang,noRepetitionTypesSet) );
+                        .suggestSentences(question,concreteLang,params) );
+    }
+
+    private SuggestionParams buildSuggestionParams(String noRepetitionTypes, String maxSuggestions, String addCombinations, String continueHint, String enableContinue, String enableAlter, String alterSimilarity) throws NumberFormatException {
+        SuggestionParams params = new SuggestionParams();
+        Set<String> noRepetitionTypesSet = new HashSet<>();
+        if(noRepetitionTypes!=null && !noRepetitionTypes.isEmpty()){
+            noRepetitionTypesSet.addAll(Arrays.asList(noRepetitionTypes.toLowerCase().split(",")));
+        }
+        params.setNoRepetitionTypes(noRepetitionTypesSet);
+        if(maxSuggestions != null && !maxSuggestions.isEmpty()){
+        params.setMaxSuggestions(Integer.parseInt(maxSuggestions));
+        }
+        if(addCombinations != null && !addCombinations.isEmpty()){
+        params.setMaxAdditionalSuggestedNames(Integer.parseInt(addCombinations));
+        }
+        if(continueHint != null && !continueHint.isEmpty()){
+        params.setContinueHint(continueHint);
+        }
+        if(enableContinue != null && !enableContinue.isEmpty()){
+        params.setEnableContinue(Boolean.parseBoolean(enableContinue));
+        }
+        if(enableAlter != null && !enableAlter.isEmpty()){
+        params.setEnableAlter(Boolean.parseBoolean(enableAlter));
+        }
+        if(alterSimilarity != null && !alterSimilarity.isEmpty()){
+        params.setAlterSimiliarity(Integer.parseInt(alterSimilarity));
+        }
+        return params;
     }
     
     //@GET

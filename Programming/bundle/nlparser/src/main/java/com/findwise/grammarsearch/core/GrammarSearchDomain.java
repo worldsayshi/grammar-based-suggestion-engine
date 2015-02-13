@@ -1,6 +1,6 @@
 package com.findwise.grammarsearch.core;
 
-import com.findwise.crescent.rest.SuggestionParams;
+import com.findwise.grammarsearch.web.SuggestionParams;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -25,6 +25,7 @@ public class GrammarSearchDomain<T> {
     private SolrGrammarSuggester grammarSuggester;
     private SolrNameSuggester nameSuggester;
     private GrammarSearchClient<T> grammarSearchClient;
+    private StringWordCountComparator stringComparator = new StringWordCountComparator();
 
     public GrammarSearchDomain(
             String absGrammarName,
@@ -133,7 +134,11 @@ public class GrammarSearchDomain<T> {
             throws Exception, SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed {
         List<String> questions = new LinkedList<>();
 
-        List<List<NameResult>> interpretations = interpretNamesOfNLQuestion(nlQuestion, params.getMaxSuggestions());
+        boolean giveContinuations = params.isEnableContinue() && nlQuestion.endsWith(params.getContinueHint());
+        boolean giveAlters = params.isEnableAlter() && !nlQuestion.endsWith(params.getContinueHint());
+        
+        
+        List<List<NameResult>> interpretations = interpretNamesOfNLQuestion(nlQuestion, params.getMaxInterpretations());
 
         // If the names are not unambiguously resolved, 
         // give suggestions based on the name interpretations
@@ -152,7 +157,6 @@ public class GrammarSearchDomain<T> {
 
         // Form suggestions based on the first interpretation
         //List<NameResult> namesInQuestion = interpretations.get(0);
-        int suggestionCount = 0;
         //List<Iterator<String>> suggestionsByInterpretations = new ArrayList<>();
         
         
@@ -163,9 +167,11 @@ public class GrammarSearchDomain<T> {
             String interpretation = templateCandidate(nlQuestion, namesInQuestion);
 
             List<TreeResult> templateLinearizationDocs = grammarSuggester.suggestRules(interpretation, concreteLang, namesInQuestion);
+            
+            
 
             for (TreeResult templateLinearizationDoc : templateLinearizationDocs) {
-
+                
                 MissingCounts missingCounts = countMissingName(
                         namesInQuestion, templateLinearizationDoc);
                 // We only care about one of the linearizations when it comes to
@@ -175,7 +181,9 @@ public class GrammarSearchDomain<T> {
                 //MARCIN TODO: tak sugerowac names, zeby sie nie powtarzaly (ew parametr) (jest parametr, napisac komentarze)
                 //MARCIN TODO: tak przebudowac, zeby najpierw byly te ktore dodaja najmniej info
                 //MARCIN TODO: napisz ze getBest moze zwrocic null (jezeli wszystkie traca informacje)
-                //MARCI TODO: konfigurowalne number of additional suggestions
+                //MARCIN TODO: konfigurowalne number of additional suggestions
+                //MARCIN TODO: sortowanie wszystkiego od najkrotszych
+                //MARCIN TODO: trol trol case
                 
                 String linearization = getBestLinearization(interpretation, templateLinearizationDoc.getLinearizations());
                 
@@ -192,14 +200,7 @@ public class GrammarSearchDomain<T> {
                         throw new InternalError(
                                 "Multiple suggestions for single template without unknowns");
                     }
-                    questions.addAll(suggestions);
-                    suggestionCount += suggestions.size();
-                    
-                    if(suggestionCount >= params.getMaxSuggestions()){
-                        return questions.subList(0, params.getMaxSuggestions());
-                    }
-                    
-                    //suggestionsByInterpretations.add(suggestions.iterator());
+                    questions.addAll(suggestions);                    
                 }
                 else {
                     Iterator<String> missingCountsIterator = missingCounts.counts.keySet().iterator();
@@ -232,39 +233,29 @@ public class GrammarSearchDomain<T> {
                             additionalNames);
 
                     questions.addAll(suggestions);
-                    suggestionCount += suggestions.size();
-                    
-                    if(suggestionCount >= params.getMaxSuggestions()){
-                        return questions.subList(0, params.getMaxSuggestions());
-                    }
-                    //suggestionsByInterpretations.add(suggestions.iterator());
                 }
                                  
             }
         }
         
-        return questions;
+        Collections.sort(questions, stringComparator );
         
-//        List<String> finalSuggestions = new ArrayList<>();
-//        int i = 0;
-//        while (finalSuggestions.size() <= maxNumOfSuggestions) {
-//            boolean depletedIterators = true;
-//            for (Iterator<String> suggestions : suggestionsByInterpretations) {
-//                if (suggestions.hasNext()) {
-//                    depletedIterators = false;
-//                    String suggestion = suggestions.next();
-//                    finalSuggestions.add(suggestion);
-//                }
-//
-//                if (finalSuggestions.size() == maxNumOfSuggestions) {
-//                    break;
-//                }
-//            }
-//            if (depletedIterators) {
-//                break;
-//            }
-//        }
-//        return finalSuggestions;
+        return questions.subList(0, Math.min(questions.size(), params.getMaxSuggestions()));
+    }
+    
+    private class StringWordCountComparator implements Comparator<String>{
+
+        @Override
+        public int compare(String o1, String o2) {
+            int diff =  o1.split("\\s+").length - o2.split("\\s+").length;
+            
+            if(diff == 0){
+                diff = o1.length() - o2.length();
+            }
+            
+            return diff;
+        }
+        
     }
 
     private String getBestLinearization(String interpretation, List<String> linearizations) throws Exception {

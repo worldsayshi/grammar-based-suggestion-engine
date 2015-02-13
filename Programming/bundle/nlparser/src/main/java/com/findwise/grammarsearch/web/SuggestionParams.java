@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.findwise.crescent.rest;
+package com.findwise.grammarsearch.web;
 
 import java.util.Collections;
 import java.util.Set;
@@ -16,6 +16,7 @@ public class SuggestionParams {
     private static final int DEFAULT_MAX_SUGGESTIONS = 15;
     private static final Set<String> DEFAULT_NO_REPETITION_TYPES = Collections.EMPTY_SET;
     private static final int DEFAULT_MAX_ADDITIONAL_NAMES = 0;
+    private static final int DEFAULT_MAX_INTERPRETATIONS = 10;
     private static final String DEFAULT_HINT = " ";
     private static final boolean DEFAULT_CONTINUE = true;
     private static final boolean DEFAULT_ALTER = false;
@@ -24,6 +25,7 @@ public class SuggestionParams {
     private Set<String> noRepetitionTypes = DEFAULT_NO_REPETITION_TYPES;
     private int maxSuggestions = DEFAULT_MAX_SUGGESTIONS;
     private int maxAdditionalSuggestedNames = DEFAULT_MAX_ADDITIONAL_NAMES;
+    private int maxInterpretations = DEFAULT_MAX_INTERPRETATIONS;
     private String continueHint = DEFAULT_HINT;
     private boolean enableContinue = DEFAULT_CONTINUE;
     private boolean enableAlter = DEFAULT_ALTER;
@@ -129,5 +131,19 @@ public class SuggestionParams {
      */
     public void setAlterSimiliarity(int alterSimiliarity) {
         this.alterSimiliarity = alterSimiliarity;
+    }
+
+    /**
+     * @return the maxInterpretations
+     */
+    public int getMaxInterpretations() {
+        return maxInterpretations;
+    }
+
+    /**
+     * @param maxInterpretations the maxInterpretations to set
+     */
+    public void setMaxInterpretations(int maxInterpretations) {
+        this.maxInterpretations = maxInterpretations;
     }
 }

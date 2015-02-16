@@ -43,10 +43,14 @@ public class SolrGrammarSuggester {
         return 0 != rsp.getResults().getNumFound();
     }
 
-    public List<TreeResult> suggestRules(String nlQuestion, String concreteLang, List<NameResult> namesInQuestion) throws GrammarLookupFailure {
+    public List<TreeResult> suggestRules(String nlQuestion, String concreteLang, List<NameResult> namesInQuestion) throws GrammarLookupFailure{
+        return suggestRules(nlQuestion, concreteLang, namesInQuestion, max_nr_of_trees);
+    } 
+    
+    public List<TreeResult> suggestRules(String nlQuestion, String concreteLang, List<NameResult> namesInQuestion, int maxRules) throws GrammarLookupFailure {
         SolrQuery treesQuery = new SolrQuery();
         // 
-        treesQuery.setRows(max_nr_of_trees);
+        treesQuery.setRows(maxRules);
         treesQuery.setQuery("linearizations:" + ClientUtils.escapeQueryChars(nlQuestion)
                 + " " + boostByTypeQuery(namesInQuestion));
         treesQuery.addFilterQuery("lang:" + concreteLang);

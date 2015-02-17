@@ -12,5 +12,6 @@ public enum SuggestionBehaviors {
     CorrectComplete,
     Continue,
     Alter,
-    DoNotSuggest
+    DoNotSuggest,
+    ReturnOriginal
 }

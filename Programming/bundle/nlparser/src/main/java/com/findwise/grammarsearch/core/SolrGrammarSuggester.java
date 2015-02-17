@@ -32,7 +32,7 @@ public class SolrGrammarSuggester {
     // Check if word is found in the grammar
     public boolean checkIfGrammarWord(String word) throws GrammarLookupFailure {
         SolrQuery treesQuery = new SolrQuery();
-        treesQuery.setRows(max_nr_of_trees);
+        treesQuery.setRows(1);
         treesQuery.setQuery(word);
         QueryResponse rsp;
         try {
@@ -54,16 +54,6 @@ public class SolrGrammarSuggester {
         treesQuery.setQuery("linearizations:" + ClientUtils.escapeQueryChars(nlQuestion)
                 + " " + boostByTypeQuery(namesInQuestion));
         treesQuery.addFilterQuery("lang:" + concreteLang);
-
-
-        //treesQuery.setParam(parseLang, )
-
-        // My guess: Weighting suggestions based on what already appear in the query 
-        /*
-         * String sorting = getSort(namesInQuestion); if(sorting != null){
-         * treesQuery.addSort(SolrQuery.SortClause.asc(sorting));			
-		}
-         */
 
         // Sorting based on suggestion length and score
         treesQuery.addSort(SolrQuery.SortClause.desc("score"));

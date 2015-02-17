@@ -13,7 +13,7 @@ public class Suggestion {
     private boolean isNamesFilled;
     private int additionalNamesCount;
     private int addtionalGrammarWords;
-    private int alteredGammarWordsCount;
+    private int alteredGrammarWordsCount;
     private int wordsCount;
     
     public Suggestion(String text, boolean isNamesFilled, int addNames, int addGrammar, int alterGrammar){
@@ -21,7 +21,7 @@ public class Suggestion {
         this.isNamesFilled = isNamesFilled;
         this.additionalNamesCount = addNames;
         this.addtionalGrammarWords = addGrammar;
-        this.alteredGammarWordsCount = alterGrammar;
+        this.alteredGrammarWordsCount = alterGrammar;
         
         this.wordsCount = text.split("\\s+").length;
     }
@@ -71,15 +71,15 @@ public class Suggestion {
     /**
      * @return the alteredGammarWordsCount
      */
-    public int getAlteredGammarWordsCount() {
-        return alteredGammarWordsCount;
+    public int getAlteredGrammarWordsCount() {
+        return alteredGrammarWordsCount;
     }
 
     /**
-     * @param alteredGammarWordsCount the alteredGammarWordsCount to set
+     * @param alteredGrammarWordsCount the alteredGammarWordsCount to set
      */
-    public void setAlteredGammarWordsCount(int alteredGammarWordsCount) {
-        this.alteredGammarWordsCount = alteredGammarWordsCount;
+    public void setAlteredGrammarWordsCount(int alteredGrammarWordsCount) {
+        this.alteredGrammarWordsCount = alteredGrammarWordsCount;
     }
 
     /**

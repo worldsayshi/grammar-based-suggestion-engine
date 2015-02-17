@@ -8,8 +8,7 @@ import java.util.Collections;
 import java.util.Set;
 
 /**
- *
- * @author marcin.goss
+ * Class representing parameters used by suggestion algorithm
  */
 public class SuggestionParams {
 
@@ -22,13 +21,28 @@ public class SuggestionParams {
     private static final boolean DEFAULT_ALTER = false;
     private static final int DEFAULT_ALTER_SIMILIARITY = 80;
     
+    //name types that should not have duplicates returned in suggestions
     private Set<String> noRepetitionTypes = DEFAULT_NO_REPETITION_TYPES;
+    
+    //maximum number of suggestions returned
     private int maxSuggestions = DEFAULT_MAX_SUGGESTIONS;
+    
+    //maximum number of additional name combinations given for each suggestion rule
     private int maxAdditionalSuggestedNames = DEFAULT_MAX_ADDITIONAL_NAMES;
+    
+    //maximum number of name interpretations resulting in initial query analysis
     private int maxInterpretations = DEFAULT_MAX_INTERPRETATIONS;
+    
+    //hint enabling continue behavior
     private String continueHint = DEFAULT_HINT;
+    
+    //whether or not to enable continue behavior
     private boolean enableContinue = DEFAULT_CONTINUE;
+    
+    //whether or not to enable later behavior
     private boolean enableAlter = DEFAULT_ALTER;
+    
+    //similiarity of suggestions when using alter behavior 
     private int alterSimiliarity = DEFAULT_ALTER_SIMILIARITY;
     
     public SuggestionParams(){

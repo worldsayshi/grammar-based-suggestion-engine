@@ -28,7 +28,7 @@ public class GrammarSearchDomain<T> {
     private SolrGrammarSuggester grammarSuggester;
     private SolrNameSuggester nameSuggester;
     private GrammarSearchClient<T> grammarSearchClient;
-    private StringWordCountComparator stringComparator = new StringWordCountComparator();
+    private SuggestionComparator suggestionComparator = new SuggestionComparator();
 
     public GrammarSearchDomain(
             String absGrammarName,
@@ -140,7 +140,7 @@ public class GrammarSearchDomain<T> {
      */
     public List<String> suggestSentences(String nlQuestion, String concreteLang, SuggestionParams params)
             throws Exception, SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed {
-        List<String> questions = new LinkedList<>();
+        List<Suggestion> questions = new LinkedList<>();
 
         nlQuestion = nlQuestion.toLowerCase();
 
@@ -195,14 +195,14 @@ public class GrammarSearchDomain<T> {
                 //MARCIN TODO: sortowanie wszystkiego od najkrotszych
                 //MARCIN TODO: trol trol case
 
-                String linearization = getBestLinearization(templateLinearizationDoc.getLinearizations(), current, interpretations.getWordTypes());
+                Suggestion linearization = getBestLinearization(templateLinearizationDoc.getLinearizations(), current, interpretations.getWordTypes());
 
                 if (linearization == null) {
                     continue;
                 }
 
                 if (missingCounts.total < 1) {
-                    List<String> suggestions = createSuggestionsForLinearization(
+                    List<Suggestion> suggestions = createSuggestionsForLinearization(
                             namesInQuestion,
                             linearization,
                             Collections.EMPTY_LIST);
@@ -237,7 +237,7 @@ public class GrammarSearchDomain<T> {
                         }
                     }
 
-                    List<String> suggestions = createSuggestionsForLinearization(
+                    List<Suggestion> suggestions = createSuggestionsForLinearization(
                             namesInQuestion,
                             linearization,
                             additionalNames);
@@ -248,38 +248,55 @@ public class GrammarSearchDomain<T> {
             }
         }
 
-        Collections.sort(questions, stringComparator);
+        Collections.sort(questions, suggestionComparator);
 
-        return questions.subList(0, Math.min(questions.size(), params.getMaxSuggestions()));
+        return suggestionsToStringList(questions.subList(0, Math.min(questions.size(), params.getMaxSuggestions())));
     }
 
-//    private SuggestionBehaviors chooseBehavior(String nlQuestion, String template, String concreteLang, List<NameResult> namesInQuestion, SuggestionParams params) throws GrammarLookupFailure {
-//        List<TreeResult> rules = grammarSuggester.suggestRules(template, concreteLang, namesInQuestion, 1);
-//        
-//        if(rules.isEmpty() ){
-//            return SuggestionBehaviors.DoNotSuggest;
-//        }
-//        
-//        if(getBestLinearization(template, rules.get(0).getLinearizations()))
-//        tutaj dalej jazda
-//        
-//    }
-    private class StringWordCountComparator implements Comparator<String> {
+    
+    private List<String> suggestionsToStringList(List<Suggestion> suggestions){
+        List<String> result = new LinkedList<>();
+        
+        for(Suggestion suggestion : suggestions){
+            result.add(suggestion.getText());
+        }
+        
+        return result;
+    }
+
+    private class SuggestionComparator implements Comparator<Suggestion> {
 
         @Override
-        public int compare(String o1, String o2) {
-            int diff = o1.split("\\s+").length - o2.split("\\s+").length;
+        public int compare(Suggestion o1, Suggestion o2) {
+            
+            //less altered word first
+            int diff = o1.getAlteredGammarWordsCount() - o2.getAlteredGammarWordsCount();
+            
+            if(diff != 0){
+                return diff;
+            }
+            
+            //less added info first
+            diff = o1.getAdditionalNamesCount() + o1.getAddtionalGrammarWords() - (o2.getAdditionalNamesCount() + o2.getAddtionalGrammarWords());
+            
+            if(diff != 0){
+                return diff;
+            }
+            
+            //less words first
+            diff = o1.getWordsCount() - o2.getWordsCount();
 
             if (diff == 0) {
-                diff = o1.length() - o2.length();
+                return diff;
             }
-
-            return diff;
+            
+            //shortest text first
+            return o1.getText().length() - o2.getText().length();
         }
     }
 
     
-    private String getBestLinearization(List<String> linearizations, Interpretation interpretation, Map<String, WordType> originalWords){
+    private Suggestion getBestLinearization(List<String> linearizations, Interpretation interpretation, Map<String, WordType> originalWords){
         
         Suggestion best = null;
         
@@ -293,33 +310,10 @@ public class GrammarSearchDomain<T> {
                 best = suggestion;
             }
         }
-        
-        if(best == null){
-            return null;
-        }
-        
-        return best.getText();
+              
+        return best;
     }
     
-//    private String getBestLinearization(String interpretation, List<String> linearizations) throws Exception {
-//        List<String> words = Arrays.asList(interpretation.toLowerCase().split("\\s+"));
-//
-//        String best = null;
-//        int bestLength = Integer.MAX_VALUE;
-//
-//        for (String current : linearizations) {
-//            
-//            
-//            
-//            if (Arrays.asList(current.toLowerCase().split("\\s+")).containsAll(words) && bestLength > current.length()) {
-//                best = current;
-//                bestLength = current.length();
-//            }
-//        }
-//
-//        return best;
-//    }
-
     private Suggestion buildSuggestion(String linearization, Interpretation interpretation, Map<String, WordType> originalWords) {
         String[] words = linearization.split("\\s+");
 
@@ -391,36 +385,21 @@ public class GrammarSearchDomain<T> {
         return new Suggestion(linearization, false, addNamesCount, grammarWordsAdded, grammarWordsAltered);
     }
 
-//    private Suggestion getSuggestionTemplate(String currentInterpretation, TreeResult templateDoc, Map<String,WordType> originalWords){
-//        List<Suggestion> suggestionsFromLinearizations = new LinkedList<>();
-//        
-//        for(String linearization : templateDoc.getLinearizations()){
-//            
-//            int grammarCount = 0;
-//            int nameCount = 0;
-//            
-//            List<String> currentWords = Arrays.asList(linearization.toLowerCase().split("\\s+"));
-//            
-//            for(String)
-//        }
-//        
-//        return new Suggestion(absGrammarName, false, addNames, addGrammar, alterNames, alterGrammar)
-//    }
-    private List<String> createSuggestionsForLinearization(
+    private List<Suggestion> createSuggestionsForLinearization(
             List<NameResult> namesInQuestion,
-            String linearization,
+            Suggestion input,
             List<List<NameResult>> additionalNames) {
 
-        List<String> suggestions = new ArrayList<>();
+        List<Suggestion> suggestions = new ArrayList<>();
 
-        linearization = fillTemplate(linearization, namesInQuestion);
+        String linearization = fillTemplate(input.getText(), namesInQuestion);
 
         int nrUnknowns = defTempl.listVariables(linearization).size();
         if (nrUnknowns > additionalNames.size()) {
             throw new InternalError("No suggestions for unknown template variables.");
         }
         if (nrUnknowns == 0) {
-            return Arrays.asList(linearization);
+            return Arrays.asList(input);
         }
 
         int index = 0;
@@ -439,7 +418,7 @@ public class GrammarSearchDomain<T> {
             }
 
             if (allNamesFilled) {
-                suggestions.add(currentSuggestion);
+                suggestions.add(new Suggestion(currentSuggestion, true, input.getAdditionalNamesCount(), input.getAddtionalGrammarWords(), input.getAlteredGammarWordsCount()));
                 index++;
             }
             else {

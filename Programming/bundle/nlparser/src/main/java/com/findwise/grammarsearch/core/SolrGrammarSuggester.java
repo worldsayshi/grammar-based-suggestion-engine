@@ -21,10 +21,10 @@ import org.apache.solr.client.solrj.util.ClientUtils;
  * @author per.fredelius
  */
 public class SolrGrammarSuggester {
-
+    
     private SolrServer treesServer;
     private Integer max_nr_of_trees = 40;
-
+    
     public SolrGrammarSuggester(String solr_url) {
         treesServer = new HttpSolrServer(solr_url + "/trees");
     }
@@ -42,12 +42,16 @@ public class SolrGrammarSuggester {
         }
         return 0 != rsp.getResults().getNumFound();
     }
-
-    public List<TreeResult> suggestRules(String nlQuestion, String concreteLang, List<NameResult> namesInQuestion) throws GrammarLookupFailure{
-        return suggestRules(nlQuestion, concreteLang, namesInQuestion, max_nr_of_trees);
+    
+    public List<TreeResult> suggestRules(String nlQuestion, String concreteLang, List<NameResult> namesInQuestion) throws GrammarLookupFailure {
+        return suggestRules(nlQuestion, concreteLang, namesInQuestion, max_nr_of_trees, false, 0);
     } 
     
-    public List<TreeResult> suggestRules(String nlQuestion, String concreteLang, List<NameResult> namesInQuestion, int maxRules) throws GrammarLookupFailure {
+    public List<TreeResult> suggestRules(String nlQuestion, String concreteLang, List<NameResult> namesInQuestion, boolean useSimiliarity, int similiarity) throws GrammarLookupFailure {
+        return suggestRules(nlQuestion, concreteLang, namesInQuestion, max_nr_of_trees, useSimiliarity, similiarity);
+    } 
+    
+    public List<TreeResult> suggestRules(String nlQuestion, String concreteLang, List<NameResult> namesInQuestion, int maxRules, boolean useSimiliarity, int similiarity) throws GrammarLookupFailure {
         SolrQuery treesQuery = new SolrQuery();
         // 
         treesQuery.setRows(maxRules);
@@ -58,10 +62,14 @@ public class SolrGrammarSuggester {
         // Sorting based on suggestion length and score
         treesQuery.addSort(SolrQuery.SortClause.desc("score"));
         treesQuery.addSort(SolrQuery.SortClause.asc("length"));
+        
+        if (useSimiliarity) {
+            treesQuery.add("mm", similiarity + "%");
+        }
 
         // Run query for getting suggestion templates
         System.out.println(treesQuery.toString());
-
+        
         QueryResponse treesResp;
         try {
             treesResp = treesServer.query(treesQuery);
@@ -100,7 +108,7 @@ public class SolrGrammarSuggester {
         }
         return sb.toString();
     }
-
+    
     private Map<String, List<NameResult>> getNamesByType(List<NameResult> names) {
         Map<String, List<NameResult>> namesByType = new HashMap<>();
         for (NameResult name : names) {
@@ -115,7 +123,7 @@ public class SolrGrammarSuggester {
         }
         return namesByType;
     }
-
+    
     private String boostByTypeQuery(List<NameResult> namesInQuestion) {
         Map<String, List<NameResult>> namesByType = getNamesByType(namesInQuestion);
         String res = "";
@@ -125,9 +133,9 @@ public class SolrGrammarSuggester {
         }
         return res;
     }
-
+    
     static public class GrammarLookupFailure extends Exception {
-
+        
         public GrammarLookupFailure(SolrServerException ex) {
             super(ex);
         }

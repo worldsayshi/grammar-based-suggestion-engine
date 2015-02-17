@@ -148,12 +148,17 @@ public class GrammarSearchDomain<T> {
 
         SuggestionBehaviors behavior = chooseBehavior(nlQuestion, interpretations, params, concreteLang);
 
+        if(behavior.isSkipSuggestions()){
+            return Collections.EMPTY_LIST;
+        }
+        
         for (Interpretation current : interpretations.getInterpretations()) {
             List<NameResult> namesInQuestion = current.getNameTypes();
 
             String template = templateCandidate(nlQuestion, namesInQuestion);
 
-            List<TreeResult> templateLinearizationDocs = grammarSuggester.suggestRules(template, concreteLang, namesInQuestion);
+            List<TreeResult> templateLinearizationDocs = grammarSuggester.suggestRules(template, concreteLang, namesInQuestion, 
+                    behavior.isUseSimiliarity(), behavior.isTakeParamSimiliarity() ? params.getAlterSimiliarity() : behavior.getSimiliarity());
 
             for (TreeResult templateLinearizationDoc : templateLinearizationDocs) {
 
@@ -170,7 +175,7 @@ public class GrammarSearchDomain<T> {
                 //MARCIN TODO: sortowanie wszystkiego od najkrotszych
                 //MARCIN TODO: trol trol case
 
-                Suggestion linearization = getBestLinearization(templateLinearizationDoc.getLinearizations(), current, interpretations.getWordTypes(), true);
+                Suggestion linearization = getBestLinearization(templateLinearizationDoc.getLinearizations(), current, interpretations.getWordTypes(), behavior.isAllMustMatch());
 
                 if (linearization == null) {
                     continue;
@@ -223,11 +228,29 @@ public class GrammarSearchDomain<T> {
             }
         }
 
+        filterSuggestions(questions, behavior);
         Collections.sort(questions, suggestionComparator);
 
-        return suggestionsToStringList(questions.subList(0, Math.min(questions.size(), params.getMaxSuggestions())));
+        return suggestionsToStringList(questions.subList(0, behavior.isJustOneResult() ? 1 : Math.min(questions.size(), params.getMaxSuggestions())));
     }
 
+    
+    private void filterSuggestions(List<Suggestion> suggestions, SuggestionBehaviors behavior){
+        Iterator<Suggestion> iterator = suggestions.iterator();
+        
+        while(iterator.hasNext()){
+            Suggestion suggestion = iterator.next();
+            
+            if(!behavior.isAcceptLostInfo() && suggestion.getAlteredGrammarWordsCount() > 0){
+                iterator.remove();
+            }
+            
+            if(!behavior.isAcceptOnlyAdditions() && suggestion.getAlteredGrammarWordsCount() == 0 && suggestion.getAdditionalNamesCount() + suggestion.getAddtionalGrammarWords() > 0){
+                iterator.remove();
+            }
+        }
+    }
+    
     private List<String> suggestionsToStringList(List<Suggestion> suggestions) {
         List<String> result = new LinkedList<>();
 
@@ -248,7 +271,7 @@ public class GrammarSearchDomain<T> {
         for (Interpretation interpretation : interpretations.getInterpretations()) {
             List<NameResult> nameTypes = interpretation.getNameTypes();
             String template = templateCandidate(nlQuestion, nameTypes);
-            List<TreeResult> suggestRules = grammarSuggester.suggestRules(template, concreteLang, nameTypes, 1);
+            List<TreeResult> suggestRules = grammarSuggester.suggestRules(template, concreteLang, nameTypes, 1, false, 0);
 
             if (suggestRules.isEmpty()) {
                 continue;
@@ -320,11 +343,21 @@ public class GrammarSearchDomain<T> {
         for (String current : linearizations) {
             Suggestion suggestion = buildSuggestion(current, interpretation, originalWords, matchAllWords);
 
-            if (suggestion != null
-                    && (best == null
-                    || best.getAlteredGrammarWordsCount() > suggestion.getAlteredGrammarWordsCount()
-                    || best.getAdditionalNamesCount() + best.getAddtionalGrammarWords() > suggestion.getAdditionalNamesCount() + suggestion.getAddtionalGrammarWords())) {
-                best = suggestion;
+            if (suggestion != null){
+                if(best == null){
+                    best = suggestion;
+                }
+                else{
+                    int diff = best.getAlteredGrammarWordsCount() - suggestion.getAlteredGrammarWordsCount();
+                    
+                    if(diff == 0){
+                        diff = best.getAdditionalNamesCount() + best.getAddtionalGrammarWords() - (suggestion.getAdditionalNamesCount() + suggestion.getAddtionalGrammarWords());
+                    }
+                    
+                    if(diff > 0){
+                        best = suggestion;
+                    }
+                }
             }
         }
 
@@ -379,25 +412,13 @@ public class GrammarSearchDomain<T> {
             }
         }
 
-        //MARCIN TODO: tylko w okreslonych trybach
+        //if removing words from query is not allowed
         if (matchAllWords && !wordsNotMatched.isEmpty()) {
             return null;
         }
 
         int grammarWordsAltered = wordsNotMatched.size();
         int grammarWordsAdded = addGrammarWordsCount - grammarWordsAltered;
-
-        if (grammarWordsAdded < 0) {
-            //losing valid information when applying this linearization
-            return null;
-        }
-
-        for (Entry<String, Integer> entry : namesMissing.entrySet()) {
-            if (entry.getValue() != 0) {
-                //losing valid information when applying this linearization
-                return null;
-            }
-        }
 
         return new Suggestion(linearization, false, addNamesCount, grammarWordsAdded, grammarWordsAltered);
     }
@@ -416,7 +437,7 @@ public class GrammarSearchDomain<T> {
             throw new InternalError("No suggestions for unknown template variables.");
         }
         if (nrUnknowns == 0) {
-            return Arrays.asList(input);
+            return Arrays.asList(new Suggestion(linearization, true, input.getAdditionalNamesCount(), input.getAddtionalGrammarWords(), input.getAlteredGrammarWordsCount()));
         }
 
         int index = 0;

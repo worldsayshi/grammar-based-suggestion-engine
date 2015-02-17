@@ -5,15 +5,26 @@
 package com.findwise.grammarsearch.core;
 
 /**
- *
- * @author marcin.goss
+ *  Class representing potential suggestion together with some numbers describing its relation to the original query
  */
 public class Suggestion {
+    
+    //suggestion text
     private String text;
+    
+    //true - if name placeholders has been replaced with valid names already, false otherwise
     private boolean isNamesFilled;
+    
+    //count of names added in relation to the original query
     private int additionalNamesCount;
+    
+    //count of grammar words added in relation to the original query
     private int addtionalGrammarWords;
+    
+    //count of grammar words altered in relation to the original query
     private int alteredGrammarWordsCount;
+    
+    //words count in the suggestion text
     private int wordsCount;
     
     public Suggestion(String text, boolean isNamesFilled, int addNames, int addGrammar, int alterGrammar){

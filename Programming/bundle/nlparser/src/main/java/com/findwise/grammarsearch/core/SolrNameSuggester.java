@@ -23,6 +23,9 @@ public class SolrNameSuggester {
 
     }
 
+    /*
+     * Returns a list of names found in the index most similiar to the string provided as a parameter
+     */
     public List<NameResult> suggestNameResolution(String word) throws NameLookupFailed {
         SolrQuery namesQuery = new SolrQuery();
         namesQuery.addSort("score", SolrQuery.ORDER.desc);
@@ -37,10 +40,19 @@ public class SolrNameSuggester {
         return rsp.getBeans(NameResult.class);
     }
 
+    /**
+     * Gives a list of names in the index of a given type
+     * @param absGrammarName names grammar
+     * @param missingNameType type of names to be returned
+     * @param namesInQuestion names already used so therefore not to be included in result
+     * @param resultSize number of names to be returned
+     * @return
+     * @throws com.findwise.grammarsearch.core.SolrNameSuggester.NameLookupFailed 
+     */
     public List<NameResult> suggestNames(
             String absGrammarName,
             String missingNameType,
-            List<NameResult> namesInQuestion, Integer nr_of_additional_suggestions) throws NameLookupFailed {
+            List<NameResult> namesInQuestion, Integer resultSize) throws NameLookupFailed {
         
         SolrQuery namesQuery = new SolrQuery();
         namesQuery.addSort("score", SolrQuery.ORDER.desc);
@@ -54,8 +66,8 @@ public class SolrNameSuggester {
         
         namesQuery.setFilterQueries(queryForNamesNotInQuestion);
         namesQuery.setQuery("*:*");
-        int numberOfWantedSuggestions = nr_of_additional_suggestions;
-        namesQuery.setRows(numberOfWantedSuggestions);
+
+        namesQuery.setRows(resultSize);
         List<NameResult> namesNotInQuestion;
         try {
             QueryResponse namesRespT = namesServer.query(namesQuery);

@@ -22,6 +22,8 @@ import org.grammaticalframework.pgf.ParseError;
  */
 public class GrammarSearchDomain<T> {
 
+    //MARCIN TODO: trol trol case
+    
     private final static String placeholderPrefix = "{{";
     private final static String placeholderSuffix = "}}";
     private String absGrammarName;
@@ -41,139 +43,44 @@ public class GrammarSearchDomain<T> {
         this.grammarSearchClient = grammarSearchClient;
     }
 
-    // Returning a list of interpretations
-    // Each template has a list of potential names found in the natural language question
-    public Interpretations interpretNamesOfNLQuestion(String nlQuestion, int maxNumOfInterpretations)
-            throws SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed {
-
-        Map<String, WordType> wordTypes = new HashMap<>();
-        List<Interpretation> namesInterpretations = new ArrayList<>();
-
-        String[] words = nlQuestion.split("\\s+");
-
-        boolean anyKnownName = false;
-
-        // Find all names with their corresponding types in the question.
-        // Add type and names to the hashmap names.
-        for (String word : words) {
-
-            // Check if current word exists in a generated query
-            // We don't do namelookups for words that exist statically in the
-            // grammar. 
-            // E.g. word = 'people' or 'who' or 'and' ...
-            // This seems like an unnecessary limitation?
-            boolean isGrammarWord = grammarSuggester.checkIfGrammarWord(word);
-
-            if (isGrammarWord) {
-                wordTypes.put(word, WordType.Grammar);
-                continue;
-            }
-
-            //List<NameResult> nameResults = rsp.getBeans(NameResult.class);
-            List<NameResult> nameResults = nameSuggester.suggestNameResolution(word);
-            // Assume a word can only be represented by one name in the index
-            // i.e. we only care about best match (the first)
-            if (nameResults.isEmpty()) {
-                wordTypes.put(word, WordType.Unknown);
-                continue;
-            } /*
-             * else if (nameResults.size()==1) { NameResult nameResult =
-             * nameResults.get(0);
-             *
-             * nameResult.setOriginalName(word); // Change the word into its
-             * type + index // E.g. 'Java' ==> 'Skill0'
-             * template.add(nameResult); }
-             */ else {
-
-                wordTypes.put(word, WordType.Name);
-                anyKnownName = true;
-
-                if (namesInterpretations.isEmpty()) {
-                    List<Interpretation> new_interpretations = new ArrayList<>();
-                    for (NameResult nameResult : nameResults) {
-                        nameResult.setOriginalName(word);
-                        new_interpretations.add(new Interpretation(new ArrayList<>(Arrays.asList(nameResult))));
-                    }
-                    namesInterpretations = new_interpretations;
-                }
-                else {
-                    List<Interpretation> new_interpretations = new ArrayList<>();
-                    for (Interpretation interpretation : namesInterpretations) {
-                        if (new_interpretations.size() >= maxNumOfInterpretations) {
-                            break;
-                        }
-                        for (int i = 0; i < nameResults.size(); i++) {
-                            NameResult altName = nameResults.get(i);
-                            altName.setOriginalName(word);
-                            ArrayList<NameResult> new_interpretation = new ArrayList<>(interpretation.getNameTypes());
-                            new_interpretation.add(altName);
-                            new_interpretations.add(new Interpretation(new_interpretation));
-                        }
-                    }
-                    namesInterpretations = new_interpretations;
-                }
-            }
-        }
-
-        //there was no known names -> return one "empty" template
-        if (!anyKnownName) {
-            namesInterpretations.add(new Interpretation(new ArrayList<NameResult>()));
-        }
-
-        return new Interpretations(namesInterpretations, wordTypes);
-    }
-
     /**
-     * Complete a string into a valid question. Psuedocode of the algorithm: 1.
-     * Determine the words of the string which are names 2. Replace those names
-     * with their type in the index, e.g. Java ==> Skill0 3. Ask the index of
-     * questions similar to the string 4. Change the types back into their names
-     * (not the original if misspelled) 5. If the question consists of more
-     * names than what is inputed, ask index of more names and add them to the
-     * question 6. Return all questions
      *
-     * @param nlQuestion - A question in a natural language
-     * @param parseLang - A natural language
-     * @return Valid questions
-     * @throws org.agfjord.grammar.SolrGrammarSuggester.GrammarLookupFailure
-     * @throws org.agfjord.grammar.SolrNameSuggester.NameLookupFailed
+     * @param nlQuestion - Natural language question
+     * @param concreteLang - Natural language used
+     * @param params - Suggestion parameters
+     * @return List of suggestion strings
+     * @throws Exception
+     * @throws
+     * com.findwise.grammarsearch.core.SolrGrammarSuggester.GrammarLookupFailure
+     * @throws
+     * com.findwise.grammarsearch.core.SolrNameSuggester.NameLookupFailed
      */
     public List<String> suggestSentences(String nlQuestion, String concreteLang, SuggestionParams params)
             throws Exception, SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed {
         List<Suggestion> questions = new LinkedList<>();
 
         nlQuestion = nlQuestion.toLowerCase();
-
         Interpretations interpretations = interpretNamesOfNLQuestion(nlQuestion, params.getMaxInterpretations());
 
+        //find out whether the query is complete / partial / invalid and choose right suggestion behavior
         SuggestionBehaviors behavior = chooseBehavior(nlQuestion, interpretations, params, concreteLang);
 
-        if(behavior.isSkipSuggestions()){
+        if (behavior.isSkipSuggestions()) {
             return Collections.EMPTY_LIST;
         }
-        
+
         for (Interpretation current : interpretations.getInterpretations()) {
             List<NameResult> namesInQuestion = current.getNameTypes();
 
             String template = templateCandidate(nlQuestion, namesInQuestion);
 
-            List<TreeResult> templateLinearizationDocs = grammarSuggester.suggestRules(template, concreteLang, namesInQuestion, 
+            List<TreeResult> templateLinearizationDocs = grammarSuggester.suggestRules(template, concreteLang, namesInQuestion,
                     behavior.isUseSimiliarity(), behavior.isTakeParamSimiliarity() ? params.getAlterSimiliarity() : behavior.getSimiliarity());
 
             for (TreeResult templateLinearizationDoc : templateLinearizationDocs) {
 
                 NameTypeCounts missingCounts = countMissingName(
                         namesInQuestion, templateLinearizationDoc);
-                // We only care about one of the linearizations when it comes to
-                // suggesting
-
-                //MARCIN TODO: WYBRAC ODPOWIEDNIE LINEARIZATION (napisac komentarz co i jak)
-                //MARCIN TODO: tak sugerowac names, zeby sie nie powtarzaly (ew parametr) (jest parametr, napisac komentarze)
-                //MARCIN TODO: tak przebudowac, zeby najpierw byly te ktore dodaja najmniej info
-                //MARCIN TODO: napisz ze getBest moze zwrocic null (jezeli wszystkie traca informacje)
-                //MARCIN TODO: konfigurowalne number of additional suggestions
-                //MARCIN TODO: sortowanie wszystkiego od najkrotszych
-                //MARCIN TODO: trol trol case
 
                 Suggestion linearization = getBestLinearization(templateLinearizationDoc.getLinearizations(), current, interpretations.getWordTypes(), behavior.isAllMustMatch());
 
@@ -194,13 +101,10 @@ public class GrammarSearchDomain<T> {
                 }
                 else {
                     Iterator<String> missingCountsIterator = missingCounts.counts.keySet().iterator();
-
                     List<List<NameResult>> additionalNames = new ArrayList<>();
 
                     while (missingCountsIterator.hasNext()) {
-
                         String missingNameType = missingCountsIterator.next();
-
                         List<NameResult> forbiddenNames = new LinkedList<>(namesInQuestion);
 
                         for (int i = 0; i < missingCounts.counts.get(missingNameType); i++) {
@@ -234,23 +138,30 @@ public class GrammarSearchDomain<T> {
         return suggestionsToStringList(questions.subList(0, behavior.isJustOneResult() ? 1 : Math.min(questions.size(), params.getMaxSuggestions())));
     }
 
-    
-    private void filterSuggestions(List<Suggestion> suggestions, SuggestionBehaviors behavior){
+    /*
+     * Filtering out suggestions that are not allowed by the behavior
+     */
+    private void filterSuggestions(List<Suggestion> suggestions, SuggestionBehaviors behavior) {
         Iterator<Suggestion> iterator = suggestions.iterator();
-        
-        while(iterator.hasNext()){
+
+        while (iterator.hasNext()) {
             Suggestion suggestion = iterator.next();
-            
-            if(!behavior.isAcceptLostInfo() && suggestion.getAlteredGrammarWordsCount() > 0){
+
+            //remove those losing valid information if not allowed
+            if (!behavior.isAcceptLostInfo() && suggestion.getAlteredGrammarWordsCount() > 0) {
                 iterator.remove();
             }
-            
-            if(!behavior.isAcceptOnlyAdditions() && suggestion.getAlteredGrammarWordsCount() == 0 && suggestion.getAdditionalNamesCount() + suggestion.getAddtionalGrammarWords() > 0){
+
+            //remove those that only add information if not allowed
+            if (!behavior.isAcceptOnlyAdditions() && suggestion.getAlteredGrammarWordsCount() == 0 && suggestion.getAdditionalNamesCount() + suggestion.getAddtionalGrammarWords() > 0) {
                 iterator.remove();
             }
         }
     }
-    
+
+    /*
+     * Converts suggestions list to their string representations
+     */
     private List<String> suggestionsToStringList(List<Suggestion> suggestions) {
         List<String> result = new LinkedList<>();
 
@@ -261,11 +172,14 @@ public class GrammarSearchDomain<T> {
         return result;
     }
 
+    /*
+     * Analysing the query and parameters and choosing the right behavior
+     */
     private SuggestionBehaviors chooseBehavior(String nlQuestion, Interpretations interpretations, SuggestionParams params, String concreteLang) throws GrammarLookupFailure {
 
         boolean continuePossible = params.isEnableContinue() && nlQuestion.endsWith(params.getContinueHint());
         boolean alterPossible = params.isEnableAlter() && !nlQuestion.endsWith(params.getContinueHint());
-        
+
         SuggestionBehaviors result = SuggestionBehaviors.DoNotSuggest;
 
         for (Interpretation interpretation : interpretations.getInterpretations()) {
@@ -276,28 +190,27 @@ public class GrammarSearchDomain<T> {
             if (suggestRules.isEmpty()) {
                 continue;
             }
-            
+
             Suggestion bestSuggestion = getBestLinearization(suggestRules.get(0).getLinearizations(), interpretation, interpretations.getWordTypes(), false);
 
             // the query is complete: give alter or continue suggestions if enabled
-            if(bestSuggestion.getAdditionalNamesCount() == 0 && 
-                    bestSuggestion.getAddtionalGrammarWords() == 0 &&
-                    bestSuggestion.getAlteredGrammarWordsCount() ==0){
-                if(continuePossible){
+            if (bestSuggestion.getAdditionalNamesCount() == 0
+                    && bestSuggestion.getAddtionalGrammarWords() == 0
+                    && bestSuggestion.getAlteredGrammarWordsCount() == 0) {
+                if (continuePossible) {
                     result = SuggestionBehaviors.Continue;
                 }
-                else if(alterPossible){
+                else if (alterPossible) {
                     result = SuggestionBehaviors.Alter;
                 }
-                else{
-                    if(result != SuggestionBehaviors.Continue && result != SuggestionBehaviors.Alter){
+                else {
+                    if (result != SuggestionBehaviors.Continue && result != SuggestionBehaviors.Alter) {
                         result = SuggestionBehaviors.ReturnOriginal;
                     }
                 }
             }
-            
             //the query is invalid or partial: give correct/complete suggestions
-            else if(result == SuggestionBehaviors.DoNotSuggest){
+            else if (result == SuggestionBehaviors.DoNotSuggest) {
                 result = SuggestionBehaviors.CorrectComplete;
             }
         }
@@ -305,6 +218,9 @@ public class GrammarSearchDomain<T> {
         return result;
     }
 
+    /*
+     * Comparator used when applying final sorting to suggestion list
+     */
     private class SuggestionComparator implements Comparator<Suggestion> {
 
         @Override
@@ -336,6 +252,9 @@ public class GrammarSearchDomain<T> {
         }
     }
 
+    /*
+     * Chooses the best matching linearization from the ones available for a single rule. Returns null if none of the linearization is valid.
+     */
     private Suggestion getBestLinearization(List<String> linearizations, Interpretation interpretation, Map<String, WordType> originalWords, boolean matchAllWords) {
 
         Suggestion best = null;
@@ -343,18 +262,20 @@ public class GrammarSearchDomain<T> {
         for (String current : linearizations) {
             Suggestion suggestion = buildSuggestion(current, interpretation, originalWords, matchAllWords);
 
-            if (suggestion != null){
-                if(best == null){
+            if (suggestion != null) {
+                if (best == null) {
                     best = suggestion;
                 }
-                else{
+                else {
+                    //prefer linearizations altering less words
                     int diff = best.getAlteredGrammarWordsCount() - suggestion.getAlteredGrammarWordsCount();
-                    
-                    if(diff == 0){
+
+                    //prefer linearizations adding less words
+                    if (diff == 0) {
                         diff = best.getAdditionalNamesCount() + best.getAddtionalGrammarWords() - (suggestion.getAdditionalNamesCount() + suggestion.getAddtionalGrammarWords());
                     }
-                    
-                    if(diff > 0){
+
+                    if (diff > 0) {
                         best = suggestion;
                     }
                 }
@@ -364,6 +285,9 @@ public class GrammarSearchDomain<T> {
         return best;
     }
 
+    /*
+     * Builds a Suggestion object from linearization string collecting info about words added / altered etc
+     */
     private Suggestion buildSuggestion(String linearization, Interpretation interpretation, Map<String, WordType> originalWords, boolean matchAllWords) {
         String[] words = linearization.split("\\s+");
 
@@ -423,6 +347,9 @@ public class GrammarSearchDomain<T> {
         return new Suggestion(linearization, false, addNamesCount, grammarWordsAdded, grammarWordsAltered);
     }
 
+    /*
+     * Produces final suggestion from linearization by replacing name placeholders with names provided in namesInQuestion and additionalNames parameters
+     */
     private List<Suggestion> createSuggestionsForLinearization(
             List<NameResult> namesInQuestion,
             Suggestion input,
@@ -466,6 +393,8 @@ public class GrammarSearchDomain<T> {
 
         return suggestions;
     }
+    
+    
     private static final Templating defTempl = new Templating(placeholderPrefix, placeholderSuffix);
 
     private String templateCandidate(String nlQuestion, List<NameResult> namesInQuestion) {
@@ -521,6 +450,77 @@ public class GrammarSearchDomain<T> {
             template = fillTemplate(template, nameInQuestion);
         }
         return template;
+    }
+
+    // Returning a list of interpretations
+    // Each template has a list of potential names found in the natural language question
+    private Interpretations interpretNamesOfNLQuestion(String nlQuestion, int maxNumOfInterpretations)
+            throws SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed {
+
+        Map<String, WordType> wordTypes = new HashMap<>();
+        List<Interpretation> namesInterpretations = new ArrayList<>();
+
+        String[] words = nlQuestion.split("\\s+");
+
+        boolean anyKnownName = false;
+
+        // Find all names with their corresponding types in the question.
+        // Add type and names to the hashmap names.
+        for (String word : words) {
+
+            //grammar word
+            boolean isGrammarWord = grammarSuggester.checkIfGrammarWord(word);
+            if (isGrammarWord) {
+                wordTypes.put(word, WordType.Grammar);
+                continue;
+            }
+
+            //check if the word can be interpreted as name
+            List<NameResult> nameResults = nameSuggester.suggestNameResolution(word);
+
+            //unknown word
+            if (nameResults.isEmpty()) {
+                wordTypes.put(word, WordType.Unknown);
+                continue;
+            }
+            else { //name
+
+                wordTypes.put(word, WordType.Name);
+                anyKnownName = true;
+
+                if (namesInterpretations.isEmpty()) {
+                    List<Interpretation> new_interpretations = new ArrayList<>();
+                    for (NameResult nameResult : nameResults) {
+                        nameResult.setOriginalName(word);
+                        new_interpretations.add(new Interpretation(new ArrayList<>(Arrays.asList(nameResult))));
+                    }
+                    namesInterpretations = new_interpretations;
+                }
+                else {
+                    List<Interpretation> new_interpretations = new ArrayList<>();
+                    for (Interpretation interpretation : namesInterpretations) {
+                        if (new_interpretations.size() >= maxNumOfInterpretations) {
+                            break;
+                        }
+                        for (int i = 0; i < nameResults.size(); i++) {
+                            NameResult altName = nameResults.get(i);
+                            altName.setOriginalName(word);
+                            ArrayList<NameResult> new_interpretation = new ArrayList<>(interpretation.getNameTypes());
+                            new_interpretation.add(altName);
+                            new_interpretations.add(new Interpretation(new_interpretation));
+                        }
+                    }
+                    namesInterpretations = new_interpretations;
+                }
+            }
+        }
+
+        //there was no known names -> return one "empty" template
+        if (!anyKnownName) {
+            namesInterpretations.add(new Interpretation(new ArrayList<NameResult>()));
+        }
+
+        return new Interpretations(namesInterpretations, wordTypes);
     }
 
     public List<String> getLanguages() {

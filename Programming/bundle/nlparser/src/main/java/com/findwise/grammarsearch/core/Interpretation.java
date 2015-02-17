@@ -10,12 +10,14 @@ import java.util.Map;
 import org.agfjord.server.result.NameResult;
 
 /**
- *
- * @author marcin.goss
+ *  Class representing one possible interpretation of the original query
  */
 public class Interpretation {
 
+    //list of names and their types appearing in the query
     private List<NameResult> nameTypes;
+    
+    //name type appearances stats
     private NameTypeCounts nameTypeCounts;
 
     public Interpretation(List<NameResult> nameTypes) {

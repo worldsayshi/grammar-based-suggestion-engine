@@ -5,8 +5,8 @@
 package com.findwise.grammarsearch.core;
 
 /**
- *
- * @author marcin.goss
+ * Enum representing possible behaviors to be applied when giving suggestions.
+ * Each behavior is represented by the set of rules that it uses.
  */
 public enum SuggestionBehaviors {
     CorrectComplete(false, false, false, 0, false, false,false, true),
@@ -25,14 +25,28 @@ public enum SuggestionBehaviors {
         this.acceptLostInfo = acceptLost;
         this.acceptOnlyAdditions = acceptOnlyAdd;
     }
-    
+    // do all words need to match when choosing from possible linearizations
     private final boolean allMustMatch;
+    
+    // whether or not to use minimum match parameters when doing rules lookup
     private final boolean useSimiliarity;
+    
+    //whether or not to take minimum match percentage parameter from rest call when doing rules lookup
     private final boolean takeParamSimiliarity;
+    
+    //minimum match similiarity percentage to be used if not taking users parameter
     private final int similiarity;
+    
+    //whether or not to skip giving suggestions at all
     private final boolean skipSuggestions;
+    
+    //whether or not to only give one suggestion as a result
     private final boolean justOneResult;
+    
+    //whether or not to accept suggestions that remove valid information on final filtering
     private final boolean acceptLostInfo;
+    
+    //whether or not to accepr suggestions that only add information on final filtering
     private final boolean acceptOnlyAdditions;
 
     /**

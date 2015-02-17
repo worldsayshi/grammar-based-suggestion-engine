@@ -5,8 +5,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.agfjord.server.result.NameResult;
 import org.agfjord.server.result.TreeResult;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -51,11 +49,22 @@ public class SolrGrammarSuggester {
         return suggestRules(nlQuestion, concreteLang, namesInQuestion, max_nr_of_trees, useSimiliarity, similiarity);
     } 
     
-    public List<TreeResult> suggestRules(String nlQuestion, String concreteLang, List<NameResult> namesInQuestion, int maxRules, boolean useSimiliarity, int similiarity) throws GrammarLookupFailure {
+    /**
+     * Returns a list of grammar rules that match give query
+     * @param template natural language query that has names replaced by name placeholders
+     * @param concreteLang natural language used
+     * @param namesInQuestion names in query
+     * @param maxRules maximum number of rules to be returned
+     * @param useSimiliarity whether or not to include minimum match parameter to query
+     * @param similiarity percent of terms that should match in order to be returned
+     * @return list of rules matching given constraints
+     * @throws com.findwise.grammarsearch.core.SolrGrammarSuggester.GrammarLookupFailure 
+     */
+    public List<TreeResult> suggestRules(String template, String concreteLang, List<NameResult> namesInQuestion, int maxRules, boolean useSimiliarity, int similiarity) throws GrammarLookupFailure {
         SolrQuery treesQuery = new SolrQuery();
         // 
         treesQuery.setRows(maxRules);
-        treesQuery.setQuery("linearizations:" + ClientUtils.escapeQueryChars(nlQuestion)
+        treesQuery.setQuery("linearizations:" + ClientUtils.escapeQueryChars(template)
                 + " " + boostByTypeQuery(namesInQuestion));
         treesQuery.addFilterQuery("lang:" + concreteLang);
 
@@ -78,37 +87,7 @@ public class SolrGrammarSuggester {
         }
         return treesResp.getBeans(TreeResult.class);
     }
-
-    //people who know Skill0 and who work in Location0 ==> add(sub(Skill_i,1),sub(Location_i,1))
-    //people who know Skill0 and who work in Location0 and who work with Solr ==> add(add(sub(Skill_i,1),sub(Location_i,1)),sub(Object_i,1))
-    private String getSort(List<NameResult> names) {
-        // TODO getNamesByType feels a bit redundant... refactor this.
-        Map<String, List<NameResult>> namesByType = getNamesByType(names);
-        StringBuilder sb = new StringBuilder();
-        int sum = 0;
-        for (String key : namesByType.keySet()) {
-            sum += namesByType.get(key).size();
-        }
-        if (sum == 0) {
-            return null;
-        }
-        if (namesByType.keySet().size() > 1) {
-            sb.append("add(");
-        }
-        for (String nameType : namesByType.keySet()) {
-            sb.append("abs(");
-            sb.append("sub(" + nameType + "_i" + "," + (namesByType.get(nameType).size()) + ")");
-            sb.append(")");
-            sb.append(",");
-            // "abs(add(add(sub(Location_i,1),sub(Skill_i,1)),%20sub(Object_i,0)))%20asc,%20score%20desc";	
-        }// abs(add(add(add(sub(Skill_i,0),sub(Object_i,0),sub(Location_i,1),)
-        sb.deleteCharAt(sb.length() - 1);
-        if (namesByType.keySet().size() > 1) {
-            sb.append(")");
-        }
-        return sb.toString();
-    }
-    
+   
     private Map<String, List<NameResult>> getNamesByType(List<NameResult> names) {
         Map<String, List<NameResult>> namesByType = new HashMap<>();
         for (NameResult name : names) {

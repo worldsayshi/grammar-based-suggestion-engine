@@ -73,15 +73,22 @@ public class JSONService {
     //@Path("/api/{grammarSearchDomain}/suggestSentences")
     //@Produces(MediaType.APPLICATION_JSON+";charset=UTF-8")
     /**
-     *
+     * 
      * @param grammarSearchDomain
      * @param question
      * @param concreteLang
+     * @param noRepetitionTypes
+     * @param maxSuggestions
+     * @param addCombinations
+     * @param continueHint
+     * @param enableContinue
+     * @param enableAlter
+     * @param alterSimilarity
+     * @param maxInterpretations
      * @return
-     * @throws
-     * com.findwise.grammarsearch.core.SolrGrammarSuggester.GrammarLookupFailure
-     * @throws
-     * com.findwise.grammarsearch.core.SolrNameSuggester.NameLookupFailed
+     * @throws com.findwise.grammarsearch.core.SolrGrammarSuggester.GrammarLookupFailure
+     * @throws com.findwise.grammarsearch.core.SolrNameSuggester.NameLookupFailed
+     * @throws Exception 
      */
     @RequestMapping(value = "/api/{grammarSearchDomain}/suggestSentences",
     method = RequestMethod.GET,

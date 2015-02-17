@@ -8,12 +8,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
- * @author marcin.goss
+ *  Class representing a result of initial query analysis
  */
 public class Interpretations {
       
+    //list of query interpretations
     private List<Interpretation> interpretations;
+    
+    //map from words appearing in the query to their deduced wordtypes
     private Map<String,WordType> wordTypes;
     
     public Interpretations(List<Interpretation> interpretations, Map<String,WordType> wordTypes ){

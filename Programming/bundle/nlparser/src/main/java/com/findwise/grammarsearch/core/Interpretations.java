@@ -27,7 +27,7 @@ public class Interpretations {
             return false;
         }
         
-        for(NameResult nameResult : interpretations.get(0).getNameTypes()){
+        for(NameResult nameResult : interpretations.get(0).getNameResults()){
             if(!nameResult.getName().equalsIgnoreCase(nameResult.getOriginalName())){
                 return false;
             }

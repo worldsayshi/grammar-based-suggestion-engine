@@ -11,14 +11,14 @@ import org.agfjord.server.result.NameResult;
 public class Interpretation {
 
     //list of names and their types appearing in the query
-    private List<NameResult> nameTypes;
+    private List<NameResult> nameResults;
     
     //name type appearances stats
     private NameTypeCounts nameTypeCounts;
 
-    public Interpretation(List<NameResult> nameTypes) {
-        this.nameTypes = nameTypes;
-        calculateNameTypeCounts(nameTypes);
+    public Interpretation(List<NameResult> nameResults) {
+        this.nameResults = nameResults;
+        calculateNameTypeCounts(nameResults);
     }
 
     private void calculateNameTypeCounts(List<NameResult> nameTypes) {
@@ -40,8 +40,8 @@ public class Interpretation {
     /**
      * @return the nameTypes
      */
-    public List<NameResult> getNameTypes() {
-        return nameTypes;
+    public List<NameResult> getNameResults() {
+        return nameResults;
     }
 
     /**

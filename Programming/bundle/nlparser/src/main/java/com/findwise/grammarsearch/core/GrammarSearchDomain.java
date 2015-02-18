@@ -23,7 +23,6 @@ import org.grammaticalframework.pgf.ParseError;
 public class GrammarSearchDomain<T> {
 
     //MARCIN TODO: trol trol case
-    
     private final static String placeholderPrefix = "{{";
     private final static String placeholderSuffix = "}}";
     private String absGrammarName;
@@ -60,7 +59,7 @@ public class GrammarSearchDomain<T> {
         List<Suggestion> questions = new LinkedList<>();
 
         nlQuestion = nlQuestion.toLowerCase();
-        Interpretations interpretations = interpretNamesOfNLQuestion(nlQuestion, params.getMaxInterpretations());
+        Interpretations interpretations = interpretNamesOfNLQuestion(nlQuestion, params.getMaxInterpretations(), params);
 
         //find out whether the query is complete / partial / invalid and choose right suggestion behavior
         SuggestionBehaviors behavior = chooseBehavior(nlQuestion, interpretations, params, concreteLang);
@@ -70,7 +69,7 @@ public class GrammarSearchDomain<T> {
         }
 
         for (Interpretation current : interpretations.getInterpretations()) {
-            List<NameResult> namesInQuestion = current.getNameTypes();
+            List<NameResult> namesInQuestion = current.getNameResults();
 
             String template = templateCandidate(nlQuestion, namesInQuestion);
 
@@ -183,7 +182,7 @@ public class GrammarSearchDomain<T> {
         SuggestionBehaviors result = SuggestionBehaviors.DoNotSuggest;
 
         for (Interpretation interpretation : interpretations.getInterpretations()) {
-            List<NameResult> nameTypes = interpretation.getNameTypes();
+            List<NameResult> nameTypes = interpretation.getNameResults();
             String template = templateCandidate(nlQuestion, nameTypes);
             List<TreeResult> suggestRules = grammarSuggester.suggestRules(template, concreteLang, nameTypes, 1, false, 0);
 
@@ -251,7 +250,8 @@ public class GrammarSearchDomain<T> {
     }
 
     /*
-     * Chooses the best matching linearization from the ones available for a single rule. Returns null if none of the linearization is valid.
+     * Chooses the best matching linearization from the ones available for a
+     * single rule. Returns null if none of the linearization is valid.
      */
     private Suggestion getBestLinearization(List<String> linearizations, Interpretation interpretation, Map<String, WordType> originalWords, boolean matchAllWords) {
 
@@ -284,7 +284,8 @@ public class GrammarSearchDomain<T> {
     }
 
     /*
-     * Builds a Suggestion object from linearization string collecting info about words added / altered etc
+     * Builds a Suggestion object from linearization string collecting info
+     * about words added / altered etc
      */
     private Suggestion buildSuggestion(String linearization, Interpretation interpretation, Map<String, WordType> originalWords, boolean matchAllWords) {
         String[] words = linearization.split("\\s+");
@@ -346,7 +347,9 @@ public class GrammarSearchDomain<T> {
     }
 
     /*
-     * Produces final suggestion from linearization by replacing name placeholders with names provided in namesInQuestion and additionalNames parameters
+     * Produces final suggestion from linearization by replacing name
+     * placeholders with names provided in namesInQuestion and additionalNames
+     * parameters
      */
     private List<Suggestion> createSuggestionsForLinearization(
             List<NameResult> namesInQuestion,
@@ -391,8 +394,6 @@ public class GrammarSearchDomain<T> {
 
         return suggestions;
     }
-    
-    
     private static final Templating defTempl = new Templating(placeholderPrefix, placeholderSuffix);
 
     private String templateCandidate(String nlQuestion, List<NameResult> namesInQuestion) {
@@ -452,7 +453,7 @@ public class GrammarSearchDomain<T> {
 
     // Returning a list of interpretations
     // Each template has a list of potential names found in the natural language question
-    private Interpretations interpretNamesOfNLQuestion(String nlQuestion, int maxNumOfInterpretations)
+    private Interpretations interpretNamesOfNLQuestion(String nlQuestion, int maxNumOfInterpretations, SuggestionParams params)
             throws SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed {
 
         Map<String, WordType> wordTypes = new HashMap<>();
@@ -503,7 +504,7 @@ public class GrammarSearchDomain<T> {
                         for (int i = 0; i < nameResults.size(); i++) {
                             NameResult altName = nameResults.get(i);
                             altName.setOriginalName(word);
-                            ArrayList<NameResult> new_interpretation = new ArrayList<>(interpretation.getNameTypes());
+                            ArrayList<NameResult> new_interpretation = new ArrayList<>(interpretation.getNameResults());
                             new_interpretation.add(altName);
                             new_interpretations.add(new Interpretation(new_interpretation));
                         }
@@ -513,12 +514,60 @@ public class GrammarSearchDomain<T> {
             }
         }
 
+        avoidNameDuplicates(namesInterpretations, params);
+
         //there was no known names -> return one "empty" template
         if (!anyKnownName) {
             namesInterpretations.add(new Interpretation(new ArrayList<NameResult>()));
         }
 
         return new Interpretations(namesInterpretations, wordTypes);
+    }
+
+    /*
+     * Checks if generated name interpretations produced any unneed duplications and removes them if possible
+     */
+    private void avoidNameDuplicates(List<Interpretation> namesInterpretations, SuggestionParams params) {
+
+        //if there is no nametypes that should avoid duplicating or there is at most one interpretation skip this
+        if (params.getNoRepetitionTypes().isEmpty() || namesInterpretations.size() <= 1) {
+            return;
+        }
+
+        List<Interpretation> toBeRemoved = new LinkedList<>();
+        
+        for(Interpretation current : namesInterpretations){
+  
+            //prepare occurences sets
+            Map<String,Set<String>> nameTypeOccurences = new HashMap<>();
+            for(String nameType : current.getNameTypeCounts().counts.keySet()){
+                if(params.getNoRepetitionTypes().contains(nameType.toLowerCase())){
+                    nameTypeOccurences.put(nameType.toLowerCase(), new HashSet<String>());
+                }
+            }
+            
+            //collect occurences watching for duplicates
+            for(NameResult name : current.getNameResults()){
+                if(params.getNoRepetitionTypes().contains(name.getType().toLowerCase())){
+                    
+                    if(!nameTypeOccurences.get(name.getType().toLowerCase()).add(name.getName())){
+                        //duplicate detected, removing this interpretation
+                        toBeRemoved.add(current);
+                    }
+                }
+            }
+        }
+        
+        //all interpetations identified as containing duplicates
+        //impossible to avoid duplicates
+        //fallback to not removing anything
+        if(toBeRemoved.size() == namesInterpretations.size()){
+            return;
+        }
+        
+        for(Interpretation current : toBeRemoved){
+            namesInterpretations.remove(current);
+        }
     }
 
     public List<String> getLanguages() {

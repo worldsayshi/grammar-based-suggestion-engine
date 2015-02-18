@@ -37,7 +37,14 @@ public class SolrNameSuggester {
         } catch (SolrServerException ex) {
             throw new NameLookupFailed(ex);
         }
-        return rsp.getBeans(NameResult.class);
+        List<NameResult> res = rsp.getBeans(NameResult.class);
+        
+        //if first name is a perfect match, then return only this one
+        if(!res.isEmpty() && res.get(0).getName().equalsIgnoreCase(word)){
+            res = res.subList(0, 1);
+        }
+        
+        return res;
     }
 
     /**

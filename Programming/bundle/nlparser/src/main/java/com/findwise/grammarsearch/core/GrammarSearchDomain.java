@@ -194,9 +194,7 @@ public class GrammarSearchDomain<T> {
             Suggestion bestSuggestion = getBestLinearization(suggestRules.get(0).getLinearizations(), interpretation, interpretations.getWordTypes(), false);
 
             // the query is complete: give alter or continue suggestions if enabled
-            if (bestSuggestion.getAdditionalNamesCount() == 0
-                    && bestSuggestion.getAddtionalGrammarWords() == 0
-                    && bestSuggestion.getAlteredGrammarWordsCount() == 0) {
+            if (template.trim().equalsIgnoreCase(bestSuggestion.getText().trim()) && interpretations.isAllNamesComplete()) {
                 if (continuePossible) {
                     result = SuggestionBehaviors.Continue;
                 }

@@ -67,6 +67,10 @@ input.grammar-search {
     display:block;
 }
 
+.list-group-item>.trip-badge {
+    float: inherit;
+}
+
 
 
 /* QC search box and result styling

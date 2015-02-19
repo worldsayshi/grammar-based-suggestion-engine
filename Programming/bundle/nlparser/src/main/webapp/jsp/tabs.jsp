@@ -31,6 +31,7 @@
                 <form id="search-form-${domainEntry.key}">
                     <input id="search-input-${domainEntry.key}" name="q" type="text" class="input-large search-input" 
                            placeholder="Type your question.." data-searchdomain="${domainEntry.key}"></input>
+                    
                     <c:if test="${fn:length(domainEntry.value) lt 2}" >
                         <input name="lang" type="hidden" value="${domainEntry.value[0]}" />
                     </c:if>
@@ -40,6 +41,12 @@
                                 <option value="${lang}">${lang}</option>
                             </c:forEach>
                         </select>
+                    </c:if>
+                    <!-- parameters hardcoded for now -->
+                    <!-- make possible to change that here -->
+                    <c:if test="${domainEntry.key eq 'vasttrafik'}">
+                        <input name="norep" type="hidden" value="station" />
+                        <input name="n" type="hidden" value="8" />
                     </c:if>
                 </form>
             </div>

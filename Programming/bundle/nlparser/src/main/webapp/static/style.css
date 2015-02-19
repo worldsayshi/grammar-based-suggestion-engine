@@ -8,40 +8,40 @@ pre {outline: 1px solid #ccc; padding: 5px; margin-top: 10px; }
 body { padding: 25px ; }
 
 .input-large {
-  width: 210px;
-  height: 44px !important;
-  margin-bottom: 10px !important;
-  line-height: 30px !important;
-  padding: 11px 19px !important;
-  font-size: 17.5px !important;
-  -webkit-border-radius: 6px;
-     -moz-border-radius: 6px;
-          border-radius: 6px;
+    width: 210px;
+    height: 44px !important;
+    margin-bottom: 10px !important;
+    line-height: 30px !important;
+    padding: 11px 19px !important;
+    font-size: 17.5px !important;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
 }
 
 .input-large[class=input-large] {
     width: 700px;
 
-  display: block;
+    display: block;
 }
 
 .error {
-  color : red;
+    color : red;
 }
 
 .error-word {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 .btn-group.group {
-  padding-bottom: 4px;
-  margin-left: 0px;
+    padding-bottom: 4px;
+    margin-left: 0px;
 }
 #ambiguous_result {
-  display: none ;
+    display: none ;
 }
 #tech_info {
-  display: none;
+    display: none;
 }
 
 #search_result,#search_result ul {
@@ -75,63 +75,100 @@ input.grammar-search {
 .typeahead,
 .tt-query,
 .tt-hint {
-  width: 396px;
-  height: 30px;
-  padding: 8px 12px;
-  font-size: 24px;
-  line-height: 30px;
-  border: 2px solid #ccc;
-  -webkit-border-radius: 8px;
-     -moz-border-radius: 8px;
-          border-radius: 8px;
-  outline: none;
+    width: 396px;
+    height: 30px;
+    padding: 8px 12px;
+    font-size: 24px;
+    line-height: 30px;
+    border: 2px solid #ccc;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    outline: none;
 }
 
 .typeahead {
-  background-color: #fff;
+    background-color: #fff;
 }
 
 .typeahead:focus {
-  border: 2px solid #0097cf;
+    border: 2px solid #0097cf;
 }
 
 .tt-query {
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 }
 
 .tt-hint {
-  color: #999
+    color: #999
 }
 
 .tt-dropdown-menu {
-  width: 422px;
-  margin-top: 12px;
-  padding: 8px 0;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  -webkit-border-radius: 8px;
-     -moz-border-radius: 8px;
-          border-radius: 8px;
-  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
-     -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
-          box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    width: 422px;
+    margin-top: 12px;
+    padding: 8px 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
 }
 
 .tt-suggestion {
-  padding: 3px 20px;
-  font-size: 18px;
-  line-height: 24px;
+    padding: 3px 20px;
+    font-size: 18px;
+    line-height: 24px;
 }
 
 .tt-suggestion.tt-cursor {
-  color: #fff;
-  background-color: #0097cf;
+    color: #fff;
+    background-color: #0097cf;
 
 }
 
 .tt-suggestion p {
-  margin: 0;
+    margin: 0;
+}
+
+/* Speech recognition stuff
+==================*/
+
+.final {
+    color: black;
+    padding-right: 3px;
+}
+.interim {
+    color: gray;
+}
+.info {
+    font-size: 14px;
+    text-align: center;
+    color: #777;
+    display: none;
+}
+
+#info {
+    font-size: 20px;
+    text-align: center;
+    color: #777;
+    visibility: hidden;
+}
+#results {
+    font-size: 14px;
+    font-weight: bold;
+    border: 1px solid #ddd;
+    padding: 15px;
+    text-align: left;
+    min-height: 150px;
+}
+#start_button {
+    border: 0;
+    background-color:transparent;
+    padding: 0;
 }

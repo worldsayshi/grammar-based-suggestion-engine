@@ -22,7 +22,6 @@ import org.grammaticalframework.pgf.ParseError;
  */
 public class GrammarSearchDomain<T> {
 
-    //MARCIN TODO: trol trol case
     private final static String placeholderPrefix = "{{";
     private final static String placeholderSuffix = "}}";
     private String absGrammarName;

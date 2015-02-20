@@ -17,11 +17,6 @@
     </head>
     <body>
 
-        <div class="test">
-            <input type="button" id="speakButton" value="Click to Speak" onclick="startButton()">
-            <input type="search" id="q" name="q" size=120>
-        </div>
-
         </select-->
         <ul id="search_result"></ul>
 

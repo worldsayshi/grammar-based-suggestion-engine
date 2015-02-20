@@ -12,12 +12,8 @@
     <ul class="nav nav-tabs" role="tablist">
         <c:forEach var="domainEntry" items="${searchDomains}" varStatus="loop">
             <li role="presentation" class="<c:if test="${loop.index=='0'}">active</c:if>">
-                <a href="#${domainEntry.key}" aria-controls="home" role="tab" data-toggle="tab">${domainEntry.key}</a>
+                <a href="#${domainEntry.key}" aria-controls="home" role="tab" onclick="tabChanged()" data-toggle="tab">${domainEntry.key}</a>
             </li>
-            <%--li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home2</a></li>
-            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile222</a></li>
-            <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
-            <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li--%>
         </c:forEach>
     </ul>
 
@@ -29,7 +25,10 @@
                 <h2 id="MainTitle">${domainEntry.key} Demo</h2>
 
                 <form id="search-form-${domainEntry.key}">
-                    <input id="search-input-${domainEntry.key}" name="q" type="text" class="input-large search-input" 
+                    
+                    <input type="button" id="button-${domainEntry.key}" value="Click to Speak" onclick="startButton('${domainEntry.key}')">
+                    
+                    <input id="search-input-${domainEntry.key}" name="q" type="text" oninput="inputted()" class="input-large search-input"  
                            placeholder="Type your question.." data-searchdomain="${domainEntry.key}"></input>
                     
                     <c:if test="${fn:length(domainEntry.value) lt 2}" >
@@ -51,10 +50,6 @@
                 </form>
             </div>
         </c:forEach>
-        <%--div role="tabpanel" class="tab-pane active" id="home">home</div>
-        <div role="tabpanel" class="tab-pane" id="profile">profile</div>
-        <div role="tabpanel" class="tab-pane" id="messages">mess</div>
-        <div role="tabpanel" class="tab-pane" id="settings">sett</div--%>
     </div>
 
 </div>

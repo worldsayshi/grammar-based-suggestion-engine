@@ -71,10 +71,10 @@ recognition.onresult = function(event) {
       
     interim_text = "";
     
-    for( var i = event.resultIndex; i < event.results.length; ++i){
-        q.value += event.results[i][0].transcript;
-    }
-    
+//    for( var i = event.resultIndex; i < event.results.length; ++i){
+//        q.value += event.results[i][0].transcript;
+//    }
+//    
     for (var i = event.resultIndex; i < event.results.length; ++i) {
         if (event.results[i].isFinal) {
             final_text += event.results[i][0].transcript;
@@ -83,28 +83,65 @@ recognition.onresult = function(event) {
         }
     }
     
-    q.value = final_text + interim_text;
+    setCurrentInputText(final_text + interim_text);
+    
+    if(interim_text == ""){
+        setCurrentInputFocus();
+    }
+    //q.value = final_text + interim_text;
 };
 
 recognition.onstart = function() {
     recognizing = true;
-    speakButton.value = "Click to Stop!";
+    setCurrentButtonText("Click to Stop!");
 };
 
 recognition.onend = function() {
     recognizing = false;
-    speakButton.value = "Click to Speak!";
+    setCurrentButtonText("Click to Speak!");
 };
     
-function startButton() {
+var currentDomain = "";    
+    
+function startButton(domain) {
+    
     if (recognizing) {
         recognition.stop();
         return;
     }
-    q.value = "";
+    
+    currentDomain = domain;
+    
+    console.log("got domain: " + domain);
+    
+    setCurrentInputText("");
     interim_text = "";
     final_text = "";
 
     recognition.start();
-};    
+}; 
+
+function setCurrentButtonText(text){
+    document.getElementById("button-" + currentDomain).value = text;
+}
+
+function setCurrentInputText(text){
+    document.getElementById("search-input-" + currentDomain).value = text;
+}
+
+function setCurrentInputFocus(){ 
+    
+    document.getElementById("search-input-" + currentDomain).focus();
+}
+
+function tabChanged(){
+    if (recognizing) {
+        recognition.stop();
+        return;
+    }
+};
+
+function inputted(){
+    console.log("mamy input");
+}
 

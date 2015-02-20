@@ -1,10 +1,6 @@
 package com.findwise.grammarsearch.core;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import org.agfjord.server.result.NameResult;
 import org.agfjord.server.result.TreeResult;
 import org.apache.solr.client.solrj.SolrQuery;

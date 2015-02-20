@@ -2,22 +2,15 @@ package com.findwise.grammarsearch.web;
 
 import com.findwise.grammarsearch.SearchConfig;
 import com.findwise.grammarsearch.core.GrammarSearchDomain;
-import com.google.gson.Gson;
-import java.util.Map;
-import javax.ws.rs.core.MediaType;
 import com.findwise.grammarsearch.core.SolrGrammarSuggester;
 import com.findwise.grammarsearch.core.SolrNameSuggester;
+import com.google.gson.Gson;
 import java.util.*;
+import javax.ws.rs.core.MediaType;
 import org.grammaticalframework.pgf.ParseError;
-
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 /**

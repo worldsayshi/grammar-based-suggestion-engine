@@ -1,8 +1,6 @@
 package com.findwise.grammarsearch.core;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.agfjord.server.result.NameResult;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;

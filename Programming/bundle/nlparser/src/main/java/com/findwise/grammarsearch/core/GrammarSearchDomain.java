@@ -1,16 +1,10 @@
 package com.findwise.grammarsearch.core;
 
 import com.findwise.grammarsearch.core.SolrGrammarSuggester.GrammarLookupFailure;
-import com.findwise.grammarsearch.web.SuggestionParams;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import com.findwise.grammarsearch.util.Templating;
-import java.util.*;
+import com.findwise.grammarsearch.web.SuggestionParams;
 import java.util.Map.Entry;
+import java.util.*;
 import org.agfjord.server.result.NameResult;
 import org.agfjord.server.result.TreeResult;
 import org.grammaticalframework.pgf.ParseError;

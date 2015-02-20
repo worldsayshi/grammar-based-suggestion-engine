@@ -41,6 +41,18 @@
                             </c:forEach>
                         </select>
                     </c:if>
+
+
+                    <!-- parameters hardcoded for now-->
+                    <c:if test="${domainEntry.key eq 'vasttrafik'}">
+                        <input name="norep" type="hidden" value="station" />
+                        <input name="add" type="hidden" value="2" />
+                    </c:if>
+
+                    <c:if test="${domainEntry.key eq 'precisionSearch'}">
+                        <input name="norep" type="hidden" value="skill,organization,location" />
+                        <input name="add" type="hidden" value="2" />
+                    </c:if>
                 </form>
             </div>
         </c:forEach>

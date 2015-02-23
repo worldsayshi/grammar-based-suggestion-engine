@@ -70,11 +70,7 @@ var interim_text = "";
 recognition.onresult = function(event) {
       
     interim_text = "";
-    
-//    for( var i = event.resultIndex; i < event.results.length; ++i){
-//        q.value += event.results[i][0].transcript;
-//    }
-//    
+     
     for (var i = event.resultIndex; i < event.results.length; ++i) {
         if (event.results[i].isFinal) {
             final_text += event.results[i][0].transcript;
@@ -82,13 +78,8 @@ recognition.onresult = function(event) {
             interim_text += event.results[i][0].transcript;
         }
     }
-    
+   
     setCurrentInputText(final_text + interim_text);
-    
-    if(interim_text == ""){
-        setCurrentInputFocus();
-    }
-    //q.value = final_text + interim_text;
 };
 
 recognition.onstart = function() {
@@ -121,17 +112,16 @@ function startButton(domain) {
     recognition.start();
 }; 
 
-function setCurrentButtonText(text){
+function setCurrentButtonText(text){    
     document.getElementById("button-" + currentDomain).value = text;
 }
 
 function setCurrentInputText(text){
-    document.getElementById("search-input-" + currentDomain).value = text;
-}
+    $('#search-input-' + currentDomain).focus();
+    $('#search-input-' + currentDomain).typeahead('val','blabla');
 
-function setCurrentInputFocus(){ 
-    
-    document.getElementById("search-input-" + currentDomain).focus();
+    $('#search-input-' + currentDomain).focus();
+    $('#search-input-' + currentDomain).typeahead('val',text);
 }
 
 function tabChanged(){

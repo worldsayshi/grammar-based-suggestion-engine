@@ -1,18 +1,12 @@
 package com.findwise.grammarsearch.core;
 
 import com.findwise.crescent.model.Location;
-import com.findwise.crescent.model.StopLocation;
 import com.findwise.crescent.model.TripList;
 import com.findwise.crescent.rest.MeansOfTransport;
 import com.findwise.crescent.rest.VasttrafikQuery;
 import com.findwise.crescent.rest.VasttrafikRestClient;
 import java.util.*;
-import org.grammaticalframework.pgf.Concr;
-import org.grammaticalframework.pgf.Expr;
-import org.grammaticalframework.pgf.ExprProb;
-import org.grammaticalframework.pgf.NercLiteralCallback;
-import org.grammaticalframework.pgf.PGF;
-import org.grammaticalframework.pgf.ParseError;
+import org.grammaticalframework.pgf.*;
 
 /**
  *

@@ -49,7 +49,7 @@ public class GrammarSearchDomain<T> {
      */
     public List<String> suggestSentences(String nlQuestion, String concreteLang, SuggestionParams params)
             throws Exception, SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed {
-        List<Suggestion> questions = new LinkedList<>();
+        List<Suggestion> questions = new ArrayList<>();
 
         nlQuestion = nlQuestion.toLowerCase();
         Interpretations interpretations = interpretNamesOfNLQuestion(nlQuestion, params.getMaxInterpretations(), params);
@@ -97,7 +97,7 @@ public class GrammarSearchDomain<T> {
 
                     while (missingCountsIterator.hasNext()) {
                         String missingNameType = missingCountsIterator.next();
-                        List<NameResult> forbiddenNames = new LinkedList<>(namesInQuestion);
+                        List<NameResult> forbiddenNames = new ArrayList<>(namesInQuestion);
 
                         for (int i = 0; i < missingCounts.counts.get(missingNameType); i++) {
 
@@ -155,7 +155,7 @@ public class GrammarSearchDomain<T> {
      * Converts suggestions list to their string representations
      */
     private List<String> suggestionsToStringList(List<Suggestion> suggestions) {
-        List<String> result = new LinkedList<>();
+        List<String> result = new ArrayList<>();
 
         for (Suggestion suggestion : suggestions) {
             result.add(suggestion.getText());
@@ -361,24 +361,22 @@ public class GrammarSearchDomain<T> {
             return Arrays.asList(new Suggestion(linearization, true, input.getAdditionalNamesCount(), input.getAddtionalGrammarWords(), input.getAlteredGrammarWordsCount()));
         }
 
-        int index = 0;
         while (true) {
             String currentSuggestion = linearization;
             boolean allNamesFilled = true;
 
             for (List<NameResult> currentNames : additionalNames) {
 
-                if (currentNames.size() <= index) {
+                if (currentNames.size() <= suggestions.size()) {
                     allNamesFilled = false;
                     break;
                 }
 
-                currentSuggestion = fillTemplate(currentSuggestion, currentNames.get(index));
+                currentSuggestion = fillTemplate(currentSuggestion, currentNames.get(suggestions.size()));
             }
 
             if (allNamesFilled) {
                 suggestions.add(new Suggestion(currentSuggestion, true, input.getAdditionalNamesCount(), input.getAddtionalGrammarWords(), input.getAlteredGrammarWordsCount()));
-                index++;
             }
             else {
                 break;
@@ -527,7 +525,7 @@ public class GrammarSearchDomain<T> {
             return;
         }
 
-        List<Interpretation> toBeRemoved = new LinkedList<>();
+        List<Interpretation> toBeRemoved = new ArrayList<>();
         
         for(Interpretation current : namesInterpretations){
   

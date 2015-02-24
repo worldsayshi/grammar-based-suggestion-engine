@@ -50,7 +50,7 @@ public class SolrGrammarSuggester {
     } 
     
     /**
-     * Returns a list of grammar rules that match give query
+     * Returns a list of grammar rules that match given query
      * @param template natural language query that has names replaced by name placeholders
      * @param concreteLang natural language used
      * @param namesInQuestion names in query
@@ -60,7 +60,9 @@ public class SolrGrammarSuggester {
      * @return list of rules matching given constraints
      * @throws com.findwise.grammarsearch.core.SolrGrammarSuggester.GrammarLookupFailure 
      */
-    public List<TreeResult> suggestRules(String template, String concreteLang, List<NameResult> namesInQuestion, int maxRules, boolean useSimiliarity, int similiarity) throws GrammarLookupFailure {
+    public List<TreeResult> suggestRules(String template, String concreteLang, 
+            List<NameResult> namesInQuestion, int maxRules, boolean useSimiliarity, 
+            int similiarity) throws GrammarLookupFailure {
         SolrQuery treesQuery = new SolrQuery();
         // 
         treesQuery.setRows(maxRules);

@@ -35,7 +35,7 @@ public class SuggestionParams {
     //whether or not to enable continue behavior
     private boolean enableContinue = DEFAULT_CONTINUE;
     
-    //whether or not to enable later behavior
+    //whether or not to enable alter behavior
     private boolean enableAlter = DEFAULT_ALTER;
     
     //similiarity of suggestions when using alter behavior 

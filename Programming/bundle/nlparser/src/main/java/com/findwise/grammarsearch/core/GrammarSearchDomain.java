@@ -59,10 +59,12 @@ public class GrammarSearchDomain<T> {
         List<Suggestion> questions = new LinkedList<>();
 
         nlQuestion = nlQuestion.toLowerCase();
-        Interpretations interpretations = interpretNamesOfNLQuestion(nlQuestion, params.getMaxInterpretations(), params);
+        Interpretations interpretations = interpretNamesOfNLQuestion(
+                nlQuestion, params.getMaxInterpretations(), params);
 
         //find out whether the query is complete / partial / invalid and choose right suggestion behavior
-        SuggestionBehaviors behavior = chooseBehavior(nlQuestion, interpretations, params, concreteLang);
+        SuggestionBehaviors behavior = chooseBehavior(
+                nlQuestion, interpretations, params, concreteLang);
 
         if (behavior.isSkipSuggestions()) {
             return Collections.EMPTY_LIST;
@@ -73,15 +75,21 @@ public class GrammarSearchDomain<T> {
 
             String template = templateCandidate(nlQuestion, namesInQuestion);
 
-            List<TreeResult> templateLinearizationDocs = grammarSuggester.suggestRules(template, concreteLang, namesInQuestion,
-                    behavior.isUseSimiliarity(), behavior.isTakeParamSimiliarity() ? params.getAlterSimiliarity() : behavior.getSimiliarity());
+            List<TreeResult> templateLinearizationDocs = grammarSuggester.suggestRules(
+                    template, concreteLang, namesInQuestion,
+                    behavior.isUseSimiliarity(), 
+                    behavior.isTakeParamSimiliarity() 
+                            ? params.getAlterSimiliarity() 
+                            : behavior.getSimiliarity());
 
             for (TreeResult templateLinearizationDoc : templateLinearizationDocs) {
 
                 NameTypeCounts missingCounts = countMissingName(
                         namesInQuestion, templateLinearizationDoc);
 
-                Suggestion linearization = getBestLinearization(templateLinearizationDoc.getLinearizations(), current, interpretations.getWordTypes(), behavior.isAllMustMatch());
+                Suggestion linearization = getBestLinearization(
+                        templateLinearizationDoc.getLinearizations(), current, 
+                        interpretations.getWordTypes(), behavior.isAllMustMatch());
 
                 if (linearization == null) {
                     continue;
@@ -174,7 +182,10 @@ public class GrammarSearchDomain<T> {
     /*
      * Analysing the query and parameters and choosing the right behavior
      */
-    private SuggestionBehaviors chooseBehavior(String nlQuestion, Interpretations interpretations, SuggestionParams params, String concreteLang) throws GrammarLookupFailure {
+    private SuggestionBehaviors chooseBehavior(String nlQuestion, 
+            Interpretations interpretations, 
+            SuggestionParams params, 
+            String concreteLang) throws GrammarLookupFailure {
 
         boolean continuePossible = params.isEnableContinue() && nlQuestion.endsWith(params.getContinueHint());
         boolean alterPossible = params.isEnableAlter() && !nlQuestion.endsWith(params.getContinueHint());
@@ -184,7 +195,8 @@ public class GrammarSearchDomain<T> {
         for (Interpretation interpretation : interpretations.getInterpretations()) {
             List<NameResult> nameTypes = interpretation.getNameResults();
             String template = templateCandidate(nlQuestion, nameTypes);
-            List<TreeResult> suggestRules = grammarSuggester.suggestRules(template, concreteLang, nameTypes, 1, false, 0);
+            List<TreeResult> suggestRules = grammarSuggester.suggestRules(
+                    template, concreteLang, nameTypes, 1, false, 0);
 
             if (suggestRules.isEmpty()) {
                 continue;
@@ -365,7 +377,11 @@ public class GrammarSearchDomain<T> {
             throw new InternalError("No suggestions for unknown template variables.");
         }
         if (nrUnknowns == 0) {
-            return Arrays.asList(new Suggestion(linearization, true, input.getAdditionalNamesCount(), input.getAddtionalGrammarWords(), input.getAlteredGrammarWordsCount()));
+            return Arrays.asList(new Suggestion(
+                    linearization, 
+                    true, input.getAdditionalNamesCount(), 
+                    input.getAddtionalGrammarWords(), 
+                    input.getAlteredGrammarWordsCount()));
         }
 
         int index = 0;
@@ -384,7 +400,11 @@ public class GrammarSearchDomain<T> {
             }
 
             if (allNamesFilled) {
-                suggestions.add(new Suggestion(currentSuggestion, true, input.getAdditionalNamesCount(), input.getAddtionalGrammarWords(), input.getAlteredGrammarWordsCount()));
+                suggestions.add(new Suggestion(
+                        currentSuggestion, true, 
+                        input.getAdditionalNamesCount(), 
+                        input.getAddtionalGrammarWords(), 
+                        input.getAlteredGrammarWordsCount()));
                 index++;
             }
             else {
@@ -453,7 +473,8 @@ public class GrammarSearchDomain<T> {
 
     // Returning a list of interpretations
     // Each template has a list of potential names found in the natural language question
-    private Interpretations interpretNamesOfNLQuestion(String nlQuestion, int maxNumOfInterpretations, SuggestionParams params)
+    private Interpretations interpretNamesOfNLQuestion(
+            String nlQuestion, int maxNumOfInterpretations, SuggestionParams params)
             throws SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed {
 
         Map<String, WordType> wordTypes = new HashMap<>();

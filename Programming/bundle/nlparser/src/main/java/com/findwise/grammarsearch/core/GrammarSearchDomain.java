@@ -234,7 +234,8 @@ public class GrammarSearchDomain<T> {
         public int compare(Suggestion sugg1, Suggestion sugg2) {
 
             //less altered word first
-            int diff = sugg1.getAlteredGrammarWordsCount() - sugg2.getAlteredGrammarWordsCount();
+            int diff = sugg1.getAlteredGrammarWordsCount() 
+                    - sugg2.getAlteredGrammarWordsCount();
 
             if (diff != 0) {
                 return diff;

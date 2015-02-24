@@ -57,7 +57,7 @@ public class GrammarSearchDomain<T> {
         //find out whether the query is complete / partial / invalid and choose right suggestion behavior
         SuggestionBehaviors behavior = chooseBehavior(nlQuestion, interpretations, params, concreteLang);
 
-        if (behavior.isSkipSuggestions()) {
+        if (behavior.contains(BehaviorDetails.SkipSuggestions)) {
             return Collections.EMPTY_LIST;
         }
 
@@ -67,14 +67,14 @@ public class GrammarSearchDomain<T> {
             String template = templateCandidate(nlQuestion, namesInQuestion);
 
             List<TreeResult> templateLinearizationDocs = grammarSuggester.suggestRules(template, concreteLang, namesInQuestion,
-                    behavior.isUseSimiliarity(), behavior.isTakeParamSimiliarity() ? params.getAlterSimiliarity() : behavior.getSimiliarity());
+                    behavior.contains(BehaviorDetails.UseSimiliarity), behavior.contains(BehaviorDetails.TakeParamSimiliarity) ? params.getAlterSimiliarity() : behavior.getSimiliarity());
 
             for (TreeResult templateLinearizationDoc : templateLinearizationDocs) {
 
                 NameTypeCounts missingCounts = countMissingName(
                         namesInQuestion, templateLinearizationDoc);
 
-                Suggestion linearization = getBestLinearization(templateLinearizationDoc.getLinearizations(), current, interpretations.getWordTypes(), behavior.isAllMustMatch());
+                Suggestion linearization = getBestLinearization(templateLinearizationDoc.getLinearizations(), current, interpretations.getWordTypes(), behavior.contains(BehaviorDetails.AllMustMatch));
 
                 if (linearization == null) {
                     continue;
@@ -127,7 +127,7 @@ public class GrammarSearchDomain<T> {
         filterSuggestions(questions, behavior);
         Collections.sort(questions, suggestionComparator);
 
-        return suggestionsToStringList(questions.subList(0, behavior.isJustOneResult() ? 1 : Math.min(questions.size(), params.getMaxSuggestions())));
+        return suggestionsToStringList(questions.subList(0, behavior.contains(BehaviorDetails.JustOneResult) ? 1 : Math.min(questions.size(), params.getMaxSuggestions())));
     }
 
     /*
@@ -140,12 +140,12 @@ public class GrammarSearchDomain<T> {
             Suggestion suggestion = iterator.next();
 
             //remove those losing valid information if not allowed
-            if (!behavior.isAcceptLostInfo() && suggestion.getAlteredGrammarWordsCount() > 0) {
+            if (!behavior.contains(BehaviorDetails.AcceptLostInfo) && suggestion.getAlteredGrammarWordsCount() > 0) {
                 iterator.remove();
             }
 
             //remove those that only add information if not allowed
-            if (!behavior.isAcceptOnlyAdditions() && suggestion.getAlteredGrammarWordsCount() == 0 && suggestion.getAdditionalNamesCount() + suggestion.getAddtionalGrammarWords() > 0) {
+            if (!behavior.contains(BehaviorDetails.AcceptOnlyAdditions) && suggestion.getAlteredGrammarWordsCount() == 0 && suggestion.getAdditionalNamesCount() + suggestion.getAddtionalGrammarWords() > 0) {
                 iterator.remove();
             }
         }

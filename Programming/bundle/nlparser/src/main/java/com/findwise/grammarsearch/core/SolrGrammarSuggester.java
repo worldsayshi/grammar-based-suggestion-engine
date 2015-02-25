@@ -63,7 +63,7 @@ public class SolrGrammarSuggester {
         // 
         treesQuery.setRows(maxRules);
         treesQuery.setQuery("linearizations:" + ClientUtils.escapeQueryChars(template)
-                + " " + boostByTypeQuery(namesInQuestion));
+                + boostByTypeQuery(namesInQuestion));
         treesQuery.addFilterQuery("lang:" + concreteLang);
 
         // Sorting based on suggestion length and score
@@ -106,7 +106,7 @@ public class SolrGrammarSuggester {
         String res = "";
         for (String typeName : namesByType.keySet()) {
             int count = namesByType.get(typeName).size();
-            res += typeName + "_i:" + count;
+            res += " " + typeName + "_i:" + count;
         }
         return res;
     }

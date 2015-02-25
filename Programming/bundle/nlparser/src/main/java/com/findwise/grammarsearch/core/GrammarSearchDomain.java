@@ -18,6 +18,7 @@ public class GrammarSearchDomain<T> {
 
     private final static String placeholderPrefix = "{{";
     private final static String placeholderSuffix = "}}";
+    private final static String CONTINUE_HINT = " ";
     private String absGrammarName;
     private SolrGrammarSuggester grammarSuggester;
     private SolrNameSuggester nameSuggester;
@@ -183,8 +184,8 @@ public class GrammarSearchDomain<T> {
             SuggestionParams params,
             String concreteLang) throws GrammarLookupFailure {
 
-        boolean continuePossible = params.isEnableContinue() && nlQuestion.endsWith(params.getContinueHint());
-        boolean alterPossible = params.isEnableAlter() && !nlQuestion.endsWith(params.getContinueHint());
+        boolean continuePossible = params.isEnableContinue() && nlQuestion.endsWith(CONTINUE_HINT);
+        boolean alterPossible = params.isEnableAlter() && !nlQuestion.endsWith(CONTINUE_HINT);
 
         SuggestionBehaviors result = SuggestionBehaviors.DoNotSuggest;
 

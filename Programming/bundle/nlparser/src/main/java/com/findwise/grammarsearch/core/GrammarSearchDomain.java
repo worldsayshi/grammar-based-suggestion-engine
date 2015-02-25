@@ -330,7 +330,7 @@ public class GrammarSearchDomain<T> {
         for (String word : words) {
 
             //name word
-            if (word.startsWith(placeholderPrefix) && word.endsWith(placeholderSuffix)) {
+            if (defTempl.isVariable(word)) {
                 String type = word.substring(2, word.length() - 2);
                 if (namesMissing.containsKey(type)) {
                     Integer count = namesMissing.get(type);
@@ -347,10 +347,10 @@ public class GrammarSearchDomain<T> {
             }
             //grammar word
             else {
-                String lowWord = word.toLowerCase();
+                String lowerCaseWord = word.toLowerCase();
 
-                if (wordsNotMatched.contains(lowWord)) {
-                    wordsNotMatched.remove(lowWord);
+                if (wordsNotMatched.contains(lowerCaseWord)) {
+                    wordsNotMatched.remove(lowerCaseWord);
                 }
                 else {
                     addGrammarWordsCount++;

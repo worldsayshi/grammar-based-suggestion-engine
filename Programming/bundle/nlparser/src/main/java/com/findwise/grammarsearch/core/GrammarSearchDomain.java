@@ -70,10 +70,10 @@ public class GrammarSearchDomain<T> {
 
             List<TreeResult> templateLinearizationDocs = grammarSuggester.suggestRules(
                     template, concreteLang, namesInQuestion,
-                    behavior.contains(BehaviorDetails.UseSimiliarity), 
-                    behavior.contains(BehaviorDetails.TakeParamSimiliarity) 
-                            ? params.getAlterSimiliarity() 
-                            : behavior.getSimiliarity());
+                    behavior.contains(BehaviorDetails.UseSimiliarity),
+                    behavior.contains(BehaviorDetails.TakeParamSimiliarity)
+                    ? params.getAlterSimiliarity()
+                    : behavior.getSimiliarity());
 
             for (TreeResult templateLinearizationDoc : templateLinearizationDocs) {
 
@@ -81,8 +81,8 @@ public class GrammarSearchDomain<T> {
                         namesInQuestion, templateLinearizationDoc);
 
                 Suggestion linearization = getBestLinearization(
-                        templateLinearizationDoc.getLinearizations(), 
-                        current, interpretations.getWordTypes(), 
+                        templateLinearizationDoc.getLinearizations(),
+                        current, interpretations.getWordTypes(),
                         behavior.contains(BehaviorDetails.AllMustMatch));
 
                 if (linearization == null) {
@@ -154,8 +154,8 @@ public class GrammarSearchDomain<T> {
             }
 
             //remove those that only add information if not allowed
-            if (!behavior.contains(BehaviorDetails.AcceptOnlyAdditions) 
-                    && suggestion.getAlteredGrammarWordsCount() == 0 
+            if (!behavior.contains(BehaviorDetails.AcceptOnlyAdditions)
+                    && suggestion.getAlteredGrammarWordsCount() == 0
                     && suggestion.getAdditionalNamesCount() + suggestion.getAdditionalGrammarWords() > 0) {
                 iterator.remove();
             }
@@ -178,9 +178,9 @@ public class GrammarSearchDomain<T> {
     /*
      * Analysing the query and parameters and choosing the right behavior
      */
-    private SuggestionBehaviors chooseBehavior(String nlQuestion, 
-            Interpretations interpretations, 
-            SuggestionParams params, 
+    private SuggestionBehaviors chooseBehavior(String nlQuestion,
+            Interpretations interpretations,
+            SuggestionParams params,
             String concreteLang) throws GrammarLookupFailure {
 
         boolean continuePossible = params.isEnableContinue() && nlQuestion.endsWith(params.getContinueHint());
@@ -198,11 +198,11 @@ public class GrammarSearchDomain<T> {
                 continue;
             }
 
-            Suggestion bestSuggestion = getBestLinearization(suggestRules.get(0).getLinearizations(), 
+            Suggestion bestSuggestion = getBestLinearization(suggestRules.get(0).getLinearizations(),
                     interpretation, interpretations.getWordTypes(), false);
 
             // the query is complete: give alter or continue suggestions if enabled
-            if (template.trim().equalsIgnoreCase(bestSuggestion.getText().trim()) 
+            if (template.trim().equalsIgnoreCase(bestSuggestion.getText().trim())
                     && interpretations.isAllNamesComplete()) {
                 if (continuePossible) {
                     result = SuggestionBehaviors.Continue;
@@ -234,29 +234,29 @@ public class GrammarSearchDomain<T> {
         public int compare(Suggestion sugg1, Suggestion sugg2) {
 
             //less altered word first
-            int comparisionResult = sugg1.getAlteredGrammarWordsCount() 
+            int comparisionResult = sugg1.getAlteredGrammarWordsCount()
                     - sugg2.getAlteredGrammarWordsCount();
 
             if (comparisionResult != 0) {
                 return comparisionResult;
             }
 
-            //less added info first
-            comparisionResult = sugg1.getAdditionalNamesCount() + sugg1.getAdditionalGrammarWords() 
+            //if tied: less added info first
+            comparisionResult = sugg1.getAdditionalNamesCount() + sugg1.getAdditionalGrammarWords()
                     - (sugg2.getAdditionalNamesCount() + sugg2.getAdditionalGrammarWords());
 
             if (comparisionResult != 0) {
                 return comparisionResult;
             }
 
-            //less words first
+            //if tied: less words first
             comparisionResult = sugg1.getWordsCount() - sugg2.getWordsCount();
 
             if (comparisionResult == 0) {
                 return comparisionResult;
             }
 
-            //shortest text first
+            //if tied: shortest text first
             return sugg1.getText().length() - sugg2.getText().length();
         }
     }
@@ -265,15 +265,15 @@ public class GrammarSearchDomain<T> {
      * Chooses the best matching linearization from the ones available for a
      * single rule. Returns null if none of the linearization is valid.
      */
-    private Suggestion getBestLinearization(List<String> linearizations, 
-            Interpretation interpretation, 
+    private Suggestion getBestLinearization(List<String> linearizations,
+            Interpretation interpretation,
             Map<String, WordType> originalWords, boolean matchAllWords) {
 
         Suggestion best = null;
 
         for (String current : linearizations) {
             Suggestion suggestion = buildSuggestion(
-                    current, interpretation, 
+                    current, interpretation,
                     originalWords, matchAllWords);
 
             if (suggestion != null) {
@@ -282,18 +282,18 @@ public class GrammarSearchDomain<T> {
                 }
                 else {
                     //prefer linearizations altering less words
-                    int diff = best.getAlteredGrammarWordsCount() 
+                    int comparisionResult = best.getAlteredGrammarWordsCount()
                             - suggestion.getAlteredGrammarWordsCount();
 
-                    //prefer linearizations adding less words
-                    if (diff == 0) {
-                        diff = best.getAdditionalNamesCount() 
-                                + best.getAdditionalGrammarWords() 
-                                - (suggestion.getAdditionalNamesCount() 
+                    //if tied prefer linearizations adding less words
+                    if (comparisionResult == 0) {
+                        comparisionResult = best.getAdditionalNamesCount()
+                                + best.getAdditionalGrammarWords()
+                                - (suggestion.getAdditionalNamesCount()
                                 + suggestion.getAdditionalGrammarWords());
                     }
 
-                    if (diff > 0) {
+                    if (comparisionResult > 0) {
                         best = suggestion;
                     }
                 }
@@ -307,16 +307,15 @@ public class GrammarSearchDomain<T> {
      * Builds a Suggestion object from linearization string collecting info
      * about words added / altered etc
      */
-    private Suggestion buildSuggestion(String linearization, 
-            Interpretation interpretation, 
+    private Suggestion buildSuggestion(String linearization,
+            Interpretation interpretation,
             Map<String, WordType> originalWords, boolean matchAllWords) {
         String[] words = linearization.split("\\s+");
-
 
         Map<String, Integer> namesMissing = new HashMap(
                 interpretation.getNameTypeCounts().counts);
 
-        int addNamesCount = 0;
+        int additionalNamesCount = 0;
 
         Set<String> wordsNotMatched = new HashSet<>(originalWords.keySet());
         for (Entry<String, WordType> entry : originalWords.entrySet()) {
@@ -324,25 +323,25 @@ public class GrammarSearchDomain<T> {
                 wordsNotMatched.remove(entry.getKey());
             }
         }
-        int addGrammarWordsCount = 0;
+        int additionalGrammarWordsCount = 0;
 
 
         for (String word : words) {
 
             //name word
             if (defTempl.isVariable(word)) {
-                String type = word.substring(2, word.length() - 2);
-                if (namesMissing.containsKey(type)) {
-                    Integer count = namesMissing.get(type);
-                    if (count > 1) {
-                        namesMissing.put(type, count - 1);
+                String nameType = word.substring(2, word.length() - 2);
+                if (namesMissing.containsKey(nameType)) {
+                    Integer missingCount = namesMissing.get(nameType);
+                    if (missingCount > 1) {
+                        namesMissing.put(nameType, missingCount - 1);
                     }
                     else {
-                        namesMissing.remove(type);
+                        namesMissing.remove(nameType);
                     }
                 }
                 else {
-                    addNamesCount++;
+                    additionalNamesCount++;
                 }
             }
             //grammar word
@@ -353,7 +352,7 @@ public class GrammarSearchDomain<T> {
                     wordsNotMatched.remove(lowerCaseWord);
                 }
                 else {
-                    addGrammarWordsCount++;
+                    additionalGrammarWordsCount++;
                 }
             }
         }
@@ -364,10 +363,10 @@ public class GrammarSearchDomain<T> {
         }
 
         int grammarWordsAltered = wordsNotMatched.size();
-        int grammarWordsAdded = addGrammarWordsCount - grammarWordsAltered;
+        int grammarWordsAdded = additionalGrammarWordsCount - grammarWordsAltered;
 
-        return new Suggestion(linearization, false, 
-                addNamesCount, grammarWordsAdded, grammarWordsAltered);
+        return new Suggestion(linearization, false,
+                additionalNamesCount, grammarWordsAdded, grammarWordsAltered);
     }
 
     /*
@@ -390,9 +389,9 @@ public class GrammarSearchDomain<T> {
         }
         if (nrUnknowns == 0) {
             return Arrays.asList(new Suggestion(
-                    linearization, 
-                    true, input.getAdditionalNamesCount(), 
-                    input.getAdditionalGrammarWords(), 
+                    linearization,
+                    true, input.getAdditionalNamesCount(),
+                    input.getAdditionalGrammarWords(),
                     input.getAlteredGrammarWordsCount()));
         }
 
@@ -407,7 +406,7 @@ public class GrammarSearchDomain<T> {
                     break;
                 }
 
-                currentSuggestion = fillTemplate(currentSuggestion, 
+                currentSuggestion = fillTemplate(currentSuggestion,
                         currentNames.get(suggestions.size()));
             }
 
@@ -483,8 +482,10 @@ public class GrammarSearchDomain<T> {
         return template;
     }
 
-    // Returning a list of interpretations
-    // Each template has a list of potential names found in the natural language question
+    /*
+     * Returning a list of interpretations
+     * Each template has a list of potential names found in the natural language question
+     */
     private Interpretations interpretNamesOfNLQuestion(
             String nlQuestion, int maxNumOfInterpretations, SuggestionParams params)
             throws SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed {
@@ -516,36 +517,11 @@ public class GrammarSearchDomain<T> {
                 continue;
             }
             else { //name
-
                 wordTypes.put(word, WordType.Name);
                 anyKnownName = true;
 
-                if (namesInterpretations.isEmpty()) {
-                    List<Interpretation> new_interpretations = new ArrayList<>();
-                    for (NameResult nameResult : nameResults) {
-                        nameResult.setOriginalName(word);
-                        new_interpretations.add(new Interpretation(
-                                new ArrayList<>(Arrays.asList(nameResult))));
-                    }
-                    namesInterpretations = new_interpretations;
-                }
-                else {
-                    List<Interpretation> new_interpretations = new ArrayList<>();
-                    for (Interpretation interpretation : namesInterpretations) {
-                        if (new_interpretations.size() >= maxNumOfInterpretations) {
-                            break;
-                        }
-                        for (int i = 0; i < nameResults.size(); i++) {
-                            NameResult altName = nameResults.get(i);
-                            altName.setOriginalName(word);
-                            ArrayList<NameResult> new_interpretation = new ArrayList<>(
-                                    interpretation.getNameResults());
-                            new_interpretation.add(altName);
-                            new_interpretations.add(new Interpretation(new_interpretation));
-                        }
-                    }
-                    namesInterpretations = new_interpretations;
-                }
+                namesInterpretations = updateInterpreatations(namesInterpretations,
+                        nameResults, word, maxNumOfInterpretations);
             }
         }
 
@@ -560,7 +536,47 @@ public class GrammarSearchDomain<T> {
     }
 
     /*
-     * Checks if generated name interpretations produced any unneed duplications and removes them if possible
+     * Updates list of interpretations by adding new information contained in
+     * nameResults
+     */
+    private List<Interpretation> updateInterpreatations(List<Interpretation> namesInterpretations, 
+            List<NameResult> nameResults, String word, int maxNumOfInterpretations) {
+
+        //nothing added before - just create one interpretation for each nameResult
+        if (namesInterpretations.isEmpty()) {
+            List<Interpretation> newInterpretations = new ArrayList<>();
+            for (NameResult nameResult : nameResults) {
+                nameResult.setOriginalName(word);
+                newInterpretations.add(new Interpretation(
+                        new ArrayList<>(Arrays.asList(nameResult))));
+            }
+            namesInterpretations = newInterpretations;
+        }
+        //merge current name results with previous interpretations
+        else {
+            List<Interpretation> newInterpretations = new ArrayList<>();
+            for (Interpretation interpretation : namesInterpretations) {
+                if (newInterpretations.size() >= maxNumOfInterpretations) {
+                    break;
+                }
+                for (int i = 0; i < nameResults.size(); i++) {
+                    NameResult altName = nameResults.get(i);
+                    altName.setOriginalName(word);
+                    ArrayList<NameResult> newInterpretation = new ArrayList<>(
+                            interpretation.getNameResults());
+                    newInterpretation.add(altName);
+                    newInterpretations.add(new Interpretation(newInterpretation));
+                }
+            }
+            namesInterpretations = newInterpretations;
+        }
+
+        return namesInterpretations;
+    }
+
+    /*
+     * Checks if generated name interpretations produced any unneed duplications
+     * and removes them if possible
      */
     private void avoidNameDuplicates(List<Interpretation> namesInterpretations, SuggestionParams params) {
 
@@ -570,37 +586,37 @@ public class GrammarSearchDomain<T> {
         }
 
         List<Interpretation> toBeRemoved = new ArrayList<>();
-        
-        for(Interpretation current : namesInterpretations){
-  
+
+        for (Interpretation current : namesInterpretations) {
+
             //prepare occurences sets
-            Map<String,Set<String>> nameTypeOccurences = new HashMap<>();
-            for(String nameType : current.getNameTypeCounts().counts.keySet()){
-                if(params.getNoRepetitionTypes().contains(nameType.toLowerCase())){
+            Map<String, Set<String>> nameTypeOccurences = new HashMap<>();
+            for (String nameType : current.getNameTypeCounts().counts.keySet()) {
+                if (params.getNoRepetitionTypes().contains(nameType.toLowerCase())) {
                     nameTypeOccurences.put(nameType.toLowerCase(), new HashSet<String>());
                 }
             }
-            
+
             //collect occurences watching for duplicates
-            for(NameResult name : current.getNameResults()){
-                if(params.getNoRepetitionTypes().contains(name.getType().toLowerCase())){
-                    
-                    if(!nameTypeOccurences.get(name.getType().toLowerCase()).add(name.getName())){
+            for (NameResult name : current.getNameResults()) {
+                if (params.getNoRepetitionTypes().contains(name.getType().toLowerCase())) {
+
+                    if (!nameTypeOccurences.get(name.getType().toLowerCase()).add(name.getName())) {
                         //duplicate detected, removing this interpretation
                         toBeRemoved.add(current);
                     }
                 }
             }
         }
-        
+
         //all interpetations identified as containing duplicates
         //impossible to avoid duplicates
         //fallback to not removing anything
-        if(toBeRemoved.size() == namesInterpretations.size()){
+        if (toBeRemoved.size() == namesInterpretations.size()) {
             return;
         }
-        
-        for(Interpretation current : toBeRemoved){
+
+        for (Interpretation current : toBeRemoved) {
             namesInterpretations.remove(current);
         }
     }

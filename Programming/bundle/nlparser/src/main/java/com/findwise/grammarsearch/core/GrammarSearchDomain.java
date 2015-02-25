@@ -234,26 +234,26 @@ public class GrammarSearchDomain<T> {
         public int compare(Suggestion sugg1, Suggestion sugg2) {
 
             //less altered word first
-            int diff = sugg1.getAlteredGrammarWordsCount() 
+            int comparisionResult = sugg1.getAlteredGrammarWordsCount() 
                     - sugg2.getAlteredGrammarWordsCount();
 
-            if (diff != 0) {
-                return diff;
+            if (comparisionResult != 0) {
+                return comparisionResult;
             }
 
             //less added info first
-            diff = sugg1.getAdditionalNamesCount() + sugg1.getAdditionalGrammarWords() 
+            comparisionResult = sugg1.getAdditionalNamesCount() + sugg1.getAdditionalGrammarWords() 
                     - (sugg2.getAdditionalNamesCount() + sugg2.getAdditionalGrammarWords());
 
-            if (diff != 0) {
-                return diff;
+            if (comparisionResult != 0) {
+                return comparisionResult;
             }
 
             //less words first
-            diff = sugg1.getWordsCount() - sugg2.getWordsCount();
+            comparisionResult = sugg1.getWordsCount() - sugg2.getWordsCount();
 
-            if (diff == 0) {
-                return diff;
+            if (comparisionResult == 0) {
+                return comparisionResult;
             }
 
             //shortest text first

@@ -41,10 +41,6 @@ public class SuggestionParams {
     //similiarity of suggestions when using alter behavior 
     private int alterSimiliarity = DEFAULT_ALTER_SIMILIARITY;
     
-    public SuggestionParams(){
-        
-    }
-
     /**
      * @return the noRepetitionTypes
      */

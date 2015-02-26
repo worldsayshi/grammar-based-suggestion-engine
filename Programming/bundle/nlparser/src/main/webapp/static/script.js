@@ -11,7 +11,7 @@ $(function () {
     // Change hash for page-reload
     $('.nav-tabs a').on('shown', function (e) {
         window.location.hash = e.target.hash;
-    })
+    });
     
     
     

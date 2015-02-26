@@ -235,26 +235,26 @@ public class GrammarSearchDomain<T> {
         public int compare(Suggestion sugg1, Suggestion sugg2) {
 
             //less altered word first
-            int comparisionResult = sugg1.getAlteredGrammarWordsCount()
+            int alteredGrammarWordsDifference = sugg1.getAlteredGrammarWordsCount()
                     - sugg2.getAlteredGrammarWordsCount();
 
-            if (comparisionResult != 0) {
-                return comparisionResult;
+            if (alteredGrammarWordsDifference != 0) {
+                return alteredGrammarWordsDifference;
             }
 
             //if tied: less added info first
-            comparisionResult = sugg1.getAdditionalNamesCount() + sugg1.getAdditionalGrammarWords()
+            int additionalNamesDifference = sugg1.getAdditionalNamesCount() + sugg1.getAdditionalGrammarWords()
                     - (sugg2.getAdditionalNamesCount() + sugg2.getAdditionalGrammarWords());
 
-            if (comparisionResult != 0) {
-                return comparisionResult;
+            if (additionalNamesDifference != 0) {
+                return additionalNamesDifference;
             }
 
             //if tied: less words first
-            comparisionResult = sugg1.getWordsCount() - sugg2.getWordsCount();
+            int wordCountDifference = sugg1.getWordsCount() - sugg2.getWordsCount();
 
-            if (comparisionResult == 0) {
-                return comparisionResult;
+            if (wordCountDifference == 0) {
+                return wordCountDifference;
             }
 
             //if tied: shortest text first
@@ -282,19 +282,7 @@ public class GrammarSearchDomain<T> {
                     best = suggestion;
                 }
                 else {
-                    //prefer linearizations altering less words
-                    int comparisionResult = best.getAlteredGrammarWordsCount()
-                            - suggestion.getAlteredGrammarWordsCount();
-
-                    //if tied prefer linearizations adding less words
-                    if (comparisionResult == 0) {
-                        comparisionResult = best.getAdditionalNamesCount()
-                                + best.getAdditionalGrammarWords()
-                                - (suggestion.getAdditionalNamesCount()
-                                + suggestion.getAdditionalGrammarWords());
-                    }
-
-                    if (comparisionResult > 0) {
+                    if (suggestionComparator.compare(best, suggestion) > 0) {
                         best = suggestion;
                     }
                 }

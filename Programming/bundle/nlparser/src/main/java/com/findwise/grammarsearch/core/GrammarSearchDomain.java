@@ -521,7 +521,7 @@ public class GrammarSearchDomain<T> {
                 wordTypes.put(word, WordType.Name);
                 anyKnownName = true;
 
-                namesInterpretations = updateInterpreatations(namesInterpretations,
+                namesInterpretations = updateInterpretations(namesInterpretations,
                         nameResults, word, maxNumOfInterpretations);
             }
         }
@@ -540,7 +540,7 @@ public class GrammarSearchDomain<T> {
      * Updates list of interpretations by adding new information contained in
      * nameResults
      */
-    private List<Interpretation> updateInterpreatations(List<Interpretation> namesInterpretations, 
+    private List<Interpretation> updateInterpretations(List<Interpretation> namesInterpretations, 
             List<NameResult> nameResults, String word, int maxNumOfInterpretations) {
 
         //nothing added before - just create one interpretation for each nameResult

@@ -1,10 +1,6 @@
 package com.findwise.grammarsearch.core;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import org.agfjord.server.result.NameResult;
 import org.agfjord.server.result.TreeResult;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -50,7 +46,7 @@ public class SolrGrammarSuggester {
     } 
     
     /**
-     * Returns a list of grammar rules that match give query
+     * Returns a list of grammar rules that match given query
      * @param template natural language query that has names replaced by name placeholders
      * @param concreteLang natural language used
      * @param namesInQuestion names in query
@@ -60,12 +56,14 @@ public class SolrGrammarSuggester {
      * @return list of rules matching given constraints
      * @throws com.findwise.grammarsearch.core.SolrGrammarSuggester.GrammarLookupFailure 
      */
-    public List<TreeResult> suggestRules(String template, String concreteLang, List<NameResult> namesInQuestion, int maxRules, boolean useSimiliarity, int similiarity) throws GrammarLookupFailure {
+    public List<TreeResult> suggestRules(String template, String concreteLang, 
+            List<NameResult> namesInQuestion, int maxRules, boolean useSimiliarity, 
+            int similiarity) throws GrammarLookupFailure {
         SolrQuery treesQuery = new SolrQuery();
         // 
         treesQuery.setRows(maxRules);
         treesQuery.setQuery("linearizations:" + ClientUtils.escapeQueryChars(template)
-                + " " + boostByTypeQuery(namesInQuestion));
+                + boostByTypeQuery(namesInQuestion));
         treesQuery.addFilterQuery("lang:" + concreteLang);
 
         // Sorting based on suggestion length and score
@@ -108,7 +106,7 @@ public class SolrGrammarSuggester {
         String res = "";
         for (String typeName : namesByType.keySet()) {
             int count = namesByType.get(typeName).size();
-            res += typeName + "_i:" + count;
+            res += " " + typeName + "_i:" + count;
         }
         return res;
     }

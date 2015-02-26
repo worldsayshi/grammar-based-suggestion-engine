@@ -2,22 +2,15 @@ package com.findwise.grammarsearch.web;
 
 import com.findwise.grammarsearch.SearchConfig;
 import com.findwise.grammarsearch.core.GrammarSearchDomain;
-import com.google.gson.Gson;
-import java.util.Map;
-import javax.ws.rs.core.MediaType;
 import com.findwise.grammarsearch.core.SolrGrammarSuggester;
 import com.findwise.grammarsearch.core.SolrNameSuggester;
+import com.google.gson.Gson;
 import java.util.*;
+import javax.ws.rs.core.MediaType;
 import org.grammaticalframework.pgf.ParseError;
-
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -37,8 +30,6 @@ public class JSONService {
         searchDomains = ctx.getBeansOfType(GrammarSearchDomain.class);
     }
 
-    //@GET
-    //@Produces("text/html")
     @RequestMapping(method = RequestMethod.GET,
     produces = MediaType.TEXT_HTML)
     public ModelAndView index() {
@@ -55,9 +46,6 @@ public class JSONService {
         return new ModelAndView("index", model);
     }
 
-    //@GET
-    //@Path("/api/{grammarSearchDomain}/search")
-    //@Produces(MediaType.APPLICATION_JSON+";charset=UTF-8")
     @RequestMapping(value = "/api/{grammarSearchDomain}/search",
     method = RequestMethod.GET,
     produces = MediaType.APPLICATION_JSON + ";charset=UTF-8")
@@ -69,27 +57,7 @@ public class JSONService {
                 searchDomains.get(grammarSearchDomain).performQuery(question, concreteLang));
     }
 
-    //@GET
-    //@Path("/api/{grammarSearchDomain}/suggestSentences")
-    //@Produces(MediaType.APPLICATION_JSON+";charset=UTF-8")
-    /**
-     * 
-     * @param grammarSearchDomain
-     * @param question
-     * @param concreteLang
-     * @param noRepetitionTypes
-     * @param maxSuggestions
-     * @param addCombinations
-     * @param continueHint
-     * @param enableContinue
-     * @param enableAlter
-     * @param alterSimilarity
-     * @param maxInterpretations
-     * @return
-     * @throws com.findwise.grammarsearch.core.SolrGrammarSuggester.GrammarLookupFailure
-     * @throws com.findwise.grammarsearch.core.SolrNameSuggester.NameLookupFailed
-     * @throws Exception 
-     */
+
     @RequestMapping(value = "/api/{grammarSearchDomain}/suggestSentences",
     method = RequestMethod.GET,
     produces = MediaType.APPLICATION_JSON + ";charset=UTF-8")
@@ -97,55 +65,12 @@ public class JSONService {
             @PathVariable String grammarSearchDomain,
             @RequestParam(value = "q", required = true) String question,
             @RequestParam(value = "lang", required = true) String concreteLang,
-            @RequestParam(value = "norep", required = false) String noRepetitionTypes,
-            @RequestParam(value = "n", required = false) String maxSuggestions,
-            @RequestParam(value = "add", required = false) String addCombinations,
-            @RequestParam(value = "hint", required = false) String continueHint,
-            @RequestParam(value = "continue", required = false) String enableContinue,
-            @RequestParam(value = "alter", required = false) String enableAlter,
-            @RequestParam(value = "sim", required = false) String alterSimilarity,
-            @RequestParam(value = "int", required = false) String maxInterpretations) throws SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed, Exception {
-
-        SuggestionParams params = buildSuggestionParams(noRepetitionTypes, maxSuggestions, addCombinations, continueHint, enableContinue, enableAlter, alterSimilarity, maxInterpretations);
+            SuggestionParams params) throws SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed, Exception {
 
         return gson.toJson(
                 searchDomains.get(grammarSearchDomain).suggestSentences(question, concreteLang, params));
     }
 
-    private SuggestionParams buildSuggestionParams(String noRepetitionTypes, String maxSuggestions, String addCombinations, String continueHint, String enableContinue, String enableAlter, String alterSimilarity, String maxInterpretations) throws NumberFormatException {
-        SuggestionParams params = new SuggestionParams();
-        Set<String> noRepetitionTypesSet = new HashSet<>();
-        if (noRepetitionTypes != null && !noRepetitionTypes.isEmpty()) {
-            noRepetitionTypesSet.addAll(Arrays.asList(noRepetitionTypes.toLowerCase().split(",")));
-        }
-        params.setNoRepetitionTypes(noRepetitionTypesSet);
-        if (maxSuggestions != null && !maxSuggestions.isEmpty()) {
-            params.setMaxSuggestions(Integer.parseInt(maxSuggestions));
-        }
-        if (addCombinations != null && !addCombinations.isEmpty()) {
-            params.setMaxAdditionalSuggestedNames(Integer.parseInt(addCombinations));
-        }
-        if (continueHint != null && !continueHint.isEmpty()) {
-            params.setContinueHint(continueHint);
-        }
-        if (enableContinue != null && !enableContinue.isEmpty()) {
-            params.setEnableContinue(Boolean.parseBoolean(enableContinue));
-        }
-        if (enableAlter != null && !enableAlter.isEmpty()) {
-            params.setEnableAlter(Boolean.parseBoolean(enableAlter));
-        }
-        if (alterSimilarity != null && !alterSimilarity.isEmpty()) {
-            params.setAlterSimiliarity(Integer.parseInt(alterSimilarity));
-        }
-        if (maxInterpretations != null && !maxInterpretations.isEmpty()) {
-            params.setMaxInterpretations(Integer.parseInt(maxInterpretations));
-        }
-        return params;
-    }
-
-    //@GET
-    //@Path("/api/listDomains")
-    //@Produces(MediaType.APPLICATION_JSON+";charset=UTF-8")
     @RequestMapping(value = "/api/listDomains",
     method = RequestMethod.GET,
     produces = MediaType.APPLICATION_JSON + ";charset=UTF-8")

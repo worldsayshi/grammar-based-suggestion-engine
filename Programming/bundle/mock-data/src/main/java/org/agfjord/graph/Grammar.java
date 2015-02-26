@@ -71,7 +71,7 @@ public class Grammar {
 			question.setLinearizations(linearizations.get(i).toArray(new String[linearizations.get(i).size()]));
 			String linearization = linearizations.get(i).iterator().next();
             String ast = it.next();
-			Map<String,Integer> nameCounts = countTemplateVariablesByType(ast);
+			Map<String,Integer> nameCounts = countTemplateVariablesByType(linearization);
 			/*for(String nameCat : nameCats){
 				int count = 0;
 				while(linearization.contains((nameCat + count))){

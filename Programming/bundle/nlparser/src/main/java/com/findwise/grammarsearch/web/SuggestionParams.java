@@ -12,7 +12,6 @@ public class SuggestionParams {
     private static final Set<String> DEFAULT_NO_REPETITION_TYPES = Collections.EMPTY_SET;
     private static final int DEFAULT_MAX_ADDITIONAL_NAMES = 0;
     private static final int DEFAULT_MAX_INTERPRETATIONS = 10;
-    private static final String DEFAULT_HINT = " ";
     private static final boolean DEFAULT_CONTINUE = true;
     private static final boolean DEFAULT_ALTER = false;
     private static final int DEFAULT_ALTER_SIMILIARITY = 80;
@@ -28,23 +27,16 @@ public class SuggestionParams {
     
     //maximum number of name interpretations resulting in initial query analysis
     private int maxInterpretations = DEFAULT_MAX_INTERPRETATIONS;
-    
-    //hint enabling continue behavior
-    private String continueHint = DEFAULT_HINT;
-    
+      
     //whether or not to enable continue behavior
     private boolean enableContinue = DEFAULT_CONTINUE;
     
-    //whether or not to enable later behavior
+    //whether or not to enable alter behavior
     private boolean enableAlter = DEFAULT_ALTER;
     
     //similiarity of suggestions when using alter behavior 
     private int alterSimiliarity = DEFAULT_ALTER_SIMILIARITY;
     
-    public SuggestionParams(){
-        
-    }
-
     /**
      * @return the noRepetitionTypes
      */
@@ -87,19 +79,6 @@ public class SuggestionParams {
         this.maxAdditionalSuggestedNames = maxAdditionalSuggestedNames;
     }
 
-    /**
-     * @return the continueHint
-     */
-    public String getContinueHint() {
-        return continueHint;
-    }
-
-    /**
-     * @param continueHint the continueHint to set
-     */
-    public void setContinueHint(String continueHint) {
-        this.continueHint = continueHint;
-    }
 
     /**
      * @return the enableContinue

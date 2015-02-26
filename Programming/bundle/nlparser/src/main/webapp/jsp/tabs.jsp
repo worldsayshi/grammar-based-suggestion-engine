@@ -41,11 +41,17 @@
                             </c:forEach>
                         </select>
                     </c:if>
-                    <!-- parameters hardcoded for now -->
-                    <!-- make possible to change that here -->
+
+
+                    <!-- parameters hardcoded for now-->
                     <c:if test="${domainEntry.key eq 'vasttrafik'}">
-                        <input name="norep" type="hidden" value="station" />
-                        <input name="n" type="hidden" value="8" />
+                        <input name="noRepetitionTypes" type="hidden" value="station" />
+                        <input name="maxAdditionalSuggestedNames" type="hidden" value="2" />
+                    </c:if>
+
+                    <c:if test="${domainEntry.key eq 'precisionSearch'}">
+                        <input name="noRepetitionTypes" type="hidden" value="skill,organization,location" />
+                        <input name="maxAdditionalSuggestedNames" type="hidden" value="2" />
                     </c:if>
                 </form>
             </div>

@@ -1,17 +1,12 @@
 package com.findwise.grammarsearch;
 
-import com.findwise.grammarsearch.core.SolrGrammarSearchClient;
 import com.findwise.crescent.model.TripList;
-import com.findwise.grammarsearch.core.GrammarSearchDomain;
-import com.findwise.grammarsearch.core.VasttrafikGrammarSearchClient;
+import com.findwise.grammarsearch.core.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.findwise.grammarsearch.core.SolrGrammarSuggester;
-import com.findwise.grammarsearch.core.SolrNameSuggester;
 import org.apache.solr.common.SolrDocumentList;
-import org.grammaticalframework.pgf.NercLiteralCallback;
 import org.grammaticalframework.pgf.PGF;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.context.annotation.Bean;

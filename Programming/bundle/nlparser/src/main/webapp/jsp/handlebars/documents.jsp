@@ -4,7 +4,7 @@
     Author     : per.fredelius
 --%>
 
-<script id="doc_template" type="text/x-handlebars-template">
+<script class="doc-template" data-searchdomain="precisionSearch" data-docpath="" type="text/x-handlebars-template">
     <li class="document" class="media">
         <h2 class="title">{{name}}</h2>
         <div class="media-body">
@@ -15,15 +15,15 @@
         </div>
     </li>
 </script>
-<script id="vasttrafik_doc_template" type="text/x-handlebars-template">
+<script class="doc-template" data-searchdomain="vasttrafik" data-docpath="trip" type="text/x-handlebars-template">
     <li class="document">
         <ul class="list-group well">
             {{#each legList}}
             <li class="list-group-item tripLeg">
-                <span class="trip-name badge badge-info">{{name}}</span>
-                <span class="trip-from badge">Från: {{origin.name}}</span>
-                <span class="trip-to badge">Till: {{destination.name}}</span>
-                <span class="trip-time badge">Tid: {{destination.time}}</span>
+                <span class="trip-badge trip-name badge badge-info">{{name}}</span>
+                <span class="trip-badge trip-from badge">Från: {{origin.name}}</span>
+                <span class="trip-badge trip-to badge">Till: {{destination.name}}</span>
+                <span class="trip-badge trip-time badge">Tid: {{destination.time}}</span>
             </li>
             {{/each}}
         </ul>

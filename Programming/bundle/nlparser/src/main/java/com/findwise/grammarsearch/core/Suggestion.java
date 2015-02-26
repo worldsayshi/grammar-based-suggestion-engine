@@ -64,7 +64,7 @@ public class Suggestion {
     /**
      * @return the addtionalGrammarWords
      */
-    public int getAddtionalGrammarWords() {
+    public int getAdditionalGrammarWords() {
         return addtionalGrammarWords;
     }
 

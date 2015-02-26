@@ -17,11 +17,11 @@
     </head>
     <body>
 
-        </select-->
-        <ul id="search_result"></ul>
+    </select-->
+    
+    <%@include file="handlebars/documents.jsp" %>
+    <%@include file="tabs.jsp" %>
+    <ul id="search_result"></ul>
 
-
-        <%@include file="tabs.jsp" %>
-
-    </body>
+</body>
 </html>

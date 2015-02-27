@@ -21,17 +21,7 @@ public class TreeResult {
     
     @Field("*_i")
     private Map<String, Integer> nameCounts;
-    
-    /*@Field("Skill_i")
-    Integer skill_count;
-    @Field("Organization_i")
-    Integer organization_count;
-    @Field("Location_i")
-    Integer location_count;
-    @Field("Module_i")
-    Integer module_count;*/
-            
-    
+       
     public List<String> getLinearizations() {
         return linearizations;
     }

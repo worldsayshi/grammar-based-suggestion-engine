@@ -1,15 +1,9 @@
 package com.findwise.grammarsearch.core;
 
-import com.findwise.grammarsearch.core.GrammarSearchClient;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -23,12 +17,7 @@ import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.params.SolrParams;
-import org.grammaticalframework.pgf.Concr;
-import org.grammaticalframework.pgf.Expr;
-import org.grammaticalframework.pgf.ExprProb;
-import org.grammaticalframework.pgf.NercLiteralCallback;
-import org.grammaticalframework.pgf.PGF;
-import org.grammaticalframework.pgf.ParseError;
+import org.grammaticalframework.pgf.*;
 
 /**
  *

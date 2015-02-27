@@ -26,9 +26,11 @@
 
                 <form id="search-form-${domainEntry.key}">
                     
-                    <input type="button" id="button-${domainEntry.key}" value="Click to Speak" onclick="startButton('${domainEntry.key}')">
-                    
-                    <input id="search-input-${domainEntry.key}" name="q" type="text" oninput="inputted()" class="input-large search-input"  
+                    <button type="button" class="speechButton" id="button-${domainEntry.key}" value="" onclick="startButton('${domainEntry.key}')" style="border: 0; background: transparent">
+                           <img src="/static/micon.jpg" alt="speak" id="buttonImage-${domainEntry.key}">                   
+                    </button>
+                             
+                    <input id="search-input-${domainEntry.key}" name="q" type="text" class="input-large search-input"  
                            placeholder="Type your question.." data-searchdomain="${domainEntry.key}"></input>
                     
                     <c:if test="${fn:length(domainEntry.value) lt 2}" >
@@ -41,7 +43,6 @@
                             </c:forEach>
                         </select>
                     </c:if>
-
 
                     <!-- parameters hardcoded for now-->
                     <c:if test="${domainEntry.key eq 'vasttrafik'}">

@@ -47,31 +47,32 @@ $(function () {
         lastFocusedInput = this;
     });
     
-   var docTemplates = {};
-   $('.doc-template').each(function () {
-       var searchDomain = $(this).data('searchdomain');
-       docTemplates[searchDomain] = {
-           templ:Handlebars.compile($(this).html())
-           ,docpath:$(this).data('docpath')
-       };
-   });
+    var docTemplates = {};
+    $('.doc-template').each(function () {
+        var searchDomain = $(this).data('searchdomain');
+        docTemplates[searchDomain] = {
+            templ:Handlebars.compile($(this).html())
+            ,
+            docpath:$(this).data('docpath')
+        };
+    });
    
-   function doSearch(query,searchdomain) {
-       var urlTempl = "/api/<%= searchdomain %>/search?<%= query %>";
-       var templVars = {
-           searchdomain: searchdomain,
-           query:query
-       };
-       var url = _.template(urlTempl)(templVars);
-       $.get(url,function(data){
-           var docpath = docTemplates[searchdomain].docpath;
-           var docs = getDocsWithDocPath(data,docpath);
-           var templ = docTemplates[searchdomain].templ;
-           $("#search_result").empty().append($.map(docs, function (doc, ix) {
-               return templ(doc);
-           }));
-       });
-   }
+    function doSearch(query,searchdomain) {
+        var urlTempl = "/api/<%= searchdomain %>/search?<%= query %>";
+        var templVars = {
+            searchdomain: searchdomain,
+            query:query
+        };
+        var url = _.template(urlTempl)(templVars);
+        $.get(url,function(data){
+            var docpath = docTemplates[searchdomain].docpath;
+            var docs = getDocsWithDocPath(data,docpath);
+            var templ = docTemplates[searchdomain].templ;
+            $("#search_result").empty().append($.map(docs, function (doc, ix) {
+                return templ(doc);
+            }));
+        });
+    }
    
     $(".search-input").typeahead({},{
         source:suggestions.ttAdapter(),
@@ -79,8 +80,8 @@ $(function () {
         name: "grammar-suggestions"
     }).on('typeahead:selected',function (e, datum) {
         doSearch(
-                $(this).closest("form").serialize(),
-                $(this).data("searchdomain"));
+            $(this).closest("form").serialize(),
+            $(this).data("searchdomain"));
     });
     
     function getDocsWithDocPath(data,docpath) {
@@ -95,6 +96,13 @@ $(function () {
 
 
 //Speech recognition stuff ------------------------------------------------------------
+
+// hide if the browser does not support google speech (only chrome supports this)
+$(document).ready(function(){
+    if (!('webkitSpeechRecognition' in window)) {
+        $(".speechButton").hide();
+    }
+});
 
 var recognizing = false;
 var recognition = new webkitSpeechRecognition();
@@ -122,12 +130,12 @@ recognition.onresult = function(event) {
 
 recognition.onstart = function() {
     recognizing = true;
-    setCurrentButtonText("Click to Stop!");
+    setCurrentButtonImage("/static/micoff.jpg");
 };
 
 recognition.onend = function() {
     recognizing = false;
-    setCurrentButtonText("Click to Speak!");
+    setCurrentButtonImage("/static/micon.jpg");
 };
     
 var currentDomain = "";    
@@ -141,8 +149,6 @@ function startButton(domain) {
     
     currentDomain = domain;
     
-    console.log("got domain: " + domain);
-    
     setCurrentInputText("");
     interim_text = "";
     final_text = "";
@@ -150,13 +156,13 @@ function startButton(domain) {
     recognition.start();
 }; 
 
-function setCurrentButtonText(text){    
-    document.getElementById("button-" + currentDomain).value = text;
+function setCurrentButtonImage(src){    
+    document.getElementById("buttonImage-" + currentDomain).src = src;
 }
 
 function setCurrentInputText(text){
     $('#search-input-' + currentDomain).focus();
-    $('#search-input-' + currentDomain).typeahead('val','blabla');
+    $('#search-input-' + currentDomain).typeahead('val','replace');
 
     $('#search-input-' + currentDomain).focus();
     $('#search-input-' + currentDomain).typeahead('val',text);
@@ -168,8 +174,4 @@ function tabChanged(){
         return;
     }
 };
-
-function inputted(){
-    console.log("mamy input");
-}
 

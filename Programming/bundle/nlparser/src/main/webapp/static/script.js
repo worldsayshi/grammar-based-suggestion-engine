@@ -102,6 +102,8 @@ $(document).ready(function(){
     if (!('webkitSpeechRecognition' in window)) {
         $(".speechButton").hide();
     }
+    
+    $(".clearButton").hide();
 });
 
 var recognizing = false;
@@ -130,19 +132,21 @@ recognition.onresult = function(event) {
         final_text = "";
     }
    
-        setCurrentInputText(final_text + interim_text);
+    setCurrentInputText(final_text + interim_text);
 };
 
 recognition.onstart = function() {
     recognizing = true;
     setCurrentButtonImage("/static/micoff.jpg");
-    $('#search-input-' + currentDomain).prop('disabled', true);
+    document.getElementById("search-input-" + currentDomain).readOnly = true;
+    $(".clearButton").show();
 };
 
 recognition.onend = function() {
     recognizing = false;
     setCurrentButtonImage("/static/micon.jpg");
-    $('#search-input-' + currentDomain).prop('disabled', false);
+    document.getElementById("search-input-" + currentDomain).readOnly = false;
+    $(".clearButton").hide();
 };
     
 var currentDomain = "";    
@@ -163,9 +167,13 @@ function startButton(domain) {
     setCurrentInputText("");
     interim_text = "";
     final_text = "";
-    interruptedByInput = false;
     recognition.start();
 }; 
+
+function clearButton() {
+    final_text = "";
+    setCurrentInputText("");
+};
 
 function setCurrentButtonImage(src){    
     document.getElementById("buttonImage-" + currentDomain).src = src;

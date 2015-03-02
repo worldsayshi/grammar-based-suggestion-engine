@@ -25,14 +25,19 @@
                 <h2 id="MainTitle">${domainEntry.key} Demo</h2>
 
                 <form id="search-form-${domainEntry.key}">
-                    
+
                     <button type="button" class="speechButton" id="button-${domainEntry.key}" value="" onclick="startButton('${domainEntry.key}')" style="border: 0; background: transparent">
-                           <img src="/static/micon.jpg" alt="speak" id="buttonImage-${domainEntry.key}">                   
+                        <img src="/static/micon.jpg" alt="speak" id="buttonImage-${domainEntry.key}">                   
                     </button>
-                             
+
                     <input id="search-input-${domainEntry.key}" name="q" type="text" class="input-large search-input"  
                            placeholder="Type your question.." data-searchdomain="${domainEntry.key}"></input>
-                    
+
+                    <button type="button" class="clearButton" id="clear-${domainEntry.key}" value="" onclick="clearButton()" style="border: 0; background: transparent">
+                        <img src="/static/clear.jpg" alt="clear" id="clearImage-${domainEntry.key}">                   
+                    </button>
+
+
                     <c:if test="${fn:length(domainEntry.value) lt 2}" >
                         <input name="lang" type="hidden" value="${domainEntry.value[0]}" />
                     </c:if>

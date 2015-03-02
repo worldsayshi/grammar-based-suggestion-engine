@@ -32,6 +32,18 @@ $(function () {
                 return newUrl;
             },
             filter: function(list) {
+                
+                //if in speech mode and there is only one suggestion
+                //perform search automatically
+                if(recognizing && list.length == 1){
+                    $('#search-input-' + currentDomain).typeahead('val',list[0]);
+                    $('#search-input-' + currentDomain).typeahead('close');
+                    
+                    doSearch(
+                        $('#search-input-' + currentDomain).closest("form").serialize(),
+                        $('#search-input-' + currentDomain).data("searchdomain"));
+                }
+                
                 return $.map(list, function(word) {
                     return {
                         s: word
@@ -187,10 +199,12 @@ function setCurrentInputText(text){
     $('#search-input-' + currentDomain).typeahead('val',text);
 }
 
-function tabChanged(){
+function tabChanged(domain){
     if (recognizing) {
         recognition.stop();
         return;
     }
+    
+    currentDomain = domain;
 };
 

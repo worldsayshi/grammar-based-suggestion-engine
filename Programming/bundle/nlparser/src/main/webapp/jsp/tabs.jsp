@@ -12,7 +12,7 @@
     <ul class="nav nav-tabs" role="tablist">
         <c:forEach var="domainEntry" items="${searchDomains}" varStatus="loop">
             <li role="presentation" class="<c:if test="${loop.index=='0'}">active</c:if>">
-                <a href="#${domainEntry.key}" aria-controls="home" role="tab" onclick="tabChanged()" data-toggle="tab">${domainEntry.key}</a>
+                <a href="#${domainEntry.key}" aria-controls="home" role="tab" onclick="tabChanged('${domainEntry.key}')" data-toggle="tab">${domainEntry.key}</a>
             </li>
         </c:forEach>
     </ul>

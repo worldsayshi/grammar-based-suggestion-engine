@@ -113,33 +113,44 @@ recognition.interimResults = true;
 var final_text = "";
 var interim_text = "";
 
-recognition.onresult = function(event) {
-      
-    interim_text = "";
+recognition.onresult = function(event) {    
+    interim_text = "";     
+    lastWord = ""; 
      
     for (var i = event.resultIndex; i < event.results.length; ++i) {
         if (event.results[i].isFinal) {
             final_text += event.results[i][0].transcript;
+            lastWord = event.results[i][0].transcript;
         } else {
             interim_text += event.results[i][0].transcript;
         }
     }
    
-    setCurrentInputText(final_text + interim_text);
+    if(endsWith(lastWord.trim(),"reset")){
+        final_text = "";
+    }
+   
+        setCurrentInputText(final_text + interim_text);
 };
 
 recognition.onstart = function() {
     recognizing = true;
     setCurrentButtonImage("/static/micoff.jpg");
+    $('#search-input-' + currentDomain).prop('disabled', true);
 };
 
 recognition.onend = function() {
     recognizing = false;
     setCurrentButtonImage("/static/micon.jpg");
+    $('#search-input-' + currentDomain).prop('disabled', false);
 };
     
 var currentDomain = "";    
-    
+
+function endsWith(str, suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+}
+
 function startButton(domain) {
     
     if (recognizing) {
@@ -152,7 +163,7 @@ function startButton(domain) {
     setCurrentInputText("");
     interim_text = "";
     final_text = "";
-
+    interruptedByInput = false;
     recognition.start();
 }; 
 

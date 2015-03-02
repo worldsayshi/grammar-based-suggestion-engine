@@ -66,6 +66,9 @@ public class Templating {
         return null;
     }
     
+    public boolean isVariable(String word){
+        return (word.startsWith(prefix) && word.endsWith(suffix));
+    }
     
     public List<String> listVariables (String template) {
         Pattern pat = Pattern.compile(

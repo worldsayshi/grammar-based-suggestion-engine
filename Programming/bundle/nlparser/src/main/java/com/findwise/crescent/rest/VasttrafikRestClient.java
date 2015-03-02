@@ -1,24 +1,15 @@
 package com.findwise.crescent.rest;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.findwise.crescent.model.*;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.findwise.crescent.model.CoordLocation;
-import com.findwise.crescent.model.Location;
-import com.findwise.crescent.model.LocationList;
-import com.findwise.crescent.model.LocationListWrapper;
-import com.findwise.crescent.model.StopLocation;
-import com.findwise.crescent.model.TripList;
-import com.findwise.crescent.model.TripListWrapper;
-import java.util.EnumSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.GregorianCalendar;
 
 /**
  * A simple Vasttrafik REST client, uses the model classes as Jackson databind

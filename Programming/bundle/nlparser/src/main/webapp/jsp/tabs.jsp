@@ -14,10 +14,6 @@
             <li role="presentation" class="<c:if test="${loop.index=='0'}">active</c:if>">
                 <a href="#${domainEntry.key}" aria-controls="home" role="tab" data-toggle="tab">${domainEntry.key}</a>
             </li>
-            <%--li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home2</a></li>
-            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile222</a></li>
-            <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
-            <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li--%>
         </c:forEach>
     </ul>
 
@@ -41,13 +37,21 @@
                             </c:forEach>
                         </select>
                     </c:if>
+
+
+                    <!-- parameters hardcoded for now-->
+                    <c:if test="${domainEntry.key eq 'vasttrafik'}">
+                        <input name="noRepetitionTypes" type="hidden" value="station" />
+                        <input name="maxAdditionalSuggestedNames" type="hidden" value="2" />
+                    </c:if>
+
+                    <c:if test="${domainEntry.key eq 'precisionSearch'}">
+                        <input name="noRepetitionTypes" type="hidden" value="skill,organization,location" />
+                        <input name="maxAdditionalSuggestedNames" type="hidden" value="2" />
+                    </c:if>
                 </form>
             </div>
         </c:forEach>
-        <%--div role="tabpanel" class="tab-pane active" id="home">home</div>
-        <div role="tabpanel" class="tab-pane" id="profile">profile</div>
-        <div role="tabpanel" class="tab-pane" id="messages">mess</div>
-        <div role="tabpanel" class="tab-pane" id="settings">sett</div--%>
     </div>
 
 </div>

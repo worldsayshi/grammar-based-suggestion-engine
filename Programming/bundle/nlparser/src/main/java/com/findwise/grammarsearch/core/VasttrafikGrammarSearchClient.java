@@ -3,6 +3,7 @@ package com.findwise.grammarsearch.core;
 import com.findwise.crescent.model.Location;
 import com.findwise.crescent.model.TripList;
 import com.findwise.crescent.rest.MeansOfTransport;
+import com.findwise.crescent.rest.VasttrafikCacheService;
 import com.findwise.crescent.rest.VasttrafikQuery;
 import com.findwise.crescent.rest.VasttrafikRestClient;
 import java.util.*;
@@ -26,7 +27,8 @@ public class VasttrafikGrammarSearchClient implements GrammarSearchClient<TripLi
     }
     
     // Move to VasttrafikGrammarSearchClient
-    VasttrafikRestClient vasttrafikclient = new VasttrafikRestClient();
+    VasttrafikCacheService cacheService = new VasttrafikCacheService();
+    VasttrafikRestClient vasttrafikclient = new VasttrafikRestClient(cacheService);
     
     // Move to VasttrafikGrammarSearchClient
     @Override
@@ -75,8 +77,9 @@ public class VasttrafikGrammarSearchClient implements GrammarSearchClient<TripLi
         if(inputParams.get("mean").equals("all") || inputParams.get("mean").equals("boat")) {usedTransportMeans.add(MeansOfTransport.Boat);}
         if(inputParams.get("mean").equals("all") || inputParams.get("mean").equals("tram")) {usedTransportMeans.add(MeansOfTransport.Tram);}
         
-        Location src = inputParams.containsKey("from") ? vasttrafikclient.getBestMatchStop(inputParams.get("from")) : null;
-        Location dest = inputParams.containsKey("to") ? vasttrafikclient.getBestMatchStop(inputParams.get("to")) : null;
+        // changed getBestMatchStop to getBestMatch, wondering if it's gonna impact the search 
+        Location src = inputParams.containsKey("from") ? vasttrafikclient.getBestMatch(inputParams.get("from")) : null;
+        Location dest = inputParams.containsKey("to") ? vasttrafikclient.getBestMatch(inputParams.get("to")) : null;
                 
         return new VasttrafikQuery(src,dest,date, departingDate, usedTransportMeans);
     }

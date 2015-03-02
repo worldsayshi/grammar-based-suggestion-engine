@@ -3,44 +3,50 @@ package com.findwise.crescent.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Location {
-	private String name;
-	@JsonProperty("lon")
-	private double longitude;
-	@JsonProperty("lat")
-	private double latitude;
-	@JsonProperty("idx")
-	private int idx;
 
-	public String getName() {
-		return name;
-	}
+    private String name;
+    @JsonProperty("lon")
+    private double longitude;
+    @JsonProperty("lat")
+    private double latitude;
+    @JsonProperty("idx")
+    private int idx;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public double getLongitude() {
-		return longitude;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
-	}
+    public double getLongitude() {
+        return longitude;
+    }
 
-	public double getLatitude() {
-		return latitude;
-	}
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
 
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
-	}
+    public double getLatitude() {
+        return latitude;
+    }
 
-	public int getIdx() {
-		return idx;
-	}
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
 
-	public void setIdx(int idx) {
-		this.idx = idx;
-	}
+    public int getIdx() {
+        return idx;
+    }
+
+    public void setIdx(int idx) {
+        this.idx = idx;
+    }
+
+    @Override
+    public String toString() {
+        return "Location{" + "name=" + name + ", longitude=" + longitude + ", latitude=" + latitude + ", idx=" + idx + '}';
+    }
 
 }

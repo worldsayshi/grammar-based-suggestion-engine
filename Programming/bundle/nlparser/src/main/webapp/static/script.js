@@ -192,6 +192,9 @@ function setCurrentButtonImage(src){
 }
 
 function setCurrentInputText(text){
+    
+    text = text.replace(/^\s+/g, "");
+    
     $('#search-input-' + currentDomain).focus();
     $('#search-input-' + currentDomain).typeahead('val','replace');
 

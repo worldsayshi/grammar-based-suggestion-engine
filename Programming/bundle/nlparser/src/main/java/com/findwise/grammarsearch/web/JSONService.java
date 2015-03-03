@@ -37,8 +37,8 @@ public class JSONService {
 
         Map<String, List<String>> domainsModel = new HashMap<>();
         for (String searchDomainName : searchDomains.keySet()) {
-            GrammarSearchDomain dom = searchDomains.get(searchDomainName);
-            List languages = dom.getLanguages();
+            GrammarSearchDomain domain = searchDomains.get(searchDomainName);
+            List languages = domain.getLanguages();
             domainsModel.put(searchDomainName, languages);
         }
         model.put("searchDomains", domainsModel);

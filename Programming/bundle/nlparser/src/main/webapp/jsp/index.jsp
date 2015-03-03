@@ -21,6 +21,7 @@
     
     <%@include file="handlebars/documents.jsp" %>
     <%@include file="tabs.jsp" %>
+    <p id="results_title"></p>
     <ul id="search_result"></ul>
 
 </body>

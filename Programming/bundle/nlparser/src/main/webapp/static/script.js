@@ -76,10 +76,16 @@ $(function () {
             query:query
         };
         var url = _.template(urlTempl)(templVars);
+        var currentQ = $('#search-input-' + currentDomain).val();
+        
+        $("#results_title").empty().append("<b>Results for: '" + currentQ + "'</b>");
+        $("#search_result").empty().append("<img src='/static/loader.gif' alt='loading' height='100' width='100'>");
+                
         $.get(url,function(data){
             var docpath = docTemplates[searchdomain].docpath;
             var docs = getDocsWithDocPath(data,docpath);
             var templ = docTemplates[searchdomain].templ;
+            
             $("#search_result").empty().append($.map(docs, function (doc, ix) {
                 return templ(doc);
             }));
@@ -116,6 +122,8 @@ $(document).ready(function(){
     }
     
     $(".clearButton").hide();
+    
+    currentDomain = $(".search-input").attr("data-searchdomain");
 });
 
 var recognizing = false;

@@ -70,7 +70,13 @@ $(function () {
         };
     });
    
-    function doSearch(query,searchdomain) {       
+    function doSearch(query,searchdomain) {  
+        //cancell previous search
+        if(currentRequest)
+        {
+            currentRequest.abort();
+        }
+        
         var urlTempl = "/api/<%= searchdomain %>/search?<%= query %>";
         var templVars = {
             searchdomain: searchdomain,
@@ -87,14 +93,14 @@ $(function () {
         url = removeHost(url);
         window.history.pushState('test','testTitle',url);      
               
-        $.get(u,function(data){
-            var docpath = docTemplates[searchdomain].docpath;
-            var docs = getDocsWithDocPath(data,docpath);
-            var templ = docTemplates[searchdomain].templ;
+        currentRequest = $.get(u,function(data){
+                var docpath = docTemplates[searchdomain].docpath;
+                var docs = getDocsWithDocPath(data,docpath);
+                var templ = docTemplates[searchdomain].templ;
             
-            $("#search_result").empty().append($.map(docs, function (doc, ix) {
-                return templ(doc);
-            }));
+                $("#search_result").empty().append($.map(docs, function (doc, ix) {
+                    return templ(doc);
+                }));
         });
     }
    
@@ -133,7 +139,7 @@ $(document).ready(function(){
     
     if(params.indexOf("query="))
     
-    var queryString = extractQueryParam();
+        var queryString = extractQueryParam();
     if(queryString && queryString.length!=0){
         loading = true;
         setCurrentInputText(queryString);
@@ -154,6 +160,7 @@ function extractQueryParam(){
 var recognizing = false;
 var recognition = new webkitSpeechRecognition();
 var loading = false;
+var currentRequest;
 recognition.lang = 'en-US';
 recognition.continuous = true;
 recognition.interimResults = true;
@@ -237,6 +244,13 @@ function setCurrentInputText(text){
 }
 
 function tabChanged(domain){
+    
+    //cancell previous search
+    if(currentRequest)
+    {
+        currentRequest.abort();
+    }
+    
     if (recognizing) {
         recognition.stop();
         return;

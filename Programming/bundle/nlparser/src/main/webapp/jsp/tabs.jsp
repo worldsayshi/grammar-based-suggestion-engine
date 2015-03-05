@@ -12,7 +12,7 @@
     <ul class="nav nav-tabs" role="tablist">
         <c:forEach var="domainEntry" items="${searchDomains}" varStatus="loop">
             <li role="presentation" class="<c:if test="${loop.index=='0'}">active</c:if>">
-                <a href="#${domainEntry.key}" aria-controls="home" role="tab" data-toggle="tab">${domainEntry.key}</a>
+                <a href="#${domainEntry.key}" aria-controls="home" role="tab" onclick="tabChanged('${domainEntry.key}')" data-toggle="tab">${domainEntry.key}</a>
             </li>
         </c:forEach>
     </ul>
@@ -25,8 +25,19 @@
                 <h2 id="MainTitle">${domainEntry.key} Demo</h2>
 
                 <form id="search-form-${domainEntry.key}">
-                    <input id="search-input-${domainEntry.key}" name="q" type="text" class="input-large search-input" 
+
+                    <button type="button" class="speechButton" id="button-${domainEntry.key}" value="" onclick="startButton('${domainEntry.key}')" style="border: 0; background: transparent">
+                        <img src="/static/micon.jpg" alt="speak" id="buttonImage-${domainEntry.key}">                   
+                    </button>
+
+                    <input id="search-input-${domainEntry.key}" name="q" type="text" class="input-large search-input"  
                            placeholder="Type your question.." data-searchdomain="${domainEntry.key}"></input>
+
+                    <button type="button" class="clearButton" id="clear-${domainEntry.key}" value="" onclick="clearButton()" style="border: 0; background: transparent">
+                        <img src="/static/clear.jpg" alt="clear" id="clearImage-${domainEntry.key}">                   
+                    </button>
+
+
                     <c:if test="${fn:length(domainEntry.value) lt 2}" >
                         <input name="lang" type="hidden" value="${domainEntry.value[0]}" />
                     </c:if>
@@ -37,7 +48,6 @@
                             </c:forEach>
                         </select>
                     </c:if>
-
 
                     <!-- parameters hardcoded for now-->
                     <c:if test="${domainEntry.key eq 'vasttrafik'}">

@@ -94,13 +94,13 @@ $(function () {
         window.history.pushState('test','testTitle',url);      
               
         currentRequest = $.get(u,function(data){
-                var docpath = docTemplates[searchdomain].docpath;
-                var docs = getDocsWithDocPath(data,docpath);
-                var templ = docTemplates[searchdomain].templ;
+            var docpath = docTemplates[searchdomain].docpath;
+            var docs = getDocsWithDocPath(data,docpath);
+            var templ = docTemplates[searchdomain].templ;
             
-                $("#search_result").empty().append($.map(docs, function (doc, ix) {
-                    return templ(doc);
-                }));
+            $("#search_result").empty().append($.map(docs, function (doc, ix) {
+                return templ(doc);
+            }));
         });
     }
    
@@ -155,6 +155,17 @@ function extractQueryParam(){
     }
     
     return result;
+}
+   
+function getSpeechLanguage(lang)
+{
+    if(lang.indexOf("Swe") >= 0){
+        return "sv-SE";
+    }
+    else
+    {
+        return "en-US";
+    }
 }
 
 var recognizing = false;
@@ -220,6 +231,8 @@ function startButton(domain) {
     setCurrentInputText("");
     interim_text = "";
     final_text = "";
+    
+    recognition.lang = getSpeechLanguage($('#search-lang-select-' + currentDomain).val());
     recognition.start();
 }; 
 

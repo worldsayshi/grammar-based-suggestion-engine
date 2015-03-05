@@ -8,10 +8,10 @@
     <li class="document" class="media">
         <h2 class="title">{{name}}</h2>
         <div class="media-body">
-            {{#if WORKS_IN}}<div><em>Plats:</em> {{WORKS_IN}}</div>{{/if}}
-            {{#if KNOWS}}<div><em>Kunskap:</em> {{KNOWS}}</div>{{/if}}
-            {{#if WORKS_WITH}}<div><em>Kunder:</em> {{WORKS_WITH}}</div>{{/if}}
-            {{#if USES}}<div><em>Använder:</em> {{USES}}</div>{{/if}}
+            {{#if WORKS_IN}}<div><em>Locations:</em> {{WORKS_IN}}</div>{{/if}}
+            {{#if KNOWS}}<div><em>Knowledge:</em> {{KNOWS}}</div>{{/if}}
+            {{#if WORKS_WITH}}<div><em>Organizations:</em> {{WORKS_WITH}}</div>{{/if}}
+            {{#if USES}}<div><em>Uses:</em> {{USES}}</div>{{/if}}
         </div>
     </li>
 </script>
@@ -21,9 +21,9 @@
             {{#each legList}}
             <li class="list-group-item tripLeg">
                 <span class="trip-badge trip-name badge badge-info">{{name}}</span>
-                <span class="trip-badge trip-from badge">Från: {{origin.name}}</span>
-                <span class="trip-badge trip-to badge">Till: {{destination.name}}</span>
-                <span class="trip-badge trip-time badge">Tid: {{destination.time}}</span>
+                <span class="trip-badge trip-from badge">From: {{origin.name}}</span>
+                <span class="trip-badge trip-to badge">To: {{destination.name}}</span>
+                <span class="trip-badge trip-time badge">Arrival time: {{destination.time}}</span>
             </li>
             {{/each}}
         </ul>

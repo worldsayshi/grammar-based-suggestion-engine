@@ -180,24 +180,36 @@ var final_text = "";
 var interim_text = "";
 
 recognition.onresult = function(event) {    
+    var lastTranscript = "";
     interim_text = "";     
     lastWord = ""; 
      
     for (var i = event.resultIndex; i < event.results.length; ++i) {
         if (event.results[i].isFinal) {
             final_text += event.results[i][0].transcript;
-            lastWord = event.results[i][0].transcript;
+            lastTranscript = event.results[i][0].transcript;
         } else {
             interim_text += event.results[i][0].transcript;
         }
     }
    
-    if(endsWith(lastWord.trim(),"reset")){
+    if(isResetCommand(lastTranscript.trim())){
         final_text = "";
     }
    
     setCurrentInputText(final_text + interim_text);
 };
+
+function isResetCommand(phrase){
+    if(recognition.lang == 'en-US'){
+        return(endsWith(phrase,"reset") || endsWith(phrase,"start over"));
+    }
+    else if(recognition.lang == 'sv-SE'){
+        return(endsWith(phrase,"avbryt")); 
+    }
+    
+    return false;
+}
 
 recognition.onstart = function() {
     recognizing = true;

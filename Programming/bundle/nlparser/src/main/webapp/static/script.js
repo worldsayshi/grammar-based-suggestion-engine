@@ -131,6 +131,9 @@ $(function () {
 $(document).ready(function(){
     if (!('webkitSpeechRecognition' in window)) {
         $(".speechButton").hide();
+    } 
+    else{
+        $(".description").css("margin-left","32px");
     }
     
     $(".clearButton").hide();

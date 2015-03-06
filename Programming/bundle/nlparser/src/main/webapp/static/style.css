@@ -71,6 +71,15 @@ input.grammar-search {
     float: inherit;
 }
 
+.description{
+    background-color: #F2F8FF;
+    margin: 0;
+    font-size: 12;
+    width: 700px;
+    color: #527ACC;
+    font-weight: bold;
+}
+
 
 
 /* QC search box and result styling

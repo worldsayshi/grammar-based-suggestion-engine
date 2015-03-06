@@ -25,6 +25,7 @@
             <div role="tabpanel" class="tab-pane <c:if test="${(empty params['domain'] && loop.index=='0') || (not empty params['domain'] && domainEntry.key eq params['domain'])}">active</c:if>" id="${domainEntry.key}">
                 <h2 id="MainTitle">${domainEntry.key} Demo</h2>
 
+                <p class="description">${descriptions[domainEntry.key]}</p>
                 <form id="search-form-${domainEntry.key}">
 
                     <button type="button" class="speechButton" id="button-${domainEntry.key}" onclick="startButton('${domainEntry.key}')" style="border: 0; background: transparent">

@@ -39,13 +39,17 @@ public class JSONService {
         Map<String, Map<String, ?>> model = new HashMap<>();
 
         Map<String, List<String>> domainsModel = new HashMap<>();
+        Map<String,String> descriptions = new HashMap<>();
         for (String searchDomainName : searchDomains.keySet()) {
             GrammarSearchDomain domain = searchDomains.get(searchDomainName);
             List languages = domain.getUserLanguages();
             domainsModel.put(searchDomainName, languages);
+            
+            descriptions.put(searchDomainName, domain.getDescription());
         }
         model.put("searchDomains", domainsModel);
-
+        model.put("descriptions", descriptions);
+        
         Map<String, String> params = new HashMap<>();
         if (query != null && !query.isEmpty()) {
             params.put("query", query);

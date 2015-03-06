@@ -25,18 +25,21 @@ public class GrammarSearchDomain<T> {
     private GrammarSearchClient<T> grammarSearchClient;
     private SuggestionComparator suggestionComparator = new SuggestionComparator();
     private List<String> userLanguages;
+    private String description;
 
     public GrammarSearchDomain(
             String absGrammarName,
             SolrNameSuggester nameSuggester,
             SolrGrammarSuggester grammarSuggester,
             GrammarSearchClient<T> grammarSearchClient,
-            List<String> userLanguages) {
+            List<String> userLanguages,
+            String description) {
         this.absGrammarName = absGrammarName;
         this.nameSuggester = nameSuggester;
         this.grammarSuggester = grammarSuggester;
         this.grammarSearchClient = grammarSearchClient;
         this.userLanguages = userLanguages;
+        this.description = description;
     }
 
     /**
@@ -241,6 +244,20 @@ public class GrammarSearchDomain<T> {
      */
     public void setUserLanguages(List<String> userLanguages) {
         this.userLanguages = userLanguages;
+    }
+
+    /**
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     /*

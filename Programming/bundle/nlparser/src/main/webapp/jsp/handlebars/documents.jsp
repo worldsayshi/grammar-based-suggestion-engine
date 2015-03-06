@@ -17,12 +17,15 @@
 </script>
 <script class="doc-template" data-searchdomain="vasttrafik" data-docpath="trip" type="text/x-handlebars-template">
     <li class="document">
+
         <ul class="list-group well">
+            <p class="trip-title"> {{legList.[0].origin.name}} at {{legList.[0].origin.time}}  - {{#each legList}}{{#if @last}}{{destination.name}} at {{destination.time}}{{/if}}{{/each}}</p>
             {{#each legList}}
             <li class="list-group-item tripLeg">
                 <span class="trip-badge trip-name badge badge-info">{{name}}</span>
                 <span class="trip-badge trip-from badge">From: {{origin.name}}</span>
                 <span class="trip-badge trip-to badge">To: {{destination.name}}</span>
+                <span class="trip-badge trip-time badge">Departure time: {{origin.time}}</span>
                 <span class="trip-badge trip-time badge">Arrival time: {{destination.time}}</span>
             </li>
             {{/each}}

@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Trip {
     @JsonProperty("Leg")
     private List<Leg> legList;
-
+    
     @Override
     public String toString() {
         return "\nTrip [legList=" + legList + "]";

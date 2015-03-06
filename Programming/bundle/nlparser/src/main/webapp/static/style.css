@@ -80,6 +80,11 @@ input.grammar-search {
     font-weight: bold;
 }
 
+.trip-title{
+    font-weight: bold;
+    margin:2;
+}
+
 
 
 /* QC search box and result styling

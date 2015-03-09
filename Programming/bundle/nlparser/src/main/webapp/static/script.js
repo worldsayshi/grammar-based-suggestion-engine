@@ -98,9 +98,14 @@ $(function () {
             var docs = getDocsWithDocPath(data,docpath);
             var templ = docTemplates[searchdomain].templ;
             
+            if(docs!=null){
             $("#search_result").empty().append($.map(docs, function (doc, ix) {
                 return templ(doc);
             }));
+            }
+            else{
+               $("#search_result").empty().append("<p>No results!</p>") 
+            }
         });
     }
    
@@ -116,6 +121,11 @@ $(function () {
     
     function getDocsWithDocPath(data,docpath) {
         var elem = data;
+        
+        if(elem == null){
+            return null;
+        }
+        
         var pathSegments = _.compact(docpath.split(".")); // remove empty elements
         _.each(pathSegments,function (seg) {
             elem = elem[seg];

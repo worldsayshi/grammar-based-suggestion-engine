@@ -19,7 +19,10 @@
     <li class="document">
 
         <ul class="list-group well">
-            <p class="trip-title"> {{legList.[0].origin.name}} at {{legList.[0].origin.time}}  - {{#each legList}}{{#if @last}}{{destination.name}} at {{destination.time}}{{/if}}{{/each}}</p>
+            <p class="trip-title">
+                <span>{{legList.[0].origin.name}} at {{legList.[0].origin.time}}  - {{#each legList}}{{#if @last}}{{destination.name}} at {{destination.time}}{{/if}}{{/each}}</span>
+                <span>({{tripTime}} minutes, {{transfers}} transfers )</span>
+            </p>
             {{#each legList}}
             <li class="list-group-item tripLeg">
                 <span class="trip-badge trip-name badge badge-info">{{name}}</span>

@@ -154,8 +154,9 @@ public class VasttrafikCacheService implements Runnable {
             }
             for (CoordLocation cl : ll.getCoordLocations()) {
                 SolrQuery sq = new SolrQuery();
-                final String id = "COORD_" + cl.getType() + "_" + cl.getName();
-                sq.setQuery("id:" + id); // FIXME wild guess actually
+                String id = "COORD_" + cl.getType() + "_" + cl.getName();
+                String id2 = id.replaceAll(":", "\\\\:");
+                sq.setQuery("id:" + id2); // FIXME wild guess actually
                 final QueryResponse res = solrServer.query(sq);
                 if (res.getResults().isEmpty()) {
                     SolrInputDocument document = new SolrInputDocument();

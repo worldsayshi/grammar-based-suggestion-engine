@@ -32,16 +32,36 @@ public class JSONService {
 
     @RequestMapping(method = RequestMethod.GET,
     produces = MediaType.TEXT_HTML)
-    public ModelAndView index() {
-        Map<String, Map<String, List<String>>> model = new HashMap<>();
+    public ModelAndView index(
+            @RequestParam(value = "q", required = false) String query,
+            @RequestParam(value = "domain", required = false) String currentDomain,
+            @RequestParam(value = "lang", required = false) String lang) {
+        Map<String, Map<String, ?>> model = new HashMap<>();
 
         Map<String, List<String>> domainsModel = new HashMap<>();
+        Map<String,String> descriptions = new HashMap<>();
         for (String searchDomainName : searchDomains.keySet()) {
-            GrammarSearchDomain dom = searchDomains.get(searchDomainName);
-            List languages = dom.getLanguages();
+            GrammarSearchDomain domain = searchDomains.get(searchDomainName);
+            List languages = domain.getUserLanguages();
             domainsModel.put(searchDomainName, languages);
+            
+            descriptions.put(searchDomainName, domain.getDescription());
         }
         model.put("searchDomains", domainsModel);
+        model.put("descriptions", descriptions);
+        
+        Map<String, String> params = new HashMap<>();
+        if (query != null && !query.isEmpty()) {
+            params.put("query", query);
+        }
+        if (currentDomain != null && !currentDomain.isEmpty()) {
+            params.put("domain", currentDomain);
+        }
+        if (lang != null && !lang.isEmpty()) {
+            params.put("lang", lang);
+        }
+
+        model.put("params", params);
 
         return new ModelAndView("index", model);
     }
@@ -56,7 +76,6 @@ public class JSONService {
         return gson.toJson(
                 searchDomains.get(grammarSearchDomain).performQuery(question, concreteLang));
     }
-
 
     @RequestMapping(value = "/api/{grammarSearchDomain}/suggestSentences",
     method = RequestMethod.GET,

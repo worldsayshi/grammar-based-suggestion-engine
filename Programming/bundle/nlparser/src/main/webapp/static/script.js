@@ -35,7 +35,8 @@ $(function () {
                 
                 //if in speech mode and there is only one suggestion
                 //perform search automatically
-                if(recognizing && list.length == 1){
+                if((loading || recognizing) && list.length == 1){
+                    loading = false;
                     $('#search-input-' + currentDomain).typeahead('val',list[0]);
                     $('#search-input-' + currentDomain).typeahead('close');
                     
@@ -69,17 +70,34 @@ $(function () {
         };
     });
    
-    function doSearch(query,searchdomain) {
+    function doSearch(query,searchdomain) {  
+        //cancell previous search
+        if(currentRequest)
+        {
+            currentRequest.abort();
+        }
+        
         var urlTempl = "/api/<%= searchdomain %>/search?<%= query %>";
         var templVars = {
             searchdomain: searchdomain,
             query:query
         };
-        var url = _.template(urlTempl)(templVars);
-        $.get(url,function(data){
+        var u = _.template(urlTempl)(templVars);
+        var currentQ = $('#search-input-' + currentDomain).val();
+        
+        $("#results_title").empty().append("<b>Results for: '" + currentQ + "'</b>");
+        $("#search_result").empty().append("<img src='/static/loader.gif' alt='loading' height='100' width='100'>");
+              
+        var url = window.location.href;
+        url = setParameter('q', currentQ, url);
+        url = removeHost(url);
+        window.history.pushState('test','testTitle',url);      
+              
+        currentRequest = $.get(u,function(data){
             var docpath = docTemplates[searchdomain].docpath;
             var docs = getDocsWithDocPath(data,docpath);
             var templ = docTemplates[searchdomain].templ;
+            
             $("#search_result").empty().append($.map(docs, function (doc, ix) {
                 return templ(doc);
             }));
@@ -113,13 +131,50 @@ $(function () {
 $(document).ready(function(){
     if (!('webkitSpeechRecognition' in window)) {
         $(".speechButton").hide();
+    } 
+    else{
+        $(".description").css("margin-left","32px");
     }
     
     $(".clearButton").hide();
+    
+    currentDomain = $(".tab-pane.active").attr("id");
+    
+    if(params.indexOf("query="))
+    
+        var queryString = extractQueryParam();
+    if(queryString && queryString.length!=0){
+        loading = true;
+        setCurrentInputText(queryString);
+    }
+    
 });
+
+function extractQueryParam(){
+    if(params.indexOf("query=")>=0){
+        var result = params.substring(params.indexOf("query="));
+        result = result.substring(result.indexOf("=") + 1); 
+        result = result.substring(0, Math.min(result.indexOf(","),result.indexOf("}")));
+    }
+    
+    return result;
+}
+   
+function getSpeechLanguage(lang)
+{
+    if(lang.indexOf("Swe") >= 0){
+        return "sv-SE";
+    }
+    else
+    {
+        return "en-US";
+    }
+}
 
 var recognizing = false;
 var recognition = new webkitSpeechRecognition();
+var loading = false;
+var currentRequest;
 recognition.lang = 'en-US';
 recognition.continuous = true;
 recognition.interimResults = true;
@@ -128,24 +183,36 @@ var final_text = "";
 var interim_text = "";
 
 recognition.onresult = function(event) {    
+    var lastTranscript = "";
     interim_text = "";     
     lastWord = ""; 
      
     for (var i = event.resultIndex; i < event.results.length; ++i) {
         if (event.results[i].isFinal) {
             final_text += event.results[i][0].transcript;
-            lastWord = event.results[i][0].transcript;
+            lastTranscript = event.results[i][0].transcript;
         } else {
             interim_text += event.results[i][0].transcript;
         }
     }
    
-    if(endsWith(lastWord.trim(),"reset")){
+    if(isResetCommand(lastTranscript.trim())){
         final_text = "";
     }
    
     setCurrentInputText(final_text + interim_text);
 };
+
+function isResetCommand(phrase){
+    if(recognition.lang == 'en-US'){
+        return(endsWith(phrase,"reset") || endsWith(phrase,"start over"));
+    }
+    else if(recognition.lang == 'sv-SE'){
+        return(endsWith(phrase,"avbryt")); 
+    }
+    
+    return false;
+}
 
 recognition.onstart = function() {
     recognizing = true;
@@ -179,6 +246,8 @@ function startButton(domain) {
     setCurrentInputText("");
     interim_text = "";
     final_text = "";
+    
+    recognition.lang = getSpeechLanguage($('#search-lang-select-' + currentDomain).val());
     recognition.start();
 }; 
 
@@ -203,11 +272,85 @@ function setCurrentInputText(text){
 }
 
 function tabChanged(domain){
+    
+    //cancell previous search
+    if(currentRequest)
+    {
+        currentRequest.abort();
+    }
+    
     if (recognizing) {
         recognition.stop();
         return;
     }
+    $("#results_title").empty();
+    $("#search_result").empty();
+    $('#search-input-' + currentDomain).typeahead('val',"");
     
     currentDomain = domain;
+    
+    var url = window.location.href;
+    url = setParameter('domain', domain, url);
+    url = setParameter('lang', $('#search-lang-select-' + currentDomain).val(), url);
+    url = removeParameter('q', url);
+    url = removeHost(url);
+    window.history.pushState('test','testTitle',url);
+};
+
+
+// routing stuff
+
+function langSelected(sel)
+{
+    $('#search-input-' + currentDomain).typeahead('val',"");
+    
+    var url = window.location.href;
+    url = setParameter('lang', sel.value, url);
+    url = removeParameter('q', url);
+    url = removeHost(url);
+    window.history.pushState('test','testTitle', url);
+};
+
+function removeHost(url)
+{
+    return url.replace (/^[a-z]{4}\:\/{2}[a-z]{1,}\:[0-9]{1,4}.(.*)/, '$1');
+}
+
+function removeParameter(paramName, url)
+{
+    if (url.indexOf(paramName + "=") >= 0)
+    {
+        var prefix = url.substring(0, url.indexOf(paramName));
+        if(endsWith(prefix,"&")){
+            prefix = prefix.substring(0,prefix.length - 1);
+        }
+        var suffix = url.substring(url.indexOf(paramName));
+        suffix = suffix.substring(suffix.indexOf("=") + 1);
+        suffix = (suffix.indexOf("&") >= 0) ? suffix.substring(suffix.indexOf("&")) : "";
+        url = prefix + suffix;
+    }
+
+    return url;
+}
+
+function setParameter(paramName, paramValue, url)
+{
+    if (url.indexOf(paramName + "=") >= 0)
+    {
+        var prefix = url.substring(0, url.indexOf(paramName));
+        var suffix = url.substring(url.indexOf(paramName));
+        suffix = suffix.substring(suffix.indexOf("=") + 1);
+        suffix = (suffix.indexOf("&") >= 0) ? suffix.substring(suffix.indexOf("&")) : "";
+        url = prefix + paramName + "=" + paramValue + suffix;
+    }
+    else
+    {
+        if (url.indexOf("?") < 0)
+            url += "?" + paramName + "=" + paramValue;
+        else
+            url += "&" + paramName + "=" + paramValue;
+    }
+    
+    return url;
 };
 

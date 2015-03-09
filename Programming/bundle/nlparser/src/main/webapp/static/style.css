@@ -71,6 +71,20 @@ input.grammar-search {
     float: inherit;
 }
 
+.description{
+    background-color: #F2F8FF;
+    margin: 0;
+    font-size: 12;
+    width: 700px;
+    color: #527ACC;
+    font-weight: bold;
+}
+
+.trip-title{
+    font-weight: bold;
+    margin:2;
+}
+
 
 
 /* QC search box and result styling
@@ -110,7 +124,7 @@ input.grammar-search {
 }
 
 .tt-dropdown-menu {
-    width: 422px;
+    width: 600px;
     margin-top: 12px;
     padding: 8px 0;
     background-color: #fff;

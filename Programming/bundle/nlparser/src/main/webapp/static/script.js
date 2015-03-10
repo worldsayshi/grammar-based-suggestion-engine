@@ -149,28 +149,28 @@ $(document).ready(function(){
     $(".clearButton").hide();
     
     currentDomain = $(".tab-pane.active").attr("id");
-    
-    if(params.indexOf("query="))
-    
+
+    if(params.indexOf("query=") >= 0){
         var queryString = extractQueryParam();
-    if(queryString && queryString.length!=0){
-        loading = true;
-        setCurrentInputText(queryString);
+        if(queryString && queryString.length!=0){
+            loading = true;
+            setCurrentInputText(queryString);
+        }
     }
     
     Handlebars.registerHelper("splitString", function(context, options){
-    if(context){
-      var ret = "";
-      var tempArr = String(context).trim().split(options.hash["delimiter"]);
+        if(context){
+            var ret = "";
+            var tempArr = String(context).trim().split(options.hash["delimiter"]);
 
-      for(var i=0; i < tempArr.length; i++)
-      {
-        ret = ret + options.fn(tempArr[i]);
-      }
+            for(var i=0; i < tempArr.length; i++)
+            {
+                ret = ret + options.fn(tempArr[i]);
+            }
 
-      return ret;
-    }
-  });
+            return ret;
+        }
+    });
     
 });
 
@@ -178,7 +178,12 @@ function extractQueryParam(){
     if(params.indexOf("query=")>=0){
         var result = params.substring(params.indexOf("query="));
         result = result.substring(result.indexOf("=") + 1); 
-        result = result.substring(0, Math.min(result.indexOf(","),result.indexOf("}")));
+        var endIndex = result.indexOf(",");
+        if(endIndex<0){
+            endIndex = result.indexOf("}");
+        }
+        
+        result = result.substring(0, endIndex);
     }
     
     return result;

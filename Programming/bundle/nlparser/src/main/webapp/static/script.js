@@ -194,6 +194,9 @@ function getSpeechLanguage(lang)
     if(lang.indexOf("Swe") >= 0){
         return "sv-SE";
     }
+    else if(lang.indexOf("PL") >= 0){
+        return "pl-PL";
+    }
     else
     {
         return "en-US";
@@ -238,6 +241,9 @@ function isResetCommand(phrase){
     }
     else if(recognition.lang == 'sv-SE'){
         return(endsWith(phrase,"avbryt")); 
+    }
+    else if(recognition.lang == 'pl-PL'){
+        return(endsWith(phrase,"wyczyść")); 
     }
     
     return false;

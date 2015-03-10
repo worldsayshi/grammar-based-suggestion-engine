@@ -21,6 +21,9 @@ body { padding: 25px ; }
     border-color: lightblue;
     margin: 2px;
     padding:2px;
+    height: 200px;
+    overflow-y:auto;
+    overflow-x:hidden;
 }
 
 .title{

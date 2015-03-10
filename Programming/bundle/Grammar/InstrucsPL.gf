@@ -1,4 +1,6 @@
-concrete InstrucsEngConcat of Instrucs = SymbolEng ** {
+--# -coding= utf8
+
+concrete InstrucsPL of Instrucs = SymbolEng ** {
  lincat
   Instruction = Str ;
   Internal, External, Resource = Str ;
@@ -8,33 +10,33 @@ concrete InstrucsEngConcat of Instrucs = SymbolEng ** {
  lin
   -- Instructions
   InstrucInternal internal relation = internal ++ 
-                                   ("who" | "which" | "that") ++ relation ;
+                                   "która" ++ relation ;
   InstrucExternal external relation = external ++ 
-                                   ("who" | "which" | "that") ++ relation ;
+                                   "który" ++ relation ;
   InstrucResource resource' relation = resource' ++ 
-                                   ("which" | "that") ++ relation ;
+                                   "w którym" ++ relation ;
 
   -- Subjects
-  People = "people" | "persons" | "person" ;
-  Customer = "customers" | "customer" ;
-  Project = "projects" | "project" ;
+  People = "osoba" ;
+  Customer = "klient" ;
+  Project = "projekt" ;
 
   -- Relations
-  Know_R obj = ("know" | "knows") ++ obj;
-  UseExt_R obj = ("use" | "uses") ++ obj ;
-  UseRes_R obj = ("use" | "uses") ++ obj ;
-  WorkWith_R obj = ("work with" | "works with") ++ obj ;
-  WorkIn_R obj = ("work in" | "works in") ++ obj ;
+  Know_R obj = "zna" ++ obj;
+  UseExt_R obj = "używa" ++ obj ;
+  UseRes_R obj = "używa się" ++ obj ;
+  WorkWith_R obj = "pracuje z" ++ obj ;
+  WorkIn_R obj = "pracuje w" ++ obj ;
 
   -- Boolean operators for relations
-  InternalAnd s1 s2 = s1 ++ "and" ++ s2 ;
-  InternalOr s1 s2 = s1 ++ "or" ++ s2 ;
+  InternalAnd s1 s2 = s1 ++ "i" ++ s2 ;
+  InternalOr s1 s2 = s1 ++ "lub" ++ s2 ;
 
-  ExternalAnd s1 s2 = s1 ++ "and" ++ s2 ;
-  ExternalOr s1 s2 = s1 ++ "or" ++ s2 ;
+  ExternalAnd s1 s2 = s1 ++ "i" ++ s2 ;
+  ExternalOr s1 s2 = s1 ++ "lub" ++ s2 ;
 
-  ResourceAnd s1 s2 = s1 ++ "and" ++ s2 ;
-  ResourceOr s1 s2 = s1 ++ "or" ++ s2 ; 
+  ResourceAnd s1 s2 = s1 ++ "i" ++ s2 ;
+  ResourceOr s1 s2 = s1 ++ "lub" ++ s2 ; 
 
   -- Unknown names
   Skill s = s.s ;
@@ -43,15 +45,15 @@ concrete InstrucsEngConcat of Instrucs = SymbolEng ** {
   Module s = s.s ;
 
   -- Boolean operators for names
-  And_S s1 s2 = s1 ++ "and" ++ s2 ;
-  Or_S s1 s2 = s1 ++ "or" ++ s2 ;
+  And_S s1 s2 = s1 ++ "oraz" ++ s2 ;
+  Or_S s1 s2 = s1 ++ "albo" ++ s2 ;
 	  
-  And_O s1 s2 = s1 ++ "and" ++ s2 ;
-  Or_O s1 s2 = s1 ++ "or" ++ s2 ;
+  And_O s1 s2 = s1 ++ "oraz" ++ s2 ;
+  Or_O s1 s2 = s1 ++ "albo" ++ s2 ;
 	  
-  And_L s1 s2 = s1 ++ "and" ++ s2 ;
-  Or_L s1 s2 = s1 ++ "or" ++ s2 ;
+  And_L s1 s2 = s1 ++ "oraz" ++ s2 ;
+  Or_L s1 s2 = s1 ++ "albo" ++ s2 ;
 	  
-  And_M s1 s2 = s1 ++ "and" ++ s2 ;
-  Or_M s1 s2 = s1 ++ "or" ++ s2 ;
+  And_M s1 s2 = s1 ++ "oraz" ++ s2 ;
+  Or_M s1 s2 = s1 ++ "albo" ++ s2 ;
 }

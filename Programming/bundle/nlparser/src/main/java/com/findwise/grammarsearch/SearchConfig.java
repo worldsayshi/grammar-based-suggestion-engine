@@ -50,7 +50,7 @@ public class SearchConfig {
                 new SolrNameSuggester(solr_url),
                 new SolrGrammarSuggester(solr_url),
                 new SolrGrammarSearchClient(pgf,solr_url+"/relations"),
-                Arrays.asList(new String[]{"InstrucsEngRGL","InstrucsSweRGL"}),
+                Arrays.asList(new String[]{"InstrucsEngRGL","InstrucsSweRGL","InstrucsPL"}),
                 "Ask for people with certain skills or those worked in specific locations / organizations!");
     }
     

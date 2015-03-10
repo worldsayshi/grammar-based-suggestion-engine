@@ -99,12 +99,12 @@ $(function () {
             var templ = docTemplates[searchdomain].templ;
             
             if(docs!=null){
-            $("#search_result").empty().append($.map(docs, function (doc, ix) {
-                return templ(doc);
-            }));
+                $("#search_result").empty().append($.map(docs, function (doc, ix) {
+                    return templ(doc);
+                }));
             }
             else{
-               $("#search_result").empty().append("<p>No results!</p>") 
+                $("#search_result").empty().append("<p>No results!</p>") 
             }
         });
     }
@@ -157,6 +157,20 @@ $(document).ready(function(){
         loading = true;
         setCurrentInputText(queryString);
     }
+    
+    Handlebars.registerHelper("splitString", function(context, options){
+    if(context){
+      var ret = "";
+      var tempArr = String(context).trim().split(options.hash["delimiter"]);
+
+      for(var i=0; i < tempArr.length; i++)
+      {
+        ret = ret + options.fn(tempArr[i]);
+      }
+
+      return ret;
+    }
+  });
     
 });
 

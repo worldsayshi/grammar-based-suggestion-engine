@@ -61,12 +61,15 @@
                     <!-- parameters hardcoded for now-->
                     <c:if test="${domainEntry.key eq 'vasttrafik'}">
                         <input name="noRepetitionTypes" type="hidden" value="station" />
-                        <input name="maxAdditionalSuggestedNames" type="hidden" value="2" />
+                        <input name="maxAdditionalSuggestedNames" type="hidden" value="1" />
+                        <input name="maxSuggestions" type="hidden" value="10" />
+                        
                     </c:if>
 
                     <c:if test="${domainEntry.key eq 'precisionSearch'}">
                         <input name="noRepetitionTypes" type="hidden" value="skill,organization,location" />
-                        <input name="maxAdditionalSuggestedNames" type="hidden" value="2" />
+                        <input name="maxAdditionalSuggestedNames" type="hidden" value="1" />
+                        <input name="maxSuggestions" type="hidden" value="10" />
                     </c:if>
                 </form>
             </div>

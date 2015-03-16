@@ -14,13 +14,19 @@
         <script type="text/javascript" src="static/script.js"></script>
 
         <link rel="stylesheet" type="text/css" href="static/style.css">
+
+        <script type="text/javascript">
+            var params = "${params}";
+        </script>
+
     </head>
     <body>
 
     </select-->
-    
+
     <%@include file="handlebars/documents.jsp" %>
     <%@include file="tabs.jsp" %>
+    <p id="results_title"></p>
     <ul id="search_result"></ul>
 
 </body>

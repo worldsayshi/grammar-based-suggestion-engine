@@ -7,6 +7,31 @@ pre {outline: 1px solid #ccc; padding: 5px; margin-top: 10px; }
 
 body { padding: 25px ; }
 
+.person-desc{
+    position: relative;
+    float: left;
+}
+
+.person{
+    position: relative;
+    width:30%;
+    float: left;
+    border-style: solid;
+    border-width: 1px;
+    border-color: lightblue;
+    margin: 2px;
+    padding:2px;
+    height: 200px;
+    overflow-y:auto;
+    overflow-x:hidden;
+}
+
+.title{
+    text-align: center;
+    font-size: 20px;
+    margin-top: 2px;
+}
+
 .input-large {
     width: 210px;
     height: 44px !important;
@@ -71,6 +96,20 @@ input.grammar-search {
     float: inherit;
 }
 
+.description{
+    background-color: #F2F8FF;
+    margin: 0;
+    font-size: 12;
+    width: 700px;
+    color: #527ACC;
+    font-weight: bold;
+}
+
+.trip-title{
+    font-weight: bold;
+    margin:2;
+}
+
 
 
 /* QC search box and result styling
@@ -110,7 +149,7 @@ input.grammar-search {
 }
 
 .tt-dropdown-menu {
-    width: 422px;
+    width: 600px;
     margin-top: 12px;
     padding: 8px 0;
     background-color: #fff;

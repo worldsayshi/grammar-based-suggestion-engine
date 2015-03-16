@@ -26,7 +26,7 @@
                 <h2 id="MainTitle">${domainEntry.key} Demo</h2>
 
                 <p class="description">${descriptions[domainEntry.key]}</p>
-                <form id="search-form-${domainEntry.key}">
+                <form id="search-form-${domainEntry.key}" class="search-form">
 
                     <button type="button" class="speechButton" id="button-${domainEntry.key}" onclick="startButton('${domainEntry.key}')" style="border: 0; background: transparent">
                         <img src="/static/micon.jpg" alt="speak" id="buttonImage-${domainEntry.key}">                   
@@ -34,6 +34,7 @@
 
                     <input id="search-input-${domainEntry.key}" name="q" type="text" class="input-large search-input"  
                            placeholder="Type your question.." data-searchdomain="${domainEntry.key}"></input>
+                    <input type="submit" style="position: absolute; left: -9999px"/>
 
                     <button type="button" class="clearButton" id="clear-${domainEntry.key}" value="" onclick="clearButton()" style="border: 0; background: transparent">
                         <img src="/static/clear.jpg" alt="clear" id="clearImage-${domainEntry.key}">                   

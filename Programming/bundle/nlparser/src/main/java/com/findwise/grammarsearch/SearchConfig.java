@@ -33,7 +33,7 @@ public class SearchConfig {
                 new SolrNameSuggester(solr_url),
                 new SolrGrammarSuggester(solr_url),
                 new VasttrafikGrammarSearchClient(pgf),
-                Arrays.asList(new String[]{"VasttrafikEngConcat"}),
+                Arrays.asList(new String[]{"VasttrafikEngConcat","VasttrafikSweConcat"}),
                 "Ask for travel directions from one station to another. Choose preferred means of transport and departure / arrival time!");
     }
     

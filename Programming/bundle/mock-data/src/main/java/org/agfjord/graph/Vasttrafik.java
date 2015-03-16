@@ -40,23 +40,28 @@ public class Vasttrafik {
             System.out.println();
             System.out.println("LIN");
             
-            List<Set<String>> linearizations = 
-                    grammar.generateLinearizations(asts, 
-                            abs_grammar_name+"EngConcat.gf", 
-                            abs_grammar_name+"EngConcat");
-            System.out.println(linearizations);
-            System.out.println();
-            System.out.println("INS");
-            List<Instruction> instrucs = grammar
-                    .createInstrucs(asts, linearizations, abs_grammar_name+"EngConcat");
-            System.out.println(instrucs);
-            
-            solrData.deleteLinearizationsOfLang(abs_grammar_name+"EngConcat");
-            solrData.addInstrucsToSolr(instrucs);
-            
-            solrData.deleteNamesOfAbsLang(abs_grammar_name);
-            // Add temp stations:
-            solrData.importNames("Station", createTempStations(),abs_grammar_name);
+            String[] languages = {"EngConcat", "SweConcat", "PL"};
+
+            for (String lang : languages) {
+
+                List<Set<String>> linearizations =
+                        grammar.generateLinearizations(asts,
+                        abs_grammar_name + lang + ".gf",
+                        abs_grammar_name + lang);
+                System.out.println(linearizations);
+                System.out.println();
+                System.out.println("INS");
+                List<Instruction> instrucs = grammar.createInstrucs(asts, linearizations, abs_grammar_name + lang);
+                System.out.println(instrucs);
+
+                solrData.deleteLinearizationsOfLang(abs_grammar_name + lang);
+                solrData.addInstrucsToSolr(instrucs);
+
+                solrData.deleteNamesOfAbsLang(abs_grammar_name);
+                // Add temp stations:
+                solrData.importNames("Station", createTempStations(), abs_grammar_name);
+
+            }
             
             
             

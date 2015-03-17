@@ -1,6 +1,7 @@
 #!/bin/sh
-/home/vagrant/.cabal/bin/gf -src --gfo-dir=bin -make -literal=Symb InstrucsEngRGL.gf InstrucsSweRGL.gf InstrucsEngConcat.gf InstrucsSolr.gf
-/home/vagrant/.cabal/bin/gf -src --gfo-dir=bin -make -literal=Symb Vasttrafik.gf VasttrafikEngConcat.gf VasttrafikSweConcat.gf VasttrafikApi.gf
+
+/home/vagrant/.cabal/bin/gf -src --gfo-dir=bin -make -literal=Symb InstrucsPL.gf InstrucsEngRGL.gf InstrucsSweRGL.gf InstrucsEngConcat.gf InstrucsSolr.gf
+/home/vagrant/.cabal/bin/gf -src --gfo-dir=bin -make -literal=Symb Vasttrafik.gf VasttrafikEngConcat.gf VasttrafikSweConcat.gf VasttrafikApi.gf VasttrafikPL.gf
 
 mkdir -p ../nlparser/src/main/resources
 mkdir -p ../mock-data/src/main/resources

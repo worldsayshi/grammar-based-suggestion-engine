@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+cd /vagrant/bundle/Grammar
+./build
+
 cd /vagrant/bundle/mock-data/
 mvn compile
 

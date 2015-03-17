@@ -5,21 +5,60 @@
 --%>
 
 <script class="doc-template" data-searchdomain="precisionSearch" data-docpath="" type="text/x-handlebars-template">
-    <li class="document" class="media">
+    <div class="document person" class="media">
         <h2 class="title">{{name}}</h2>
         <div class="media-body">
-            {{#if WORKS_IN}}<div><em>Locations:</em> {{WORKS_IN}}</div>{{/if}}
-            {{#if KNOWS}}<div><em>Knowledge:</em> {{KNOWS}}</div>{{/if}}
-            {{#if WORKS_WITH}}<div><em>Organizations:</em> {{WORKS_WITH}}</div>{{/if}}
-            {{#if USES}}<div><em>Uses:</em> {{USES}}</div>{{/if}}
+            {{#if WORKS_IN}}
+                <div class="person-desc">
+                    <em>Locations:</em> 
+                    <ul>
+                        {{#splitString WORKS_IN delimiter=","}} 
+                        <li>{{this}}</li>
+                        {{/splitString}}
+                    </ul>
+                </div>
+            {{/if}}
+            {{#if KNOWS}}
+                <div class="person-desc">
+                <em>Knowledge:</em> 
+                <ul>
+                    {{#splitString KNOWS delimiter=","}} 
+                    <li>{{this}}</li>
+                    {{/splitString}}
+                </ul>
+                </div>
+            {{/if}}
+            {{#if WORKS_WITH}}
+                <div class="person-desc">
+                    <em>Organizations:</em> 
+                    <ul>
+                        {{#splitString WORKS_WITH delimiter=","}} 
+                        <li>{{this}}</li>
+                        {{/splitString}}
+                    </ul>
+                </div>
+            {{/if}}
+            {{#if USES}}
+                <div class="person-desc">
+                <em>Uses:</em> 
+                <ul>
+                    {{#splitString USES delimiter=","}} 
+                    <li>{{this}}</li>
+                    {{/splitString}}
+                </ul>
+                </div>
+            {{/if}}
         </div>
-    </li>
+    </div>
 </script>
 <script class="doc-template" data-searchdomain="vasttrafik" data-docpath="trip" type="text/x-handlebars-template">
     <li class="document">
 
         <ul class="list-group well">
-            <p class="trip-title"> {{legList.[0].origin.name}} at {{legList.[0].origin.time}}  - {{#each legList}}{{#if @last}}{{destination.name}} at {{destination.time}}{{/if}}{{/each}}</p>
+            <p class="trip-title">
+                <span>{{legList.[0].origin.name}} at {{legList.[0].origin.time}}  - {{#each legList}}{{#if @last}}{{destination.name}} at {{destination.time}}{{/if}}{{/each}}</span>
+                <span>({{tripTime}} minutes, {{transfers}} transfers )</span>
+            </p>
             {{#each legList}}
             <li class="list-group-item tripLeg">
                 <span class="trip-badge trip-name badge badge-info">{{name}}</span>

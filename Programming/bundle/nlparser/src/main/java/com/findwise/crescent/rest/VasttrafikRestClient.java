@@ -61,8 +61,9 @@ public class VasttrafikRestClient {
             TripListWrapper tlw = mapper.readValue(new URL(url),
                     TripListWrapper.class);
             return tlw.getTripList();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            
         }
         return null;
     }

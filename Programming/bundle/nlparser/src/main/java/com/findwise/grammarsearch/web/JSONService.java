@@ -73,8 +73,10 @@ public class JSONService {
             @PathVariable("grammarSearchDomain") String grammarSearchDomain,
             @RequestParam(value = "q", required = true) String question,
             @RequestParam(value = "lang", required = true) String concreteLang) throws ParseError {
-        return gson.toJson(
-                searchDomains.get(grammarSearchDomain).performQuery(question, concreteLang));
+        String toJson = gson.toJson(
+                                searchDomains.get(grammarSearchDomain).performQuery(question, concreteLang));
+        
+        return toJson;
     }
 
     @RequestMapping(value = "/api/{grammarSearchDomain}/suggestSentences",

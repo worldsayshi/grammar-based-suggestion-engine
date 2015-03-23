@@ -119,6 +119,13 @@ $(function () {
             $(this).data("searchdomain"));
     });
     
+    $(".search-form").submit(function (event) {
+        doSearch(
+                $('#search-input-' + currentDomain).closest("form").serialize(),
+                $('#search-input-' + currentDomain).data("searchdomain"));
+        event.preventDefault();
+    });
+    
     function getDocsWithDocPath(data,docpath) {
         var elem = data;
         

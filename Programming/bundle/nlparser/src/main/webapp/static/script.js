@@ -37,17 +37,19 @@ $(function () {
                 //perform search automatically
                 if((loading || recognizing) && list.length == 1){
                     loading = false;
-                    $('#search-input-' + currentDomain).typeahead('val',list[0]);
+                    $('#search-input-' + currentDomain).typeahead('val',list[0].text);
                     $('#search-input-' + currentDomain).typeahead('close');
                     
                     doSearch(
                         $('#search-input-' + currentDomain).closest("form").serialize(),
-                        $('#search-input-' + currentDomain).data("searchdomain"));
+                        $('#search-input-' + currentDomain).data("searchdomain"),
+                        list[0].searchApiQuery);
                 }
                 
                 return $.map(list, function(word) {
                     return {
-                        s: word.text
+                        s: word.text,
+                        a: word.searchApiQuery
                     };
                 });
             }
@@ -70,7 +72,7 @@ $(function () {
         };
     });
    
-    function doSearch(query,searchdomain) {  
+    function doSearch(query,searchdomain, apiQuery) {  
         //cancell previous search
         if(currentRequest)
         {
@@ -83,6 +85,11 @@ $(function () {
             query:query
         };
         var u = _.template(urlTempl)(templVars);
+        
+        if(apiQuery != null){
+            u+= "&apiQuery=" + encodeURIComponent(apiQuery);
+        }
+        
         var currentQ = $('#search-input-' + currentDomain).val();
         
         $("#results_title").empty().append("<b>Results for: '" + currentQ + "'</b>");
@@ -113,16 +120,18 @@ $(function () {
         source:suggestions.ttAdapter(),
         displayKey: 's',
         name: "grammar-suggestions"
-    }).on('typeahead:selected',function (e, datum) {
+    }).on('typeahead:selected',function (obj, datum, name) {
         doSearch(
             $(this).closest("form").serialize(),
-            $(this).data("searchdomain"));
+            $(this).data("searchdomain"),
+            datum.a);
     });
     
     $(".search-form").submit(function (event) {
         doSearch(
                 $('#search-input-' + currentDomain).closest("form").serialize(),
-                $('#search-input-' + currentDomain).data("searchdomain"));
+                $('#search-input-' + currentDomain).data("searchdomain"),
+                null); //there is no apiQuery information since this has not been take from suggestion list
         event.preventDefault();
     });
     

@@ -72,7 +72,9 @@ public class JSONService {
     public String search(
             @PathVariable("grammarSearchDomain") String grammarSearchDomain,
             @RequestParam(value = "q", required = true) String question,
-            @RequestParam(value = "lang", required = true) String concreteLang) throws ParseError {
+            @RequestParam(value = "lang", required = true) String concreteLang,
+            @RequestParam(value = "apiQuery", required = false) String apiQuery) throws ParseError {
+        
         String toJson = gson.toJson(
                                 searchDomains.get(grammarSearchDomain).performQuery(question, concreteLang));
         

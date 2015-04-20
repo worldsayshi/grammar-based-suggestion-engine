@@ -469,8 +469,8 @@ public class GrammarSearchDomain<T> {
         return nlQuestion;
     }
 
-    public Object performQuery(String question, String lang) throws ParseError {
-        return grammarSearchClient.performQuery(question, lang);
+    public Object performQuery(String question, String lang, String apiQuery) throws ParseError {
+        return grammarSearchClient.performQuery(question, lang, apiQuery);
     }
 
     private NameTypeCounts countMissingName(
@@ -651,9 +651,5 @@ public class GrammarSearchDomain<T> {
         for (Interpretation current : toBeRemoved) {
             namesInterpretations.remove(current);
         }
-    }
-
-    public List<String> getLanguages() {
-        return grammarSearchClient.getLanguages();
     }
 }

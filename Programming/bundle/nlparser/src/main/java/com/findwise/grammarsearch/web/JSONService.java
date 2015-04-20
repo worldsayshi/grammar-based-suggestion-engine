@@ -76,7 +76,7 @@ public class JSONService {
             @RequestParam(value = "apiQuery", required = false) String apiQuery) throws ParseError {
         
         String toJson = gson.toJson(
-                                searchDomains.get(grammarSearchDomain).performQuery(question, concreteLang));
+                                searchDomains.get(grammarSearchDomain).performQuery(question, concreteLang, apiQuery));
         
         return toJson;
     }

@@ -26,13 +26,11 @@ public class SearchConfig {
         if (null == solr_url) {
             throw new BeanCreationException("Could not initialize search domain: solr.base.url was not set!");
         }
-        URL url = this.getClass().getClassLoader().getResource("Vasttrafik.pgf");
-        PGF pgf = importPGF(url);
         
         return new GrammarSearchDomain<>("Vasttrafik",
                 new SolrNameSuggester(solr_url),
                 new SolrGrammarSuggester(solr_url),
-                new VasttrafikGrammarSearchClient(pgf),
+                new VasttrafikGrammarSearchClient(),
                 Arrays.asList(new String[]{"VasttrafikEngConcat","VasttrafikSweConcat", "VasttrafikPL"}),
                 "Ask for travel directions from one station to another. Choose preferred means of transport and departure / arrival time!");
     }
@@ -43,25 +41,12 @@ public class SearchConfig {
         if (null == solr_url) {
             throw new BeanCreationException("Could not initialize search domain: solr.base.url was not set!");
         }
-        URL url = this.getClass().getClassLoader().getResource("Instrucs.pgf");
-        PGF pgf = importPGF(url);
         
         return new GrammarSearchDomain<>("Instrucs",
                 new SolrNameSuggester(solr_url),
                 new SolrGrammarSuggester(solr_url),
-                new SolrGrammarSearchClient(pgf,solr_url+"/relations"),
+                new SolrGrammarSearchClient(solr_url+"/relations"),
                 Arrays.asList(new String[]{"InstrucsEngRGL","InstrucsSweRGL","InstrucsPL"}),
                 "Ask for people with certain skills or those worked in specific locations / organizations!");
-    }
-    
-    private PGF importPGF (URL url) {
-        PGF pgf;
-        try {
-            pgf = PGF.readPGF(url.openStream());
-        } catch (IOException ex) {
-            Logger.getLogger(SearchConfig.class.getName()).log(Level.SEVERE, null, ex);
-            throw new BeanCreationException("Could not import Vasttrafik pgf");
-        }
-        return pgf;
     }
 }

@@ -14,33 +14,17 @@ import org.grammaticalframework.pgf.*;
  */
 public class VasttrafikGrammarSearchClient implements GrammarSearchClient<TripList> {
 
-    private PGF pgf;
     
-    public VasttrafikGrammarSearchClient (PGF pgf) {
-        this.pgf = pgf;
-        Map<String, Concr> languages = pgf.getLanguages();
-        
-        for (Concr language : languages.values()) {
-            language.addLiteral("Symb", new NercLiteralCallback());
-        }
+    public VasttrafikGrammarSearchClient () {
     }
     
-    // Move to VasttrafikGrammarSearchClient
     VasttrafikRestClient vasttrafikclient = new VasttrafikRestClient();
     
-    // Move to VasttrafikGrammarSearchClient
     @Override
     public TripList performQuery (String question, 
-            String lang /* = "VasttrafikEngConcat"*/) throws ParseError {
+            String lang, String apiQuery) throws ParseError {
         
-        List<Expr> exprs = parseToExpression(question,lang);
-        if(exprs.isEmpty()){
-            throw new Error("TODO");
-        }
-        Expr expr = exprs.get(0);
-        Concr apiLang = pgf.getLanguages().get("VasttrafikApi");
-        String apiLinearization = apiLang.linearize(expr);
-        VasttrafikQuery q = parseVasttrafikApi(apiLinearization);
+        VasttrafikQuery q = parseVasttrafikApi(apiQuery);
         if(q.from==null || q.to==null){
             // Not complete query - no route
             TripList tripList = new TripList();
@@ -49,23 +33,7 @@ public class VasttrafikGrammarSearchClient implements GrammarSearchClient<TripLi
         }
         return vasttrafikclient.findConnections(q);
     }
-    
-    // Move to VasttrafikGrammarSearchClient
-    List<Expr> parseToExpression(String question, String parseLang) throws ParseError {
-        Iterable<ExprProb> exprProbs;
-        List<Expr> expressions = new ArrayList<>();
-        exprProbs = pgf.getLanguages()
-                .get(parseLang)
-                .parse(
-                        pgf.getStartCat(), question);
-        for (ExprProb exprProb : exprProbs) {
-            Expr expr = exprProb.getExpr();
-            expressions.add(expr);
-        }
-        return expressions;
-    }
-    
-    
+       
     private VasttrafikQuery buildQuery (Map<String,String> inputParams){
                 Date date = new Date(System.currentTimeMillis() + Integer.parseInt(inputParams.get("offset")) * 60000);
         boolean departingDate = inputParams.get("reference").equals("departure");
@@ -94,9 +62,4 @@ public class VasttrafikGrammarSearchClient implements GrammarSearchClient<TripLi
         
         return buildQuery(map);
     }    
-
-    @Override
-    public List<String> getLanguages() {
-        return new ArrayList<>(pgf.getLanguages().keySet());
-    }
 }

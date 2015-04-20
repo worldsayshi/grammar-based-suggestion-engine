@@ -25,37 +25,26 @@ import org.grammaticalframework.pgf.*;
  */
 public class SolrGrammarSearchClient implements GrammarSearchClient<SolrDocumentList> {
 
-    PGF pgf;
     SolrServer server;
 
-    public SolrGrammarSearchClient(PGF pgf, String solr_url) {
-        this.pgf = pgf;
+    public SolrGrammarSearchClient(String solr_url) {
         server = new HttpSolrServer(solr_url);
-        for (Concr language : pgf.getLanguages().values()) {
-            language.addLiteral("Symb", new NercLiteralCallback());
-        }
     }
 
     @Override
-    public SolrDocumentList performQuery(String question, String lang) {
-        try {
-            List<Expr> exprs = parseToExpression(question, lang);
-            if (exprs.isEmpty()) { // not sure if needed
-                throw new Error("TODO");
+    public SolrDocumentList performQuery(String question, String lang, String apiQuery) {
+
+            if(apiQuery != null){
+                return performApiQuery(apiQuery);
             }
-            return performExpressionQuery(exprs);
-        } catch (ParseError ex) {
-            Logger.getLogger(SolrGrammarSearchClient.class.getName()).warning("Parse error, performing free-text search");
-            return performFreeTextSearch(question);
-        }
+            else{
+                return performFreeTextSearch(question);
+            }
     }
 
-    private SolrDocumentList performExpressionQuery(List<Expr> exprs) {
-        Expr expr = exprs.get(0);
-        Concr apiLang = pgf.getLanguages().get("InstrucsSolr");
-        String apiLinearization = apiLang.linearize(expr);
+    private SolrDocumentList performApiQuery(String apiQuery) {
         try {
-            List<NameValuePair> params = URLEncodedUtils.parse(parseUrl("http://www.foo.bar/" + apiLinearization), "UTF-8");
+            List<NameValuePair> params = URLEncodedUtils.parse(parseUrl("http://www.foo.bar/" + apiQuery), "UTF-8");
             QueryResponse query = server.query(buildSolrQuery(params));
             return query.getResults();
         } catch (SolrServerException ex) {
@@ -80,20 +69,6 @@ public class SolrGrammarSearchClient implements GrammarSearchClient<SolrDocument
         return null;
     }
 
-    List<Expr> parseToExpression(String question, String parseLang) throws ParseError {
-        Iterable<ExprProb> exprProbs;
-        List<Expr> expressions = new ArrayList<>();
-        exprProbs = pgf.getLanguages()
-                .get(parseLang)
-                .parse(
-                        pgf.getStartCat(), question);
-        for (ExprProb exprProb : exprProbs) {
-            Expr expr = exprProb.getExpr();
-            expressions.add(expr);
-        }
-        return expressions;
-    }
-
     private SolrParams buildSolrQuery(List<NameValuePair> params) {
         SolrQuery q = new SolrQuery();
         for (NameValuePair p : params) {
@@ -110,10 +85,5 @@ public class SolrGrammarSearchClient implements GrammarSearchClient<SolrDocument
                 u.getPath(),
                 u.getQuery(),
                 u.getRef());
-    }
-
-    @Override
-    public List<String> getLanguages() {
-        return new ArrayList<>(pgf.getLanguages().keySet());
     }
 }

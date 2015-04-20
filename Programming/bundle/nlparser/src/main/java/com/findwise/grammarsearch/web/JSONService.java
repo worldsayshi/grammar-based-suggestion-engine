@@ -86,10 +86,11 @@ public class JSONService {
             @PathVariable String grammarSearchDomain,
             @RequestParam(value = "q", required = true) String question,
             @RequestParam(value = "lang", required = true) String concreteLang,
+            @RequestParam(value = "apilang", required = true) String apiLang,
             SuggestionParams params) throws SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed, Exception {
 
         return gson.toJson(
-                searchDomains.get(grammarSearchDomain).suggestSentences(question, concreteLang, params));
+                searchDomains.get(grammarSearchDomain).suggestSentences(question, concreteLang, apiLang, params));
     }
 
     @RequestMapping(value = "/api/listDomains",

@@ -11,7 +11,6 @@ public class TreeResult {
 
     @Field("linearizations")
     List<String> linearizations;
-
     
     @Field("length")
     Integer length;
@@ -21,6 +20,9 @@ public class TreeResult {
     
     @Field("*_i")
     private Map<String, Integer> nameCounts;
+    
+    @Field("apiTemplate")
+    private String apiTemplate;
        
     public List<String> getLinearizations() {
         return linearizations;
@@ -52,5 +54,19 @@ public class TreeResult {
 
     public void setNameCounts(Map<String, Integer> nameCounts) {
         this.nameCounts = nameCounts;
+    }
+
+    /**
+     * @return the apiTemplate
+     */
+    public String getApiTemplate() {
+        return apiTemplate;
+    }
+
+    /**
+     * @param apiTemplate the apiTemplate to set
+     */
+    public void setApiTemplate(String apiTemplate) {
+        this.apiTemplate = apiTemplate;
     }
 }

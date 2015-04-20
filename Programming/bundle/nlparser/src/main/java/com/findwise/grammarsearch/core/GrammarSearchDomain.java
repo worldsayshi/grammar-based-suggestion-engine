@@ -3,11 +3,12 @@ package com.findwise.grammarsearch.core;
 import com.findwise.grammarsearch.core.SolrGrammarSuggester.GrammarLookupFailure;
 import com.findwise.grammarsearch.util.Templating;
 import com.findwise.grammarsearch.web.SuggestionParams;
+import com.findwise.grammarsearch.web.SuggestionResult;
 import java.util.Map.Entry;
 import java.util.*;
 import org.agfjord.server.result.NameResult;
 import org.agfjord.server.result.TreeResult;
-import org.grammaticalframework.pgf.ParseError;
+import org.grammaticalframework.pgf.*;
 
 /**
  * Replacement for Parser
@@ -26,6 +27,7 @@ public class GrammarSearchDomain<T> {
     private SuggestionComparator suggestionComparator = new SuggestionComparator();
     private List<String> userLanguages;
     private String description;
+
 
     public GrammarSearchDomain(
             String absGrammarName,
@@ -54,7 +56,7 @@ public class GrammarSearchDomain<T> {
      * @throws
      * com.findwise.grammarsearch.core.SolrNameSuggester.NameLookupFailed
      */
-    public List<String> suggestSentences(String nlQuestion, String concreteLang, SuggestionParams params)
+    public List<SuggestionResult> suggestSentences(String nlQuestion, String concreteLang, String searchApiLang, SuggestionParams params)
             throws Exception, SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed {
         List<Suggestion> questions = new ArrayList<>();
 
@@ -86,10 +88,11 @@ public class GrammarSearchDomain<T> {
 
                 NameTypeCounts missingCounts = countMissingName(
                         namesInQuestion, templateLinearizationDoc);
-
+                
                 Suggestion linearization = getBestLinearization(
                         templateLinearizationDoc.getLinearizations(),
                         current, interpretations.getWordTypes(),
+                        templateLinearizationDoc.getApiTemplate(),
                         behavior.contains(BehaviorDetails.AllMustMatch));
 
                 if (linearization == null) {
@@ -143,7 +146,7 @@ public class GrammarSearchDomain<T> {
         filterSuggestions(questions, behavior);
         Collections.sort(questions, suggestionComparator);
 
-        return suggestionsToStringList(questions.subList(0, behavior.contains(BehaviorDetails.JustOneResult) ? 1 : Math.min(questions.size(), params.getMaxSuggestions())));
+        return suggestionsToResultSuggestionsList(questions.subList(0, behavior.contains(BehaviorDetails.JustOneResult) ? 1 : Math.min(questions.size(), params.getMaxSuggestions())));
     }
 
     /*
@@ -172,15 +175,17 @@ public class GrammarSearchDomain<T> {
     /*
      * Converts suggestions list to their string representations
      */
-    private List<String> suggestionsToStringList(List<Suggestion> suggestions) {
-        List<String> result = new ArrayList<>();
+    private List<SuggestionResult> suggestionsToResultSuggestionsList(List<Suggestion> suggestions) {
+        List<SuggestionResult> result = new ArrayList<>();
 
         for (Suggestion suggestion : suggestions) {
-            result.add(suggestion.getText());
+            result.add(new SuggestionResult(suggestion.getText(), suggestion.getSearchApiLinearization()));
         }
 
         return result;
     }
+    
+
 
     /*
      * Analysing the query and parameters and choosing the right behavior
@@ -188,7 +193,7 @@ public class GrammarSearchDomain<T> {
     private SuggestionBehaviors chooseBehavior(String nlQuestion,
             Interpretations interpretations,
             SuggestionParams params,
-            String concreteLang) throws GrammarLookupFailure {
+            String concreteLang) throws GrammarLookupFailure, ParseError {
 
         boolean continuePossible = params.isEnableContinue() && nlQuestion.endsWith(CONTINUE_HINT);
         boolean alterPossible = params.isEnableAlter() && !nlQuestion.endsWith(CONTINUE_HINT);
@@ -206,7 +211,7 @@ public class GrammarSearchDomain<T> {
             }
 
             Suggestion bestSuggestion = getBestLinearization(suggestRules.get(0).getLinearizations(),
-                    interpretation, interpretations.getWordTypes(), false);
+                    interpretation, interpretations.getWordTypes(), suggestRules.get(0).getApiTemplate(), false);
 
             // the query is complete: give alter or continue suggestions if enabled
             if (template.trim().equalsIgnoreCase(bestSuggestion.getText().trim())
@@ -302,14 +307,14 @@ public class GrammarSearchDomain<T> {
      */
     private Suggestion getBestLinearization(List<String> linearizations,
             Interpretation interpretation,
-            Map<String, WordType> originalWords, boolean matchAllWords) {
+            Map<String, WordType> originalWords, String searchApiLinearization, boolean matchAllWords) throws ParseError {
 
         Suggestion best = null;
 
         for (String current : linearizations) {
             Suggestion suggestion = buildSuggestion(
                     current, interpretation,
-                    originalWords, matchAllWords);
+                    originalWords, searchApiLinearization, matchAllWords);
 
             if (suggestion != null) {
                 if (best == null) {
@@ -332,7 +337,7 @@ public class GrammarSearchDomain<T> {
      */
     private Suggestion buildSuggestion(String linearization,
             Interpretation interpretation,
-            Map<String, WordType> originalWords, boolean matchAllWords) {
+            Map<String, WordType> originalWords, String searchApiLinearization, boolean matchAllWords) throws ParseError {
         String[] words = linearization.split("\\s+");
 
         Map<String, Integer> namesMissing = new HashMap(
@@ -389,7 +394,7 @@ public class GrammarSearchDomain<T> {
         int grammarWordsAdded = additionalGrammarWordsCount - grammarWordsAltered;
 
         return new Suggestion(linearization, false,
-                additionalNamesCount, grammarWordsAdded, grammarWordsAltered);
+                additionalNamesCount, grammarWordsAdded, grammarWordsAltered, searchApiLinearization);
     }
 
     /*
@@ -405,21 +410,24 @@ public class GrammarSearchDomain<T> {
         List<Suggestion> suggestions = new ArrayList<>();
 
         String linearization = fillTemplate(input.getText(), namesInQuestion);
+        String searchApiLinearization = fillTemplate(input.getSearchApiLinearization(), namesInQuestion);
 
         int nrUnknowns = defTempl.listVariables(linearization).size();
         if (nrUnknowns > additionalNames.size()) {
             throw new InternalError("No suggestions for unknown template variables.");
         }
+
         if (nrUnknowns == 0) {
             return Arrays.asList(new Suggestion(
                     linearization,
                     true, input.getAdditionalNamesCount(),
                     input.getAdditionalGrammarWords(),
-                    input.getAlteredGrammarWordsCount()));
+                    input.getAlteredGrammarWordsCount(), searchApiLinearization));
         }
 
         while (true) {
             String currentSuggestion = linearization;
+            String currentSearchApiLinearization = searchApiLinearization;
             boolean allNamesFilled = true;
 
             for (List<NameResult> currentNames : additionalNames) {
@@ -431,6 +439,7 @@ public class GrammarSearchDomain<T> {
 
                 currentSuggestion = fillTemplate(currentSuggestion,
                         currentNames.get(suggestions.size()));
+                currentSearchApiLinearization = fillTemplate(currentSearchApiLinearization, currentNames.get(suggestions.size()));
             }
 
             if (allNamesFilled) {
@@ -438,7 +447,7 @@ public class GrammarSearchDomain<T> {
                         currentSuggestion, true,
                         input.getAdditionalNamesCount(),
                         input.getAdditionalGrammarWords(),
-                        input.getAlteredGrammarWordsCount()));
+                        input.getAlteredGrammarWordsCount(), currentSearchApiLinearization));
             }
             else {
                 break;

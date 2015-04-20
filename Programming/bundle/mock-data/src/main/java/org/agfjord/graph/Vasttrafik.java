@@ -2,12 +2,14 @@ package org.agfjord.graph;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.apache.solr.client.solrj.SolrServerException;
+import org.grammaticalframework.pgf.PGF;
 import org.grammaticalframework.pgf.ParseError;
 
 /**
@@ -32,7 +34,8 @@ public class Vasttrafik {
 
             String abs_grammar_name = "Vasttrafik";
             //
-            Grammar grammar = new Grammar(grammmar_dir, abs_grammar_name);
+            URL url = this.getClass().getClassLoader().getResource("Vasttrafik.pgf");
+            Grammar grammar = new Grammar(grammmar_dir, abs_grammar_name, PGF.readPGF(url.openStream()));
 
             Set<String> asts = grammar.generateAbstractSyntaxTreesFromShell();
 
@@ -51,7 +54,7 @@ public class Vasttrafik {
                 System.out.println(linearizations);
                 System.out.println();
                 System.out.println("INS");
-                List<Instruction> instrucs = grammar.createInstrucs(asts, linearizations, abs_grammar_name + lang);
+                List<Instruction> instrucs = grammar.createInstrucs(asts, linearizations, abs_grammar_name + lang, "VasttrafikApi");
                 System.out.println(instrucs);
 
                 solrData.deleteLinearizationsOfLang(abs_grammar_name + lang);

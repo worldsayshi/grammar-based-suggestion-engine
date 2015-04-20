@@ -146,6 +146,7 @@
    <field name="linearizations" type="text_general" indexed="true" stored="true" multiValued="true"/>
    <field name="subject" type="text_general" indexed="true" stored="true"/>
    <field name="lang" type="text_general" indexed="true" stored="true"/>
+   <field name="apiTemplate" type="text_general" indexed="true" stored="true"/>
    <field name="description" type="text_general" indexed="true" stored="true"/>
    <field name="comments" type="text_general" indexed="true" stored="true"/>
    <field name="ast" type="text_general" indexed="true" stored="true"/>

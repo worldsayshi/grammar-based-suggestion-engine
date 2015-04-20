@@ -23,7 +23,10 @@ public class Suggestion {
     //words count in the suggestion text
     private int wordsCount;
     
-    public Suggestion(String text, boolean isNamesFilled, int addNames, int addGrammar, int alterGrammar){
+    //search api linearization version of this suggestion
+    private String searchApiLinearization;
+    
+    public Suggestion(String text, boolean isNamesFilled, int addNames, int addGrammar, int alterGrammar, String searchApiLinearization){
         this.text = text;
         this.isNamesFilled = isNamesFilled;
         this.additionalNamesCount = addNames;
@@ -31,6 +34,8 @@ public class Suggestion {
         this.alteredGrammarWordsCount = alterGrammar;
         
         this.wordsCount = text.split("\\s+").length;
+        
+        this.searchApiLinearization = searchApiLinearization;
     }
 
     /**
@@ -108,5 +113,19 @@ public class Suggestion {
      */
     public int getWordsCount() {
         return wordsCount;
+    }
+
+    /**
+     * @return the searchApiLinearization
+     */
+    public String getSearchApiLinearization() {
+        return searchApiLinearization;
+    }
+
+    /**
+     * @param searchApiLinearization the searchApiLinearization to set
+     */
+    public void setSearchApiLinearization(String searchApiLinearization) {
+        this.searchApiLinearization = searchApiLinearization;
     }
 }

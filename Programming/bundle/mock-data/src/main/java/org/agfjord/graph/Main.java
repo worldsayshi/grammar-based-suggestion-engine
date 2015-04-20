@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.solr.client.solrj.SolrServerException;
+import org.grammaticalframework.pgf.PGF;
 import org.grammaticalframework.pgf.ParseError;
 
 public class Main {
@@ -17,10 +18,10 @@ public class Main {
 //	static InputStream is;
 
     public Main() {
-        URL url = this.getClass().getClassLoader().getResource("Instrucs.pgf");
         try {
             String grammmar_dir = System.getProperty("grammar.dir");
-            grammar = new Grammar(grammmar_dir, "Instrucs");
+            URL url = this.getClass().getClassLoader().getResource("Instrucs.pgf");
+            grammar = new Grammar(grammmar_dir, "Instrucs", PGF.readPGF(url.openStream()));
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -31,7 +32,9 @@ public class Main {
     DataImportNeo4j dataImport = new DataImportNeo4j();
 
     public static void main(String[] args) throws ParseError, IOException, SolrServerException {
+        
         Main main = new Main();
+        
         // Generate random objects and then create persons who uses these values
         main.importDocumentsNeo4j();
 //		// Add all names that have a relation to solr
@@ -77,7 +80,7 @@ public class Main {
         {
             List<Set<String>> linearizations = grammar.generateLinearizations(asts, "InstrucsEngRGL.gf", "InstrucsEngRGL");
             System.out.format("Successfully generated %d English linearizations\n", linearizations.size());
-            List<Instruction> Instrucs = grammar.createInstrucs(asts, linearizations, "InstrucsEngRGL");
+            List<Instruction> Instrucs = grammar.createInstrucs(asts, linearizations, "InstrucsEngRGL", "InstrucsSolr");
             System.out.format("Successfully instantiated %d English linearizations\n", Instrucs.size());
             solr.deleteLinearizationsOfLang("InstrucsEngRGL");
             solr.addInstrucsToSolr(Instrucs);
@@ -87,7 +90,7 @@ public class Main {
         {
             List<Set<String>> linearizations = grammar.generateLinearizations(asts, "InstrucsSweRGL.gf", "InstrucsSweRGL");
             System.out.format("Successfully generated %d Swedish linearizations\n", linearizations.size());
-            List<Instruction> Instrucs = grammar.createInstrucs(asts, linearizations, "InstrucsSweRGL");
+            List<Instruction> Instrucs = grammar.createInstrucs(asts, linearizations, "InstrucsSweRGL", "InstrucsSolr");
             System.out.format("Successfully instantiated %d Swedish linearizations\n", Instrucs.size());
             solr.deleteLinearizationsOfLang("InstrucsSweRGL");
             solr.addInstrucsToSolr(Instrucs);
@@ -96,7 +99,7 @@ public class Main {
         {
             List<Set<String>> linearizations = grammar.generateLinearizations(asts, "InstrucsEngConcat.gf", "InstrucsEngConcat");
             System.out.format("Successfully generated %d Concat English linearizations\n", linearizations.size());
-            List<Instruction> Instrucs = grammar.createInstrucs(asts, linearizations, "InstrucsEngConcat");
+            List<Instruction> Instrucs = grammar.createInstrucs(asts, linearizations, "InstrucsEngConcat", "InstrucsSolr");
             System.out.format("Successfully instantiated %d Concat English linearizations\n", Instrucs.size());
             solr.deleteLinearizationsOfLang("InstrucsEngConcat");
             solr.addInstrucsToSolr(Instrucs);
@@ -105,7 +108,7 @@ public class Main {
         {
             List<Set<String>> linearizations = grammar.generateLinearizations(asts, "InstrucsPL.gf", "InstrucsPL");
             System.out.format("Successfully generated %d PL linearizations\n", linearizations.size());
-            List<Instruction> Instrucs = grammar.createInstrucs(asts, linearizations, "InstrucsPL");
+            List<Instruction> Instrucs = grammar.createInstrucs(asts, linearizations, "InstrucsPL", "InstrucsSolr");
             System.out.format("Successfully instantiated %d PL linearizations\n", Instrucs.size());
             solr.deleteLinearizationsOfLang("InstrucsPL");
             solr.addInstrucsToSolr(Instrucs);

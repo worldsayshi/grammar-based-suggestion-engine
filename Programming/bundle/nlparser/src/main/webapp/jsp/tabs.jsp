@@ -64,13 +64,14 @@
                         <input name="noRepetitionTypes" type="hidden" value="station" />
                         <input name="maxAdditionalSuggestedNames" type="hidden" value="1" />
                         <input name="maxSuggestions" type="hidden" value="10" />
-                        
+                        <input name="apilang" type="hidden" value="VasttrafikApi" />
                     </c:if>
 
                     <c:if test="${domainEntry.key eq 'precisionSearch'}">
                         <input name="noRepetitionTypes" type="hidden" value="skill,organization,location" />
                         <input name="maxAdditionalSuggestedNames" type="hidden" value="1" />
                         <input name="maxSuggestions" type="hidden" value="10" />
+                        <input name="apilang" type="hidden" value="InstrucsSolr" />
                     </c:if>
                 </form>
             </div>

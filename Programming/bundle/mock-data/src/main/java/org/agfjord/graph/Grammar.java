@@ -1,4 +1,5 @@
 package org.agfjord.graph;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -23,213 +24,240 @@ import org.apache.commons.io.IOUtils;
 import org.grammaticalframework.pgf.PGF;
 import org.grammaticalframework.pgf.PGFError;
 import java.nio.charset.StandardCharsets;
+import java.util.Map.Entry;
 import static org.apache.lucene.analysis.standard.UAX29URLEmailTokenizer.URL;
-
+import org.grammaticalframework.pgf.*;
 
 public class Grammar {
 
     private final static String placeholderPrefix = "{{";
     private final static String placeholderSuffix = "}}";
-    
-	//private PGF gr;
-    final private String[] nameFuns = new String[]{ "Station", "GeoLocation" };
-	final private String[] nameCats = new String[]{ "Station", "GeoLocation" };
-	//final private String[] nameFuns = new String[]{ "MkSkill", "MkLocation", "MkOrganization", "MkModule" };
-	//final private String[] nameCats = new String[]{ "Skill", "Location", "Organization", "Module" };    
-	//final private Properties prop = new Properties();
+    //private PGF gr;
+    final private String[] nameFuns = new String[]{"Station", "GeoLocation"};
+    final private String[] nameCats = new String[]{"Station", "GeoLocation"};
+    //final private String[] nameFuns = new String[]{ "MkSkill", "MkLocation", "MkOrganization", "MkModule" };
+    //final private String[] nameCats = new String[]{ "Skill", "Location", "Organization", "Module" };    
+    //final private Properties prop = new Properties();
     final private String grammar_dir;
     final private String abs_grammar_filename;
+    private PGF pgf;
 
-	public Grammar(String grammar_dir,String abs_grammar_name) throws MalformedURLException, IOException {
-        
+    public Grammar(String grammar_dir, String abs_grammar_name, PGF pgf) throws MalformedURLException, IOException {
+
         this.grammar_dir = grammar_dir;
-        this.abs_grammar_filename = abs_grammar_name+".gf";
-        
-        /*URL url = new File(grammar_dir,abs_grammar_filename)
-                .toURI().toURL();
-        InputStream pgf = url.openStream();*/
-		/*try {
-			gr = PGF.readPGF(pgf);
-		} catch (PGFError e) {
-			e.printStackTrace();
-		}*/
-		/*try {
-			prop.load(new FileInputStream("config.properties"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}*/
-	}
+        this.abs_grammar_filename = abs_grammar_name + ".gf";
+        this.pgf = pgf;
+        for (Concr language : pgf.getLanguages().values()) {
+            language.addLiteral("Symb", new NercLiteralCallback());
+        }
 
-	/*
-	 * Create Instrucs from generated linearizations
-	 */
-	public List<Instruction> createInstrucs(Set<String> asts, List<Set<String>> linearizations, String lang){
-		List<Instruction> Instrucs = new ArrayList<>();
-		Iterator<String> it = asts.iterator();
-		for(int i=0; i < linearizations.size(); i++){
-			Instruction question = new Instruction();
-			question.setLinearizations(linearizations.get(i).toArray(new String[linearizations.get(i).size()]));
-			String linearization = linearizations.get(i).iterator().next();
+        /*
+         * URL url = new File(grammar_dir,abs_grammar_filename)
+         * .toURI().toURL(); InputStream pgf = url.openStream();
+         */
+        /*
+         * try { gr = PGF.readPGF(pgf); } catch (PGFError e) {
+         * e.printStackTrace(); }
+         */
+        /*
+         * try { prop.load(new FileInputStream("config.properties")); } catch
+         * (IOException e) { e.printStackTrace(); }
+         */
+    }
+
+    /*
+     * Create Instrucs from generated linearizations
+     */
+    public List<Instruction> createInstrucs(Set<String> asts, List<Set<String>> linearizations, String lang, String apiLang) throws ParseError {
+        List<Instruction> Instrucs = new ArrayList<>();
+        Iterator<String> it = asts.iterator();
+        for (int i = 0; i < linearizations.size(); i++) {
+            Instruction question = new Instruction();
+            question.setLinearizations(linearizations.get(i).toArray(new String[linearizations.get(i).size()]));
+            String linearization = linearizations.get(i).iterator().next();
             String ast = it.next();
-			Map<String,Integer> nameCounts = countTemplateVariablesByType(linearization);
-			/*for(String nameCat : nameCats){
-				int count = 0;
-				while(linearization.contains((nameCat + count))){
-					count++;
-				}
-				nameCounts.put(nameCat, count);
-			}*/
-			question.setAst(ast);
-			question.setNameCounts(nameCounts);
-			question.setLang(lang);
-			Instrucs.add(question);
-		}
-		return Instrucs;
-	}
+            Map<String, Integer> nameCounts = countTemplateVariablesByType(linearization);
+            question.setAst(ast);
+            question.setNameCounts(nameCounts);
+            question.setLang(lang);
+            question.setApiTemplate(suggestionStringToApiLinearization(linearization, lang, apiLang));
+            Instrucs.add(question);
+        }
+        return Instrucs;
+    }
 
-	/*
-	 * Generates abstract syntax trees from the GF-shell
-	 */
-	public Set<String> generateAbstractSyntaxTreesFromShell() throws IOException{
-		//Generate trees by using the GF-shell
-		List<String> commands = new ArrayList<String>();
-		commands.add("import " + abs_grammar_filename);
-		commands.add("gt -depth=6");
-		Set<String> asts = sendGfShellCommands(commands);
+    
+    private static Pattern symbPattern = Pattern.compile("\\{\\{(.*?)\\}\\}");
+    
+    private String suggestionStringToApiLinearization(String suggestionString, String suggestionLang, String apiLangName) throws ParseError {
+        
+        
+        Matcher matcher = symbPattern.matcher(suggestionString);
+        
+        Map<String,String> mappings = new HashMap<>();
+        
+        while(matcher.find()){
+            mappings.put(matcher.group(1)+"symb", "{{" + matcher.group(1) + "}}");
+        }
+        
+        suggestionString = matcher.replaceAll("$1symb");
+        
+        
+        Iterable<ExprProb> exprProbs;
+        List<Expr> expressions = new ArrayList<>();
+        exprProbs = pgf.getLanguages().get(suggestionLang).parse(
+                pgf.getStartCat(), suggestionString);
+        for (ExprProb exprProb : exprProbs) {
+            Expr expr = exprProb.getExpr();
+            expressions.add(expr);
+        }
+
+        Expr expr = expressions.get(0);
+        Concr apiLang = pgf.getLanguages().get(apiLangName);
+        String apiLinearization = apiLang.linearize(expr);
+
+        for(Entry<String,String> entry : mappings.entrySet()){
+            apiLinearization = apiLinearization.replaceAll(entry.getKey(), entry.getValue());
+        }
+        
+        return apiLinearization;
+    }
+
+    /*
+     * Generates abstract syntax trees from the GF-shell
+     */
+    public Set<String> generateAbstractSyntaxTreesFromShell() throws IOException {
+        //Generate trees by using the GF-shell
+        List<String> commands = new ArrayList<String>();
+        commands.add("import " + abs_grammar_filename);
+        commands.add("gt -depth=6");
+        Set<String> asts = sendGfShellCommands(commands);
         Set<String> solrPreparedAsts = new HashSet<>();
-        for(String ast:asts){
+        for (String ast : asts) {
             String solrPreparedAst = processNameTypes(ast);
             solrPreparedAsts.add(solrPreparedAst);
         }
-		/*Set<String> result = new LinkedHashSet<String>();
-		Iterator<String> it = asts.iterator();
-		while(it.hasNext()){
-			String ast = it.next();
-			if(!hasDuplicateRelations(ast)){
-				result.add(processNameTypes(ast));
-			}
-		}*/
-		return solrPreparedAsts;
-	}
-    
+        /*
+         * Set<String> result = new LinkedHashSet<String>(); Iterator<String> it
+         * = asts.iterator(); while(it.hasNext()){ String ast = it.next();
+         * if(!hasDuplicateRelations(ast)){ result.add(processNameTypes(ast)); }
+         * }
+         */
+        return solrPreparedAsts;
+    }
+
     /*
-	 * Modifies an abstract syntax tree. All names are by default named "Foo" by the gf-shell.
-	 * We change each name into its type + index.
-	 * E.g. Question_I Person_N (Know_R (MkSkill (MkSymb "Foo"))) ==>
-	 *      Question_I Person_N (Know_R (MkSkill (MkSymb "Skill0")))
-	 */
+     * Modifies an abstract syntax tree. All names are by default named "Foo" by
+     * the gf-shell. We change each name into its type + index. E.g. Question_I
+     * Person_N (Know_R (MkSkill (MkSymb "Foo"))) ==> Question_I Person_N
+     * (Know_R (MkSkill (MkSymb "Skill0")))
+     */
     private String processNameTypes(String ast) {
-        
+
         Templating templ = new Templating("(", " (MkSymb \"Foo\")", null, null);
         List<String> varnames = templ.listVariables(ast);
-        for(String varname : varnames){
+        for (String varname : varnames) {
             System.out.println(varname);
-            if(varname!=null){
-                ast = templ.replaceAll(ast,varname,"("+varname+" (MkSymb \""+placeholderPrefix+varname+placeholderSuffix+"\")");
+            if (varname != null) {
+                ast = templ.replaceAll(ast, varname, "(" + varname + " (MkSymb \"" + placeholderPrefix + varname + placeholderSuffix + "\")");
             }
         }
-        if(ast.contains("Foo")){
+        if (ast.contains("Foo")) {
             System.out.println("Warning: ast processing was likely incomplete!");
         }
         return ast;
     }
-	
-	/*
-	 * Determines if an abstract syntax tree has the same relation more than once
-	 * E.g. Question_I Person_N (And_I (Know_R (MkSkill (MkSymb "Skill0"))) (Know_R (MkSkill (MkSymb "Skill1"))))
-	 * contains Know_R two times. 
-	 */
-	/*private boolean hasDuplicateRelations(String ast){
-		Set<String> relations = new HashSet<String>();
-        Pattern regex = Pattern.compile("\\w+\\_R ");
-        Matcher m = regex.matcher(ast);
-        while(m.find()){
-        	if(relations.contains(m.group())){
-        		return true;
-        	}else {
-        		relations.add(m.group());
-        	}
-        } return false;
-	}*/
-	
-	/*
-	 * Generate linearizations from abstract syntax trees by using the GF-shell.
-	 * Each ast can yield more than one linearization, so we have a list of 
-	 * linearizations for each ast.
-	 * 
-	 * We do the linearization multiple intervals, GF wont be able to process
-	 * all data otherwise.
-	 */
-	public List<Set<String>> generateLinearizations(Set<String> asts, String gfConcreteGrammarFile, String concreteSyntax) throws IOException{
-		List<String> commands = new ArrayList<String>();
-		for(String ast : asts){
-			commands.add("linearize -lang=" + concreteSyntax + " -list " + ast);
-		}
-		int increment = 100;
-		int from = 0, to = increment < asts.size() ? increment : asts.size();
-		List<Set<String>> result = new ArrayList<Set<String>>();
-		while(from < asts.size()){
-			List<String> subCommands = commands.subList(from, to);
-			subCommands.add(0, "import " + gfConcreteGrammarFile);
-			Set<String> lines = sendGfShellCommands(subCommands);
-			for(String line : lines) {
-				Set<String> linearizations = new LinkedHashSet<String>();
+
+    /*
+     * Determines if an abstract syntax tree has the same relation more than
+     * once E.g. Question_I Person_N (And_I (Know_R (MkSkill (MkSymb "Skill0")))
+     * (Know_R (MkSkill (MkSymb "Skill1")))) contains Know_R two times.
+     */
+    /*
+     * private boolean hasDuplicateRelations(String ast){ Set<String> relations
+     * = new HashSet<String>(); Pattern regex = Pattern.compile("\\w+\\_R ");
+     * Matcher m = regex.matcher(ast); while(m.find()){
+     * if(relations.contains(m.group())){ return true; }else {
+     * relations.add(m.group()); } } return false; }
+     */
+    /*
+     * Generate linearizations from abstract syntax trees by using the GF-shell.
+     * Each ast can yield more than one linearization, so we have a list of
+     * linearizations for each ast.
+     *
+     * We do the linearization multiple intervals, GF wont be able to process
+     * all data otherwise.
+     */
+    public List<Set<String>> generateLinearizations(Set<String> asts, String gfConcreteGrammarFile, String concreteSyntax) throws IOException {
+        List<String> commands = new ArrayList<String>();
+        for (String ast : asts) {
+            commands.add("linearize -lang=" + concreteSyntax + " -list " + ast);
+        }
+        int increment = 100;
+        int from = 0, to = increment < asts.size() ? increment : asts.size();
+        List<Set<String>> result = new ArrayList<Set<String>>();
+        while (from < asts.size()) {
+            List<String> subCommands = commands.subList(from, to);
+            subCommands.add(0, "import " + gfConcreteGrammarFile);
+            Set<String> lines = sendGfShellCommands(subCommands);
+            for (String line : lines) {
+                Set<String> linearizations = new LinkedHashSet<String>();
                 try (Scanner sc = new Scanner(line)) {
                     sc.useDelimiter(", ");
-                    while(sc.hasNext()){
+                    while (sc.hasNext()) {
                         String linearization = sc.next();
-                        if(!linearization.isEmpty()){
+                        if (!linearization.isEmpty()) {
                             linearizations.add(linearization);
                         }
                     }
                 }
-				result.add(linearizations);
-			}
-			System.out.println("Added " + from + " to " + to); 
-			to = to + increment < asts.size() ? to + increment : asts.size();
-			from += increment ;
+                result.add(linearizations);
+            }
+            System.out.println("Added " + from + " to " + to);
+            to = to + increment < asts.size() ? to + increment : asts.size();
+            from += increment;
 
-		}
-		return result;
-	}
+        }
+        return result;
+    }
 
-	/*
-	 * Method to interact with the gf-shell
-	 */
-	private Set<String> sendGfShellCommands(List<String> commands) throws IOException{
-		// Run 'gf --run' in the correct directory
-		ProcessBuilder pb = new ProcessBuilder("gf", "-literal=Symb", "--run");
-		
-		pb.directory(new File(grammar_dir));
-		Process p = pb.start();
+    /*
+     * Method to interact with the gf-shell
+     */
+    private Set<String> sendGfShellCommands(List<String> commands) throws IOException {
+        // Run 'gf --run' in the correct directory
+        ProcessBuilder pb = new ProcessBuilder("gf", "-literal=Symb", "--run");
+
+        pb.directory(new File(grammar_dir));
+        Process p = pb.start();
         try (OutputStream outputStream = p.getOutputStream()) {
             IOUtils.writeLines(commands, "\n", outputStream, StandardCharsets.UTF_8);
         }
         LinkedHashSet result = new LinkedHashSet();
         try (InputStream inputStream = p.getInputStream()) {
             List<String> lines = IOUtils.readLines(inputStream, StandardCharsets.UTF_8);
-            
+
             result = new LinkedHashSet();
-            for(String line:lines){
-                if(!line.isEmpty()){
+            for (String line : lines) {
+                if (!line.isEmpty()) {
                     // -- System.out.println(line);
                     result.add(line);
                 }
             }
         }
         return result;
-	}
-
+    }
     Templating defTempl = new Templating(placeholderPrefix, placeholderSuffix);
-    
+
     private Map<String, Integer> countTemplateVariablesByType(String ast) {
         Map<String, Integer> counts = new HashMap<>();
         List<String> variables = defTempl.listVariables(ast);
         for (String variable : variables) {
-            if(counts.containsKey(variable)){
-                counts.put(variable,counts.get(variable)+1);
-            } else {
-                counts.put(variable,1);
+            if (counts.containsKey(variable)) {
+                counts.put(variable, counts.get(variable) + 1);
+            }
+            else {
+                counts.put(variable, 1);
             }
         }
         return counts;

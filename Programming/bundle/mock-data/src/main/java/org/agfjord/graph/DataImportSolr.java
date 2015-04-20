@@ -80,6 +80,7 @@ public class DataImportSolr {
 			solrInputDoc.addField("linearizations", question.getLinearizations());
 			solrInputDoc.addField("length", question.getLinearizations()[0].length());
 			solrInputDoc.addField("lang", question.getLang());
+                        solrInputDoc.addField("apiTemplate", question.getApiTemplate());
 			Map<String,Integer> nameCounts = question.getNameCounts();
 			for(String name : nameCounts.keySet()){
 				solrInputDoc.addField(name + "_i", nameCounts.get(name));

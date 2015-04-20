@@ -47,7 +47,7 @@ $(function () {
                 
                 return $.map(list, function(word) {
                     return {
-                        s: word
+                        s: word.text
                     };
                 });
             }

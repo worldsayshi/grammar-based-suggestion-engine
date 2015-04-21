@@ -1,23 +1,30 @@
 package com.findwise.crescent.rest;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.findwise.crescent.model.*;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.EnumSet;
 import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * A simple Vasttrafik REST client, uses the model classes as Jackson databind
  * POJOs.
- * 
+ *
  * @author mrb
- * 
+ *
  */
 public class VasttrafikRestClient {
+
     private static final String LOCATION_NAME_URL = "http://api.vasttrafik.se/bin/rest.exe/v1/location.name";
     private static final String TRIP_URL = "http://api.vasttrafik.se/bin/rest.exe/v1/trip";
     private static final String AUTH_KEY = "9e3bd1d1-6904-4b61-9336-b9d05c4e549d";
@@ -26,30 +33,30 @@ public class VasttrafikRestClient {
 
     /**
      * Get the locations for given user input.
-     * 
+     *
      * @param input
      * @return
      */
     public LocationList getLocationList(String input) {
-        String url = LOCATION_NAME_URL + URL_APPENDED_PART + "&input=" + input;
-        ObjectMapper mapper = new ObjectMapper();
         try {
+            String url = LOCATION_NAME_URL + URL_APPENDED_PART + "&input=" + URLEncoder.encode(input, "UTF-8");
+            ObjectMapper mapper = new ObjectMapper();
             LocationListWrapper llw = mapper.readValue(new URL(url),
                     LocationListWrapper.class);
             return llw.getLocationList();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ex) {
+            Logger.getLogger(VasttrafikRestClient.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         return null;
     }
 
     /**
      * Find connections from src to dest for the given date.
-     * 
+     *
      * @param src
      * @param dest
-     * @param date
-     *            may be null (will search using current time)
+     * @param date may be null (will search using current time)
      * @return
      */
     public TripList findConnections(VasttrafikQuery params) {
@@ -63,7 +70,7 @@ public class VasttrafikRestClient {
             return tlw.getTripList();
         } catch (Exception e) {
             e.printStackTrace();
-            
+
         }
         return null;
     }
@@ -74,14 +81,16 @@ public class VasttrafikRestClient {
         Location dest = params.to;
         if (src instanceof StopLocation) {
             sb.append("&originId=" + ((StopLocation) src).getId());
-        } else {
+        }
+        else {
             sb.append("&originCoordName=" + src.getName());
             sb.append("&originCoordLat=" + src.getLatitude());
             sb.append("&originCoordLong=" + src.getLongitude());
         }
         if (dest instanceof StopLocation) {
             sb.append("&destId=" + ((StopLocation) dest).getId());
-        } else {
+        }
+        else {
             sb.append("&destCoordName=" + dest.getName());
             sb.append("&destCoordLat=" + dest.getLatitude());
             sb.append("&destCoordLong=" + dest.getLongitude());
@@ -94,14 +103,13 @@ public class VasttrafikRestClient {
             sb.append("&date=" + dateFormatted);
             sb.append("&time=" + timeFormatted);
         }
-        if(!params.isDepartureDate){
+        if (!params.isDepartureDate) {
             sb.append("&searchForArrival=1");
         }
-        
-        for(MeansOfTransport mean : MeansOfTransport.values())
-        {
-            if(!params.usedTransportMeans.contains(mean)){
-                for(String paramName : mean.getRestParamNames()){
+
+        for (MeansOfTransport mean : MeansOfTransport.values()) {
+            if (!params.usedTransportMeans.contains(mean)) {
+                for (String paramName : mean.getRestParamNames()) {
                     sb.append("&");
                     sb.append(paramName);
                     sb.append("=0");
@@ -114,7 +122,7 @@ public class VasttrafikRestClient {
 
     /**
      * Get the best, i.e. the first match (bus or tram stop in this case).
-     * 
+     *
      * @param input
      * @return
      */
@@ -125,7 +133,7 @@ public class VasttrafikRestClient {
 
     /**
      * Get the best, i.e. the first match (address, point of interest...)
-     * 
+     *
      * @param input
      * @return
      */

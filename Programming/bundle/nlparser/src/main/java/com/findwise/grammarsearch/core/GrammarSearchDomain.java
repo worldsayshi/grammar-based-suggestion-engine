@@ -56,7 +56,7 @@ public class GrammarSearchDomain<T> {
      * @throws
      * com.findwise.grammarsearch.core.SolrNameSuggester.NameLookupFailed
      */
-    public List<SuggestionResult> suggestSentences(String nlQuestion, String concreteLang, String searchApiLang, SuggestionParams params)
+    public List<SuggestionResult> suggestSentences(String nlQuestion, String concreteLang, SuggestionParams params)
             throws Exception, SolrGrammarSuggester.GrammarLookupFailure, SolrNameSuggester.NameLookupFailed {
         List<Suggestion> questions = new ArrayList<>();
 
@@ -469,8 +469,8 @@ public class GrammarSearchDomain<T> {
         return nlQuestion;
     }
 
-    public Object performQuery(String question, String lang, String apiQuery) throws ParseError {
-        return grammarSearchClient.performQuery(question, lang, apiQuery);
+    public Object performQuery(String textQuery, String apiQuery) throws ParseError {
+        return grammarSearchClient.performQuery(textQuery, apiQuery);
     }
 
     private NameTypeCounts countMissingName(

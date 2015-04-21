@@ -32,13 +32,13 @@ public class SolrGrammarSearchClient implements GrammarSearchClient<SolrDocument
     }
 
     @Override
-    public SolrDocumentList performQuery(String question, String lang, String apiQuery) {
+    public SolrDocumentList performQuery(String textQuery, String apiQuery) {
 
             if(apiQuery != null){
                 return performApiQuery(apiQuery);
             }
             else{
-                return performFreeTextSearch(question);
+                return performFreeTextSearch(textQuery);
             }
     }
 

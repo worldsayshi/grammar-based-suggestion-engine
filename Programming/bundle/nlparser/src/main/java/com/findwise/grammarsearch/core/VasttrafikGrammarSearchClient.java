@@ -21,8 +21,7 @@ public class VasttrafikGrammarSearchClient implements GrammarSearchClient<TripLi
     VasttrafikRestClient vasttrafikclient = new VasttrafikRestClient();
     
     @Override
-    public TripList performQuery (String question, 
-            String lang, String apiQuery) throws ParseError {
+    public TripList performQuery (String textQuery, String apiQuery) throws ParseError {
         
         VasttrafikQuery q = parseVasttrafikApi(apiQuery);
         if(q.from==null || q.to==null){
